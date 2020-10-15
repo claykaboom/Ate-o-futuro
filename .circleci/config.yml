@@ -4,7 +4,7 @@ jobs:
   build:
     docker:
       - image: circleci/node:10
-    working_directory: /ate-o-futuro/vue-app
+    working_directory: ~/ate-o-futuro/vue-app
     steps:
       - checkout
       - restore_cache:
@@ -16,6 +16,9 @@ jobs:
       - run:
           name: Install Dependencies
           command: npm install
+      - run:
+          name: Go to proper folder
+          command: cd ..\vue-app
       - save_cache:
           key: v1-npm-deps-{{ checksum "./vue-app/package-lock.json" }}
           paths:
