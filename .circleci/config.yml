@@ -18,7 +18,7 @@ jobs:
           command: npm install
       - run:
           name: Go to proper folder
-          command: cd..\vue-app
+          command: cd../vue-app
       - save_cache:
           key: v1-npm-deps-{{ checksum "./vue-app/package-lock.json" }}
           paths:
