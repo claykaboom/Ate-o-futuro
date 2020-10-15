@@ -17,7 +17,7 @@ jobs:
           name: Install Dependencies
           command: npm install
       - save_cache:
-          key: v1-npm-deps-{{ checksum "~/ate-o-futuro/vue-app/package-lock.json" }}
+          key: v1-npm-deps-{{ checksum "../vue-app/package-lock.json" }}
           paths:
             - ./node_modules
       - run:
