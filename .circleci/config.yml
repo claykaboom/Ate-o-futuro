@@ -4,7 +4,7 @@ jobs:
   build:
     docker:
       - image: circleci/node:10
-    working_directory: ../ate-o-futuro/vue-app
+    working_directory: /ate-o-futuro/vue-app
     steps:
       - checkout
       - restore_cache:
