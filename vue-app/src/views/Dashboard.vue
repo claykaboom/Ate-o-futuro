@@ -1,1 +1,3 @@
-oi
+<template>
+    <div >     OI </div>
+</template>
