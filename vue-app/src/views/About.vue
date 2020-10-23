@@ -1,41 +1,28 @@
 <template>
   <div>
     <vue-headful title="Sobre o Até o Futuro!" description="Até o Futuro" />
-    <section class="hero is-warning is-bold">
+    <div class="box cta">
+      <p class="has-text-centered">
+        <span class="tag is-primary">NOVO</span> Peça um Feedback de Pessoas que
+        são referência de mercado em habilidades que você quer desenvolver!
+      </p>
+    </div>
+
+    <section class="hero is-info is-bold">
       <div class="hero-body">
-        <div class="container">
-          <h1 class="title">
-            Até o Futuro: Plataforma de Feedbacks e Auto-aprimoramento
-            colaborativo
-          </h1>
+        <div class="container has-text-centered">
+          <h1 class="title">Até o Futuro: Prove-se à prova do Tempo</h1>
           <h2 class="subtitle">
             <br />
-            Peça feedback sobre suas habilidades e ideias de negócio
-            <a
-              href="https://blog.claytonfreitas.com.br/cinco-vantagens-em-dar-feedback/"
-              target="blank"
-            >
-              e tenha vantagens intrínsecas e colaterais no processo
-            </a>
-
-            <router-link v-show="!$root.$isLogged" to="/Login"
-              >(necessário login)
-            </router-link>
-
-            <br />
-            <br />
-            Tenha o pensamento
-            <a href="https://github.com/claykaboom/Ate-o-futuro" target="blank">
-              Open-Source em mente.
-            </a>
-            <br />
-            <br />
+            Peça feedback sobre suas habilidades e ideias de negócio de forma
+            gratuita. Conecte-se com pessoas fantásticas que são referência de
+            mercado.
 
             <a
               href="https://blog.claytonfreitas.com.br/compartilhe-ideias-para-ter-uma-boa-ideia/"
               target="blank"
             >
-              Compartilhe suas ideias.</a
+              Compartilhe suas ideias sobre o Até o Futuro.</a
             >
             <br />
           </h2>
@@ -43,18 +30,11 @@
       </div>
     </section>
     <div class="about box">
-      <br />Este é o Até o Futuro.
-      <br />
-      <br />
-      Uma plataforma que criei para aumentar minhas próprias habilidades e para
-      praticar o ato de dar feedbacks a outros.
-      <br />
-      <br />
-      O código fonte está disponível no
-      <a href="https://github.com/claykaboom/Ate-o-futuro">
-        github para colaboração.
-      </a>
-
+      <br />Este é o Até o Futuro, uma Plataforma de
+      <a href="https://github.com/claykaboom/Ate-o-futuro"> código aberto </a>
+      com o propósito de alavancar habilidades de pessoas que querem transitar
+      de carreira, ou ingressar numa coisa nova, desconhecida. O método é usado
+      por mim mesmo para receber e fornecer feedbacks.
       <br />
       <br />
 
@@ -62,23 +42,30 @@
       estágio profissional. Pratique a generosidade.
     </div>
     <br />
-    <div class="box">
-      <h2 class="subtitle is-5">Como funciona?</h2>
+    <div class="hero is-warning is-bold">
+      <div class="hero-body">
+        <div class="container has-text-centered">
+          <h1 class="title">Quer experimentar?</h1>
+          <h2 class="subtitle is-5"></h2>
+<br />
+          <router-link 
+            :to="{ name: 'SkillFeedback' }"
+          >
+            Clique aqui para pedir <br />um feedback .
+          </router-link>
 
-      <router-link :to="{ name: 'SkillFeedback' }">
-        Comece pedindo um feedback sobre uma de suas habilidades. É necessário
-        login!
-      </router-link>
-
-      <span class="is-centered">
-        <br />
-        <br />
-      </span>
-      <br />
-      <br />
+          <span class="is-centered">
+            <br />
+            <br />
+          </span>
+          <br />
+          <br />
+        </div>
+      </div>
     </div>
   </div>
 </template>
+
 <script>
 export default {
   name: "About",

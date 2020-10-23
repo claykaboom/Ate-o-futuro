@@ -15,7 +15,7 @@ const routes = [
   // },
   {
     path: '/',
-    redirect: '/Sobre'
+    redirect: '/Home'
   },
   {
     path: '/login',
@@ -85,6 +85,21 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/Feedback/Request.vue')
+  },
+  {
+    path: '/DarFeedback/:IdFeedbackRequest',
+    name: 'ProvideSkillFeedback',
+    meta: {  
+    
+      friendlyName: "Habilidades",
+      breadcrumb: [
+        { name: 'Dar Feedback', link: 'Feedback' },
+      ]
+    },
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/Feedback/Provide-Skill-Feedback.vue')
   }
 ]
 
@@ -97,7 +112,7 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 
-  document.title = "Recibras Manager!"; // Este é o Title /Título Padrão Defaul para páginas que não usam o vue-Headful
+  document.title = "Até o Futuro! "; // Este é o Title /Título Padrão Defaul para páginas que não usam o vue-Headful
   var redirectToPath = to.path;
   if (router.currentRoute.query.redirectToPath != null) {
     // redirectToPath = router.currentRoute.query.redirectToPath;

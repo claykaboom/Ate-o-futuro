@@ -56,16 +56,42 @@
         </template>
         <b-step-item step="1" label="Habilidade" :clickable="true">
           <h1 class="title has-text-centered">Detalhes da habilidade</h1>
+
           <b-field
-            label="Descreva a Habilidade sobre a qual você gostaria de um feedback"
+            label="Qual habilidade você gostaria de aprimorar e receber feedback?"
           >
+            <b-input
+              placeholder="Descreva a habilidade sobre a qual você quer feedback aqui de maneira breve."
+              rounded
+              v-model="ResumoHabilidade"
+              @keyup="gravar()"
+            ></b-input>
+          </b-field>
+
+          <b-field label="Qual sua relação com essa habilidade atualmente?">
+            <b-select
+              placeholder="Para quê você quer essa habilidade?"
+              v-model="FinalidadeHabilidade"
+              expanded
+            >
+              <option value="pessoal">Aprimoramento pessoal/curiosidade</option>
+              <option value="novo-cargo">
+                Estou entrando em novo cargo/emprego
+              </option>
+              <option value="dia-a-dia">Preciso dela no dia-a-dia</option>
+              <option value="diferencial">
+                Quero me diferenciar no mercado de trabalho
+              </option>
+            </b-select>
+          </b-field>
+          <b-field :label="labelComoDemonstra">
             <b-input
               v-model="DescricaoHabilidade"
               type="textarea"
               minlength="10"
               maxlength="365"
               :loading="$root.isLoading"
-              placeholder="Descreva a habilidade sobre a qual você quer feedback aqui de maneira breve."
+              placeholder="Detalhe alguns momentos em que você precisa dessa habilidade, dificuldades. Dados que ajudem seu feedback a ser mais específico."
               @keyup="gravar()"
             >
             </b-input>
@@ -82,12 +108,14 @@
           }"
         >
           <h1 class="title has-text-centered">Áreas de Conhecimento</h1>
-          <b-field label="A quais competências ou áreas ela está ligada?">
+          <b-field
+            label="A quais competências ou áreas ela está ligada? Escolher as áreas vai ajudar a gente a escolher a(s) pessoa(s) mais capacitada(s) para te dar um retorno de qualidade."
+          >
             <b-taginput
-              v-model="tags"
+              v-model="Areas"
               ellipsis
               icon="label"
-              placeholder="Adicione uma TAG (e.g. Javascript)"
+              placeholder="Adicione uma ou mais TAGS (e.g. Javascript)"
               @typing="getFilteredTags"
               :data="possibleTags"
               autocomplete
@@ -104,45 +132,42 @@
           :clickable="
             DescricaoHabilidade != null &&
             DescricaoHabilidade != '' &&
-            tags.length > 0
+            Areas.length > 0
           "
           disabled
         >
           <h1 class="title has-text-centered">Referências de Apoio</h1>
           <b-field
-            label="Quer demonstrar a habilidade em um vídeo ou referência externa (github, onedrive, google drive, etc) ? "
+            label="Como você quer demonstrar essa habilidade?"
+            type="is-danger"
           >
-            <div class="field">
-              <b-switch v-model="wantsVideo"> </b-switch>
-              <br />
-              <b-field
-                v-if="wantsVideo"
-                label="Prefere fazer Upload de vídeo ou usar um link? "
+            <div class="block">
+              <b-radio
+                v-model="ExternalReferenceType"
+                name="name"
+                native-value="Upload"
               >
-                <b-switch
-                  v-model="videoType"
-                  :rounded="false"
-                  true-value="Link"
-                  false-value="Upload"
-                  type="is-primary"
-                  passive-type="is-warning"
-                  >{{ videoType }}
-                </b-switch>
-              </b-field>
+                Upload de Vídeo
+              </b-radio>
+              <b-radio v-model="ExternalReferenceType" name="name" native-value="Link">
+                Link para referência externa (GitHub, Youtube, OneDrive, Google
+                Drive, Vimeo, etc.)
+              </b-radio>
             </div>
           </b-field>
+
           <b-field
-            v-if="wantsVideo && videoType == 'Link'"
+            v-if="WantsExternalReference && ExternalReferenceType == 'Link'"
             label="Qual a URL da referência externa?"
           >
             <b-input
               placeholder="URL que demonstra a habilidade (e.g. oratória, captura de tela de desenvolvimento de sistema, resposta a entrevista, resolução de conflito)"
               type="url"
-              v-model="VideoFeedbackURL"
+              v-model="ExternalReferenceURL"
             ></b-input>
           </b-field>
           <b-field
-            v-if="wantsVideo && videoType != 'Link'"
+            v-if="WantsExternalReference && ExternalReferenceType != 'Link'"
             label="Faça o seu Upload "
           >
             <video-recorder :IdFeedBackRequest="IdFeedBackRequest" />
@@ -153,12 +178,19 @@
           :clickable="
             DescricaoHabilidade != null &&
             DescricaoHabilidade != '' &&
-            tags.length > 0
+            Areas.length > 0
           "
           disabled
         >
           <h1 class="title has-text-centered">Revise e Finalize</h1>
-          <b-field label="Sua habilidade em palavras">
+          <b-field label="Habilidade Esperada">
+            <section>
+              <b-message type="is-success">
+                {{ ResumoHabilidade }}
+              </b-message>
+            </section>
+          </b-field>
+          <b-field label="Sua habilidade em mais detalhes">
             <section>
               <b-message>
                 {{ DescricaoHabilidade }}
@@ -168,14 +200,14 @@
           <b-field label="Áreas de Conhecimento">
             <section>
               <b-taglist>
-                <b-tag type="is-info" v-for="tag in tags" :key="tag">{{
+                <b-tag type="is-warning" v-for="tag in Areas" :key="tag">{{
                   tag
                 }}</b-tag>
               </b-taglist>
             </section>
           </b-field>
           <b-field
-            v-if="wantsVideo && videoType == 'Youtube'"
+            v-if="WantsExternalReference && ExternalReferenceType == 'Youtube'"
             label="Qual a URL do Vídeo?"
           >
             <b-input
@@ -183,14 +215,34 @@
               type="url"
             ></b-input>
           </b-field>
-          <b-field v-if="wantsVideo && videoType != 'Link'" label="Seu vídeo">
-            <video class="preview" :src="VideoURLdeo" controls></video>
+          <b-field
+            v-if="
+              WantsExternalReference &&
+              ExternalReferenceType != 'Link' &&
+              VideoStorageURL != null
+            "
+            label="Seu vídeo"
+          >
+            <video class="preview" :src="VideoStorageURL" controls></video>
           </b-field>
-          <b-field v-if="wantsVideo && videoType == 'Link'" label="Seu link">
-            <a :href="VideoFeedbackURL" target="blank">{{
-              VideoFeedbackURL
+          <b-field
+            v-if="WantsExternalReference && ExternalReferenceType == 'Link'"
+            label="Seu link"
+          >
+            <a :href="ExternalReferenceURL" target="blank">{{
+              ExternalReferenceURL
             }}</a>
           </b-field>
+
+          <a
+            :href="finalShareURL"
+            onclick="window.open(this.href, 'mywin',
+'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"
+          >
+            <b-button type="is-info" icon-left="linkedin">
+              Compartilhar no LinkedIn para receber Feedbacks das suas conexões
+            </b-button>
+          </a>
         </b-step-item>
       </b-steps>
     </section>
@@ -337,15 +389,16 @@ export default {
   components: { VideoRecorder },
   data() {
     return {
-      wantsVideo: false,
-      videoType: "Upload",
+      WantsExternalReference: true,
+      ExternalReferenceType: "Upload",
       allowNew: false,
       openOnFocus: true,
-      tags: [],
+      Areas: [],
       possibleTags: allTags,
       IdFeedBackRequest: null,
-      VideoFeedbackURL: null,
-      VideoURL: null,
+      ExternalReferenceURL: null,
+      VideoStorageURL: null,
+      ResumoHabilidade: null,
       DescricaoHabilidade: null,
 
       activeStep: 0,
@@ -366,6 +419,25 @@ export default {
     };
   },
   computed: {
+    finalShareURL() {
+      return `https://www.linkedin.com/shareArticle?mini=true&url=https://AteOFuturo.com.br/DarFeedback/${this.IdFeedBackRequest}&title=Dê%20um%20feedback%20e%20receba%205%20vantagens%20imediatas&summary=Olá!%20Que%20tal%20praticar%20a%20generosidade%20e%20dar%20um%20feedback%20para%20eu%20aprimorar%20minhas%20habilidades?!%20Até%20o%20Futuro!&source=AtéOFuturo`;
+    },
+    labelComoDemonstra() {
+      const finalLabel =
+        "Lembre-se de detalhar isso para ajudar a pessoa que vai te dar Feedback a entender o seu momento.";
+      if (this.ResumoHabilidade != null) {
+        return (
+          'Quais são suas dificuldades em demonstrar a habilidade de  "' +
+          this.ResumoHabilidade +
+          '" hoje em dia e sob quais circunstâncias você precisa dela? ' +
+          finalLabel
+        );
+      }
+      return (
+        "Quais são suas dificuldades em demonstrar a habilidade acima hoje em dia e sob quais circunstâncias você precisa dela? " +
+        finalLabel
+      );
+    },
     isNextDisabled() {
       if (
         this.activeStep == 0 &&
@@ -373,7 +445,7 @@ export default {
       ) {
         return true;
       }
-      if (this.activeStep == 1 && this.tags.length == 0) {
+      if (this.activeStep == 1 && this.Areas.length == 0) {
         return true;
       }
       if (this.activeStep == 3) {
@@ -393,19 +465,9 @@ export default {
       }
     },
     videoUploaded(url) {
-      var thisVM = this;
-
       this.startFeedbackRequest();
-      this.VideoFeedbackURL = url;
-      firebase
-        .database()
-        .ref("/FeedbackRequests/" + this.IdFeedBackRequest)
-        .set({
-          DescricaoHabilidade: thisVM.DescricaoHabilidade,
-          Areas: thisVM.tags,
-          VideoURL: thisVM.nomeFornecedor,
-          VideoFeedbackURL: thisVM.VideoFeedbackURL,
-        });
+      this.ExternalReferenceURL = url;
+      this.gravar();
     },
     gravarFinal() {
       this.gravar();
@@ -430,10 +492,17 @@ export default {
         .database()
         .ref("/FeedbackRequests/" + this.IdFeedBackRequest)
         .set({
+          FinalidadeHabilidade: thisVM.FinalidadeHabilidade,
+          ResumoHabilidade: thisVM.ResumoHabilidade,
           DescricaoHabilidade: thisVM.DescricaoHabilidade,
-          Areas: thisVM.tags,
-          VideoURL: thisVM.VideoURL,
-          VideoFeedbackURL: thisVM.VideoFeedbackURL,
+          Areas: thisVM.Areas,
+          VideoStorageURL: thisVM.VideoStorageURL,
+          ExternalReferenceURL: thisVM.ExternalReferenceURL,
+          UserName: thisVM.$root.$currentUser.displayName,
+          UserId: thisVM.$root.$currentUser.uid,
+          UserEmail: thisVM.$root.$currentUser.email,
+          ExternalReferenceType: thisVM.ExternalReferenceType,
+          WantsExternalReference: thisVM.WantsExternalReference,
         });
     },
     getFilteredTags(text) {

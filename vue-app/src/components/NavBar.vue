@@ -6,22 +6,15 @@
       </b-navbar-item>
     </template>
     <template slot="start">
-      <b-navbar-dropdown label="Home">
-        <!---->
-        <!-- <b-navbar-item
+      
+        <b-navbar-item
           tag="router-link"
-          v-show="$root.$isLogged  && $route.params.time"
-          v-if="$route.params.time "
-          :to="{ name: 'Dashboard', params: { time:  $route.params.time    }}"
           class="navbar-item"
-        >Dashboard</b-navbar-item> -->
-        <!-- <b-navbar-item
-          tag="router-link"
-          v-show="$root.$isLogged  && $route.params.time"
-          v-if="$route.params.time "
-          :to="{ name: 'Email', params: { time:  $route.params.time    }}"
-          class="navbar-item"
-        >E-mails</b-navbar-item> -->
+          :to="{ name: 'Home' }"
+          >Home</b-navbar-item
+        >
+      <!-- <b-navbar-dropdown label="Home">
+   
         <b-navbar-item
           tag="router-link"
           class="navbar-item"
@@ -30,78 +23,8 @@
         >
         <hr class="navbar-divider" />
         <div class="navbar-item">Versão 0.0.1 BETA</div>
-      </b-navbar-dropdown>
-
-      <!-- <b-navbar-dropdown label="Time/Pessoas" v-show="$root.$isLogged">
-        <b-navbar-item tag="router-link" :to="{name:'Times'}" class="navbar-item">Times</b-navbar-item>
-        <b-navbar-item
-          tag="router-link"
-          v-if="$route.params.time"
-          :to="{name:'Convite', params: {   time:  $route.params.time  }}"
-          class="navbar-item"
-        >Convidar</b-navbar-item>
-        <b-navbar-item
-          tag="router-link"
-          v-if="$route.params.time"
-          :to="{ name: 'Pessoas', params: {   time:  $route.params.time  }}"
-          class="navbar-item"
-        >Pessoas</b-navbar-item>
-        <b-navbar-item
-          tag="router-link"
-          v-if="$route.params.time"
-          :to="{ name: 'Colaboradores', params: {  time:  $route.params.time  }}"
-          class="navbar-item"
-        >Colaboradores</b-navbar-item>
-      </b-navbar-dropdown>
-
-      <b-navbar-dropdown label="Operações" v-show="$root.$isLogged  && $route.params.time != null ">
-        <b-navbar-item
-          tag="router-link"
-          v-show="$root.$isLogged  && $route.params.time "
-          v-if="$route.params.time "
-          :to="{ name: 'Produtos', params: { time:  $route.params.time    }}"
-          class="navbar-item"
-        >Produtos</b-navbar-item>
-        <hr class="navbar-divider" />
-        <b-navbar-item
-          tag="router-link"
-          v-show="$root.$isLogged  && $route.params.time "
-          v-if="$route.params.time "
-          :to="{ name: 'Compras', params: {   time:  $route.params.time }}"
-          class="navbar-item"
-        >Compras</b-navbar-item>
-        <b-navbar-item
-          tag="router-link"
-          v-show="$root.$isLogged  && $route.params.time "
-          v-if="$route.params.time "
-          :to="{ name: 'Investimentos', params: {   time:  $route.params.time }}"
-          class="navbar-item"
-        >Investimentos</b-navbar-item>
-        <b-navbar-item
-          tag="router-link"
-          v-show="$root.$isLogged  && $route.params.time "
-          v-if="$route.params.time "
-          :to="{ name: 'Despesas', params: {   time:  $route.params.time }}"
-          class="navbar-item"
-        >Despesas</b-navbar-item>
-        <hr class="navbar-divider" />
-        <b-navbar-item
-          tag="router-link"
-          v-show="$root.$isLogged  && $route.params.time "
-          v-if="$route.params.time "
-          :to="{ name: 'NovaColeta', params: {   time:  $route.params.time }}"
-          class="navbar-item"
-        >Coletas</b-navbar-item>
-        <hr class="navbar-divider" />
-        <b-navbar-item
-          tag="router-link"
-          v-show="$root.$isLogged  && $route.params.time "
-          v-if="$route.params.time "
-          :to="{ name: 'Vendas', params: {   time:  $route.params.time }}"
-          class="navbar-item"
-        >Vendas</b-navbar-item>
-      </b-navbar-dropdown>
--->
+      </b-navbar-dropdown> -->
+ 
       <b-navbar-item
         tag="router-link"
         v-show="$root.$isLogged"
