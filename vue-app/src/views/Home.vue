@@ -1,341 +1,380 @@
 <template>
-  <section>
-    <h1 v-show="$root.$isLogged" class="title">
-      Olá, {{ $root.$displayName }}!
-    </h1>
-    <section class="hero main_hero is-fullheight">
+  <empty-layout>
+    <section class="hero is-medium">
       <div class="hero-body">
-        <div class="container has-text-centered">
-          <div class="slider-content animated zoomIn pb-6">
-            <div>
-              <p class="title is-1 main-text">Até o Futuro</p>
-              <p class="subtitle is-4 main-text">Torne-se à prova do tempo</p>
-            </div>
-          </div>
-          <span class="scroll-down animated zoomIn">
-            <svg
-              width="30px"
-              height="100%"
-              viewBox="0 0 247 390"
-              version="1.1"
-              xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
-              style="
-                fill-rule: evenodd;
-                clip-rule: evenodd;
-                stroke-linecap: round;
-                stroke-linejoin: round;
-                stroke-miterlimit: 1.5;
-              "
-            >
-              <path
-                id="wheel"
-                d="M123.359,79.775l0,72.843"
-                style="fill: none; stroke: #fff; stroke-width: 20px"
-              />
-              <path
-                id="mouse"
-                d="M236.717,123.359c0,-62.565 -50.794,-113.359 -113.358,-113.359c-62.565,0 -113.359,50.794 -113.359,113.359l0,143.237c0,62.565 50.794,113.359 113.359,113.359c62.564,0 113.358,-50.794 113.358,-113.359l0,-143.237Z"
-                style="fill: none; stroke: #fff; stroke-width: 20px"
-              />
-            </svg>
-          </span>
+        <div class="container">
+          <h1 class="title is-1">Até o Futuro {{ $root.displayName }}</h1>
+          <h2 class="subtitle">
+            Um simples mecanismo de aprimoramento coletivo <br />
+            baseado em feedbacks objetivos.<br />
+            Peça feedbacks sobre habilidades que você está desenvolvendo e
+            receba retornos de experts sobre como você pode aprimorar o seu eu.
+          </h2>
+
+          <router-link
+            class="button is-dark is-inverted is-large pulse-button"
+            :to="{ name: 'SkillFeedback' }"
+          >
+            <b-icon size="is-small" icon="arrow-right"></b-icon
+            ><b-icon size="is-small" icon=""></b-icon> Peça seu
+            feedback</router-link
+          >
+
+          <br />
+          <br />
+          <router-link
+            :to="{ name: 'Sobre' }"
+            class="button is-white is-large is-inverted"
+          >
+            Conheça mais &nbsp;&nbsp;&nbsp;&nbsp;&ensp;<b-icon
+              size="is-small"
+              icon=" "
+            ></b-icon
+            ><b-icon size="is-small" icon="information"></b-icon
+          ></router-link>
         </div>
       </div>
     </section>
-    <!-- Rooms Section -->
-
-    <b-carousel
-      animated="slide"
-      :has-drag="true"
-      :autoplay="true"
-      :pause-hover="true"
-      :pause-info="false"
-      :interval="10000"
-      :repeat="true"
-    >
-      <b-carousel-item>
-        <section class="hero is-medium is-dark is-bold">
-          <div class="hero-body has-text-centered">
-            <h1 class="title">ATÉ O FUTURO!</h1>
-            <p>
-              Se você está aqui é porque tem interesse em receber feedbacks.<br />
-              Depois que você pedir um feedback, vamos querer bater um papo
-              contigo para saber como foi sua experiência.
-            </p>
+    <section id="parallax-1" class="hero is-large">
+      <div class="hero-body">
+        <div class="container">
+          <div class="columns">
+            <div class="column is-6 is-offset-6">
+              <h1 class="title is-1">
+                <b-icon size="is-small" icon="account-heart"></b-icon>
+                &nbsp;&nbsp; Peça seu Feedback, é grátis
+              </h1>
+              <hr class="content-divider" />
+              <h2 class="subtitle">
+                <b-icon size="is-small" icon="check"></b-icon> Receba feedbacks
+                objetivos de referências em dezenas de habilidades diferentes
+                para você ganhar confiança na sua transição de carreira, ou na
+                execução de seu trabalho. <b> É grátis! </b> Aproveite que não é
+                sempre que você tem feedbacks de qualidade de pessoas-referência
+                de suas respectivas indústrias.
+              </h2>
+              <router-link
+                class="button is-white is-inverted is-large pulse-button"
+                :to="{ name: 'SkillFeedback' }"
+              >
+                <b-icon size="is-small" icon="arrow-right"></b-icon
+                ><b-icon size="is-small" icon=""></b-icon> Vamos lá</router-link
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="parallax-2" class="hero is-large">
+      <div class="hero-body">
+        <div class="container">
+          <div class="columns">
+            <div class="column is-6">
+              <h1 class="title is-1">Conheça nossos experts</h1>
+              <hr class="content-divider" />
+              <h2 class="subtitle">
+                Estamos fundamentando nossos feedbacks em pessoas-referência
+                para que o feedback seja claro e acionável para você! Nosso
+                objetivo é impulsionar a confiança das pessoas que nem sempre
+                têm acesso a coaches e mentores de carreira a ir para o próximo
+                nível.
+              </h2>
+              <router-link
+                class="button is-white is-inverted is-large"
+                :to="{ name: 'Sobre' }"
+              >
+                Saiba mais
+              </router-link>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="parallax-3" class="hero is-large">
+      <div class="hero-body">
+        <div class="container">
+          <div class="columns">
+            <div class="column is-6 is-offset-6">
+              <h1 class="title is-1">Que tal um cafezinho virtual?</h1>
+              <hr class="content-divider" />
+              <h2 class="subtitle">
+                Teve alguma ideia? Quer participar de uma sessão de ideação?
+                Bater um papo? Tomar um café? Marque um horário!<br /><br />
+                Queremos conversar com pessoas com boas ideias para fazer o
+                futuro mais palatável para todos; Se você é uma pessoa criativa,
+                bora conversar!
+              </h2>
+              <a
+                href="https://calendly.com/claytonfreitas/batepapo"
+                target="blank"
+                class="button is-white is-inverted"
+                >Marque um horário aqui&ensp;<i class="fad fa-chevron-right"></i
+              ></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="cta va">
+      <div class="container">
+        <div class="columns">
+          <div class="column is-6">
+            <h1 class="title is-1">
+              <b-icon size="is-small" icon="email"></b-icon
+              ><b-icon size="is-small" icon=" "></b-icon>
+            </h1>
+            <hr class="content-divider" />
+            <h2 class="subtitle">
+              Dúvidas? Ideias? Críticas? O Até o Futuro é uma plataforma de
+              código aberto e está aberta para feedbacks!
+            </h2>
+          </div>
+          <div class="column is-6">
+            <div class="field">
+              <label class="label">Name</label>
+              <div class="control">
+                <input
+                  v-model="Nome"
+                  class="input is-medium"
+                  type="text"
+                  placeholder="Seu nome aqui"
+                />
+              </div>
+            </div>
             <br />
-
-            <h1 class="title">FEEDBACK GRÁTIS</h1>
-            <p>
-              Faça Login para experimentar esse presente. O feedback é grátis,
-              mas vai funcionar por tempo limitado até 15/11/2020.<br /><br />
-            </p>
-
-            <div class="notification is-warning">
-              <div class="buttons is-centered">
-                <router-link :to="{ name: 'SkillFeedback' }">
-                  <b-button type="is-dark is-large" icon-left="account-heart"
-                    >Me dá Feedback!</b-button
-                  >
-                </router-link>
+            <div class="field">
+              <label class="label">Email</label>
+              <div class="control">
+                <input
+                  v-model="Email"
+                  class="input is-medium"
+                  type="email"
+                  placeholder="seu@email.com"
+                />
+              </div>
+              <br />
+            </div>
+            <b-field>
+              <textarea
+                type="textarea"
+                class="textarea"
+                v-model="Mensagem"
+                maxlength="360"
+                style="background-color: #000"
+                placeholder="Sua mensagem "
+              >
+              </textarea>
+            </b-field>
+            <br />
+            <div class="field is-grouped">
+              <div class="control">
+                <button
+                  class="button is-white is-rounded is-outlined"
+                  @click="enviarEmail"
+                >
+                  Enviar
+                </button>
               </div>
             </div>
           </div>
-        </section>
-      </b-carousel-item>
-      <b-carousel-item>
-        <section class="hero is-medium is-info is-bold">
-          <div class="hero-body has-text-centered">
-            <h1 class="title">Contribuintes</h1>
-
-            <b-message type="is-info"
-              ><div class="columns">
-                <div class="column is-one-fifth">
-                  <b-image
-                    src="https://media-exp1.licdn.com/dms/image/C4D03AQG-cze3-YHXfA/profile-displayphoto-shrink_200_200/0?e=1608768000&v=beta&t=r2Fn9VlqIGtGXRJ_JeZeMQs6BOjJpdc6B3ZrORMA2jE"
-                    alt="Clayton Freitas"
-                    :rounded="false"
-                  ></b-image>
-                </div>
-                <div class="column">
-                  <h2 class="subtitle">
-                    <a
-                      style="color: black"
-                      href="https://www.linkedin.com/in/claytonfreitas/"
-                      target="blank"
-                      >Clayton N. Freitas</a
-                    >
-                  </h2>
-                  <p>
-                    Conhecido por dizer "Até o Futuro", é solucionador de
-                    problemas e curioso por tecnologia e como ela pode destravar
-                    e potencializar as ações humanas.
-                    <br />
-                    <br />
-                    <a
-                      href="https://www.linkedin.com/in/claytonfreitas/"
-                      target="blank"
-                    >
-                      <b-button type="is-info is-large" icon-left="linkedin"
-                        >Conecte-se</b-button
-                      ></a
-                    >
-                  </p>
-                </div>
-              </div>
-            </b-message>
-            <ul>
-              <li></li>
-            </ul>
-
-            <p>
-              Se quiser participar em sessões de ideação do Até o Futuro, entre
-              em contato! 😁
-            </p>
-          </div>
-        </section>
-      </b-carousel-item> </b-carousel
-    ><br />
-    <About />
-  </section>
+        </div>
+      </div>
+    </section>
+    <footer class="footer">
+      <div class="content has-text-centered">
+        <p>
+          <strong>Até o Futuro</strong> by
+          <a href="https://claytonfreitas.com.br">Clayton Freitas</a>. O código
+          fonte está disponível no
+          <a href="https://github.com/claykaboom/Ate-o-futuro">GitHub</a>.
+        </p>
+      </div>
+    </footer>
+  </empty-layout>
 </template>
-<style scoped>
-html {
-  scroll-behavior: smooth;
-}
-body {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-size: 14px;
-  line-height: 1.5;
-  background-color: #f0f0f0;
-}
-.main_hero {
-  background-image: url("https://cdn.pixabay.com/photo/2016/10/18/08/13/travel-1749508_960_720.jpg");
-  background-size: cover;
-}
-img {
-  max-width: 100%;
-}
-a.is-primary {
-  background-color: #03b2e3 !important;
-  border: 1px solid #03b2e3 !important;
-}
-a.is-primary:hover {
-  background-color: transparent !important;
-  color: #000 !important;
-}
-a.button {
-  font-size: 14px;
-}
-.main_title {
-  color: #fff;
-}
-.columns {
-  flex-wrap: wrap;
-}
-.modal-content {
-  background-color: #fff;
-  padding: 2em;
-  border-radius: 5px;
-}
-@keyframes scroll {
-  0% {
-    transform: translateY(0);
-  }
-  30% {
-    transform: translateY(60px);
-  }
-}
-svg #wheel {
-  animation: scroll ease 2s infinite;
-}
-.slider-content {
-  animation-duration: 3s;
-  animation-delay: 1s;
-  -webkit-animation-duration: 3s;
-  -webkit-animation-delay: 1s;
-}
-.scroll-down {
-  animation-duration: 3s;
-  animation-delay: 2s;
-  -webkit-animation-duration: 3s;
-  -webkit-animation-delay: 2s;
-}
-.rooms {
-  background-color: #fff;
-  padding: 1em;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-}
-.reception-image img {
-  background-color: #fff;
-  padding: 10px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-}
-.reception-item {
+<style scoped lang="scss">
+.va {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  width: 70%;
-  margin: 0 auto;
-  padding: 1em 2em;
-  background-color: #fff;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-}
-.reception-item i {
-  width: 20px;
-}
-.reception-item a {
-  color: #000;
-}
-.reception-item .button {
-  border: 1px solid #03b2e3;
-  width: 50px;
-}
-.reception-item .button i {
-  width: auto;
-  padding-right: 5px;
-}
-.reception-item .button:hover {
-  background-color: #03b2e3;
-  color: #fff;
-}
-.mobile-only {
-  display: none;
-}
-@media only screen and (max-width: 769px) {
-  .reception-item {
-    width: 100%;
-  }
-  .mobile-only {
-    display: block;
-  }
-  .reception-item {
-    padding: 1em;
-  }
-}
-@media only screen and (max-width: 350px) {
-  .mobile-only {
-    display: none;
-  }
-}
-iframe {
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-}
-@media only screen and (min-width: 300px) and (max-width: 1024px) {
-  .gallery a {
-    width: 150px;
-  }
-}
-footer {
-  background-color: #344157;
-  border-top: 3px solid #03b2e3;
-  color: #fff !important;
-}
-.footer_title {
-  color: #fff !important;
-}
-.newsletter-form {
-  display: flex;
-}
-.newsletter-form input {
-  width: 100%;
-  height: 40px;
-  border: 0;
-  outline: none;
-  padding: 0 15px;
-  font-size: 14px;
-  background-color: #5c677b;
-  color: #fff;
-}
-.newsletter-form ::-webkit-input-placeholder {
-  color: #fff;
 }
 
-.newsletter-form button {
-  width: 50px;
-  height: 40px;
-  font-size: 16px;
-  color: #fff;
-  background-color: #d77b5d;
-  outline: none;
-  border: 0;
+.hero,
+.cta {
+  background: url(data:image/svg+xml;charset=utf8,%3Csvg%20viewBox%3D%220%200%20512%20512%22%20width%3D%22512%22%20height%3D%22512%22%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cfilter%20id%3D%22noise%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%220.875%22%20result%3D%22noise%22%20%2F%3E%3CfeColorMatrix%20type%3D%22matrix%22%20values%3D%220%200%200%200%200%200%200%200%200%200%200%200%200%200%200%200%200%200%200.4296875%200%22%20%2F%3E%3C%2Ffilter%3E%3Crect%20filter%3D%22url%28%23noise%29%22%20x%3D%220%22%20y%3D%220%22%20width%3D%22512%22%20height%3D%22512%22%20fill%3D%22transparent%22%20opacity%3D%221%22%20%2F%3E%3C%2Fsvg%3E),
+    linear-gradient(52deg, #42475c 0%, #20222e 71%);
 }
-.main-text {
+
+.cta {
+  height: 500px;
+  border-top: 10px solid turquoise;
+}
+
+footer {
   color: white;
-  text-shadow: 4px 4px 12px #29211b;
+  background: rgb(14, 14, 14) !important;
 }
-.navbar {
-  box-shadow: none;
+
+footer strong {
+  color: turquoise;
 }
-.navbar-item {
-  color: #484848;
+
+footer a {
+  color: turquoise;
+}
+
+.title {
+  color: white;
+  font-weight: 800;
+  font-size: 4rem;
+  font-family: "Nunito Sans", sans-serif;
+  text-shadow: 1px 1px 1px #000, 3px 3px 5px rgb(0, 0, 3);
+}
+
+.subtitle {
+  color: white;
+  font-size: 1.2rem;
+  text-shadow: 1px 1px 1px #000, 3px 3px 5px rgb(0, 0, 3);
+}
+
+hr.content-divider {
+  max-width: 75px;
+  height: 5px;
+}
+
+#parallax-1 {
+  background: url(https://source.unsplash.com/featured/?experimental);
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-top: 10px solid coral;
+}
+
+#parallax-1 hr {
+  background: coral;
+}
+
+#parallax-2 {
+  background: url(https://source.unsplash.com/featured/?creative);
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-top: 10px solid yellow;
+}
+
+#parallax-2 hr {
+  background: yellow;
+}
+
+#parallax-3 {
+  background: url(https://source.unsplash.com/featured/?meeting);
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-top: 10px solid hotpink;
+}
+
+#parallax-3 hr {
+  background: hotpink;
+}
+
+.label {
+  color: white;
+}
+
+input,
+textarea {
+  background: transparent !important;
+  border: 1px solid turquoise !important;
+  color: white !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: white !important;
+}
+
+.pulse-button {
+  font-size: 1.3em;
+  font-weight: light;
+  font-family: "Trebuchet MS", sans-serif;
+  text-transform: uppercase;
+  text-align: center;
+  letter-spacing: -1px;
+  color: white;
+  border: none;
+  background: #5a99d4;
+  cursor: pointer;
+  box-shadow: 0 0 0 0 rgba(#5a99d4, 0.5);
+  -webkit-animation: pulse 1.5s infinite;
+}
+.pulse-button:hover {
+  -webkit-animation: none;
+}
+
+@-webkit-keyframes pulse {
+  0% {
+    transform: (scale(0.9));
+  }
+  70% {
+    transfor: (scale(1));
+    box-shadow: 0 0 0 50px rgba(#5a99d4, 0);
+  }
+  100% {
+    transform: (scale(0.9));
+    box-shadow: 0 0 0 0 rgba(#5a99d4, 0);
+  }
 }
 </style>
 <script>
+import firebase from "firebase";
 export default {
+  name: "Home",
   data() {
     return {
-      carousel: 0,
-      animated: "fade",
-      drag: false,
-      autoPlay: false,
-      pauseHover: false,
-      pauseInfo: false,
-      repeat: false,
-      pauseType: "is-primary",
-      interval: 3000,
-      carousels: [
-        { title: "Slide 1", color: "dark" },
-        { title: "Slide 2", color: "primary" },
-        { title: "Slide 3", color: "info" },
-        { title: "Slide 4", color: "success" },
-        { title: "Slide 5", color: "warning" },
-        { title: "Slide 6", color: "danger" },
-      ],
+      Nome: "",
+      Email: null,
+      Mensagem: null,
     };
   },
   methods: {
+    enviarEmail() {
+      if (this.Nome != null && this.Email != null && this.Mensagem != null) {
+        var idContato = firebase.database().ref().child("/Contatos").push().key;
+
+        firebase
+          .database()
+          .ref("/Contatos/" + idContato)
+          .set({
+            Nome: this.Nome,
+            Email: this.Email,
+            Mensagem: this.Mensagem,
+          });
+
+        this.$buefy.dialog.alert({
+          message: "Deu tudo certo! Vamos ler sua mensagem com carinho!",
+          onConfirm: () => {
+            this.$buefy.toast.open(`Feito`);
+
+            this.Nome = null;
+            this.Email = null;
+            this.Mensagem = null;
+          },
+        });
+      } else {
+        this.$buefy.dialog.alert({
+          message:
+            "😢 Ops! Parece que você precisa preencher tudo para a gente poder retornar com uma resposta.",
+          onConfirm: () => {
+            this.$buefy.toast.open(
+              `Preencha todos os campos para entrar em contato`
+            );
+          },
+        });
+      }
+    },
     info(value) {
       this.carousel = value;
       this.$buefy.toast.open({
@@ -347,22 +386,3 @@ export default {
 };
 </script>
 
-
-<script>
-import About from "./About";
-
-export default {
-  data() {
-    return {
-      carousels: [
-        { text: "Slide 1", color: "primary" },
-        { text: "Slide 2", color: "info" },
-        { text: "Slide 3", color: "success" },
-        { text: "Slide 4", color: "warning" },
-        { text: "Slide 5", color: "danger" },
-      ],
-    };
-  },
-  components: { About },
-};
-</script>

@@ -1,6 +1,10 @@
 <template>
-  <nav class="breadcrumb" aria-label="breadcrumbs">
-    <ul>
+  <nav class="breadcrumb" aria-label="breadcrumbs">   
+    <ul><li>
+       <router-link :to="{ name: 'Home'}"> 
+      <b-icon
+                icon="crosshairs-gps" >
+            </b-icon></router-link></li>
       <li v-for="(breadcrumb, idx) in breadcrumbList" :key="idx">
         <router-link :to="{ name: breadcrumb.link}">{{ breadcrumb.name }}</router-link>
       </li>
@@ -9,7 +13,7 @@
       </li>
     </ul>
   </nav>
-</template>
+</template> 
 
 <script>
 export default {

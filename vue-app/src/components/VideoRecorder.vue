@@ -7,7 +7,7 @@
 
       <br />
 
-      <button @click="remove" class="button is-danger">Remover o Vídeo</button>
+      <button @click="remove" class="button is-danger">Trocar o Vídeo</button>
       <button @click="onUpload" class="button is-primary">Upload</button>
     </div>
 
@@ -47,13 +47,15 @@ import firebase from "firebase";
 
 export default {
   name: "VideoRecorder",
-  props: ["IdFeedBackRequest", "StoredPath", "isUploading"],
+  props: ["IdFeedBackRequest", "StoredPath"],
+  event: "uploadComplete",
   data() {
     return {
       dropFiles: null,
       videoData: null,
       video: null,
       uploadValue: 0,
+      isUploading: false,
     };
   },
   mounted() {},
@@ -124,14 +126,16 @@ export default {
             thisVM.isUploading = false;
           }
         },
-        // error => {
-        //  // console.log(error.message);
-        // },
+        (error) => {
+          this.$buefy.dialog.alert({
+            message: `Ocorreu um erro! Seu vídeo não foi carregado 😢. Detalhes: ${error}`,
+            onConfirm: () => {},
+          });
+        },
         () => {
           this.uploadValue = 100;
           storageRef.snapshot.ref.getDownloadURL().then((url) => {
             this.video = url;
-
             this.$emit("uploadComplete", url);
             thisVM.$root.stopLoading();
           });

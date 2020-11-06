@@ -1,4 +1,6 @@
 <template>
+
+  <layout-default>
   <transition name="slide">
     <div class="box">
       <h2 class="title is-4">Faça Logoff</h2>
@@ -14,6 +16,8 @@
       </button>
     </div>
   </transition>
+  
+  </layout-default>
 </template>
 
 <script>

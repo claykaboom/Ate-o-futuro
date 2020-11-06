@@ -15,10 +15,12 @@
     "core-js": "^3.6.5",
     "firebase": "^7.24.0",
     "vue": "^2.6.11",
+    "vue-analytics": "^5.22.1",
     "vue-headful": "^2.1.0",
     "vue-loader": "^15.9.3",
     "vue-media-recorder": "^0.1.25",
     "vue-router": "^3.2.0",
+    "vue-youtube-embed": "^2.2.2",
     "vuex": "^3.4.0"
   },
   "devDependencies": {

@@ -1,18 +1,19 @@
 <template>
-  <transition name="slide">
-    <div class="html  ">
-      <section class="hero is-fullheight">
-        <div class="hero-body">
-          <div class="container has-text-centered">
-            <div class="column is-4 is-offset-4">
-              <div class="box">
-                <p class="subtitle is-4">Faça Login para ir Até o Futuro.</p>
-                <br />
-                <span v-if="$route.query.redirectToPath">
-                  Para acessar esta tela ou fazer esta operação é necessário
-                  fazer login 😄 <br /><br />
-                </span>
-                
+  <layout-default>
+    <transition name="slide">
+      <div class="html">
+        <section class="hero is-fullheight">
+          <div class="hero-body">
+            <div class="container has-text-centered">
+              <div class="column is-4 is-offset-4">
+                <div class="box">
+                  <p class="subtitle is-4">Faça Login para ir Até o Futuro.</p>
+                  <br />
+                  <span v-if="$route.query.redirectToPath">
+                    Para acessar esta tela ou fazer esta operação é necessário
+                    fazer login 😄 <br /><br />
+                  </span>
+
                   <!-- <div class="field">
                     <p class="control has-icons-left has-icons-right">
                       <input
@@ -79,14 +80,14 @@
                       </span>
                     </a>
                   </div> -->
-                
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
-    </div>
-  </transition>
+        </section>
+      </div>
+    </transition>
+  </layout-default>
 </template>
 <style scoped>
 html,
