@@ -124,7 +124,9 @@ export default {
     getData() {
       var thisVM = this;
       this.videoId = null;
-      thisVM.$root.startLoading();
+      // thisVM.$root.startLoading();
+
+      thisVM.$store.commit("startLoading");
       var feedBackRequest = firebase
         .database()
         .ref(`FeedbackRequests/${thisVM.IdfeedBackRequest}`);
@@ -142,12 +144,15 @@ export default {
             thisVM.feedBackRequest.ExternalReferenceURL
           );
         }
-        if (thisVM.feedBackRequest != null) { // it seems sometimes it is returning null. i don't know why
+        if (thisVM.feedBackRequest != null) {
+          // it seems sometimes it is returning null. i don't know why
           thisVM.$buefy.toast.open(
             `Detalhes do pedido sobre "${thisVM.feedBackRequest.ResumoHabilidade}" carregados!`
           );
         }
-        thisVM.$root.stopLoading();
+
+        thisVM.$store.commit("stopLoading");
+        //thisVM.$root.stopLoading();
       });
     },
   },

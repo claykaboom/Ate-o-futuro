@@ -9,15 +9,24 @@ import vueHeadful from 'vue-headful';
 import EmptyLayout from './layouts/EmptyLayout.vue';
 import LayoutDefault from './layouts/LayoutDefault.vue';
 
+import store from './store/index'
+
+import Vuex from 'vuex'
+
 import VueAnalytics from 'vue-analytics'
 
 import VueYouTubeEmbed from 'vue-youtube-embed'
 Vue.use(VueYouTubeEmbed)
 Vue.use(VueAnalytics, {
-  id: 'G-GFYJ74SRBH',router
+  id: 'G-GFYJ74SRBH', router
 })
 
 Vue.use(Buefy)
+
+
+Vue.use(Vuex)
+
+
 Vue.component('vue-headful', vueHeadful);
 Vue.component('layout-default', LayoutDefault);
 Vue.component('empty-layout', EmptyLayout);
@@ -61,41 +70,22 @@ if (!app) {
 
   app = new Vue({
     components: {
-      LayoutDefault,EmptyLayout
+      LayoutDefault, EmptyLayout
     },
-    data: {
-      $loadCounter: 0,
-      $currentUser: null,
-      $displayName: "",
-      $isLogged: false
+    data: { 
 
     },
     computed: {
       isLoading() {
-        return this.$loadCounter > 0;
+        return this.$store.state.loadCounter > 0;
       }
     },
     methods: {
-      startLoading: function () {
-        if (this.$loadCounter < 0) {
-          //no caso de terem usado mais stopLoading do que startLoading
-          this.$loadCounter = 0;
-        }
-        this.$loadCounter++;
-      },
-      stopLoading() {
-        this.$loadCounter--;
-        if (this.$loadCounter < 0) {
-          //no caso de terem usado mais stopLoading do que startLoading
-          this.$loadCounter = 0;
-        }
-      },
-      resetLoader() {
-        this.$loadCounter = 0;
-      }
     },
     mounted() {
-      this.$loadCounter = 0;
+      //this.$loadCounter = 0;
+      
+      this.$store.commit('resetLoader');
       //       //Initialize Firebase
       //       let firebaseConfig = JSON.parse(process.env.VUE_APP_FIREBASE_JSON_CONFIG)
       // try {
@@ -104,19 +94,15 @@ if (!app) {
 
       //       }
       // } catch (exception){console.log(exception)} 
-
+      var thisVM = this;
       auth.onAuthStateChanged(() => {
 
-        this.$isLogged = auth.currentUser != null;
-        this.$currentUser = null;
-        this.$displayName = "";
-        if (this.$isLogged) {
-          this.$currentUser = auth.currentUser;
-          this.$displayName = this.$currentUser.displayName;
-        }
+        thisVM.$store.commit('setCurrentUser', auth.currentUser);
+ 
       });
     },
     router,
+    store,
     render: h => h(App)
   }).$mount('#app')
 }

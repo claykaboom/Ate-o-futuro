@@ -3,7 +3,8 @@
     <b-button @click="getData()" type="is-info"
       >Clique para ver detalhes do Feedback</b-button
     >
-    <div v-if="feedbackResponse"><br /> 
+    <div v-if="feedbackResponse">
+      <br />
       <b-message :closable="false" title="Isenção de Responsabilidade">
         Todo o conteúdo deste feedback foi escrito por uma pessoa que
         voluntariamente cedeu seu tempo para dar o seu parecer. Por essa razão,
@@ -15,7 +16,11 @@
       <br />
 
       Nota média:
-      <b-rate v-model="feedbackResponse.ClassificacaoFinal" disabled :showScore="true"></b-rate
+      <b-rate
+        v-model="feedbackResponse.ClassificacaoFinal"
+        disabled
+        :showScore="true"
+      ></b-rate
       ><br />
       <br />
       <b-message
@@ -56,23 +61,29 @@
         class="button is-info"
         ><b-icon icon="linkedin" /><b-icon icon="" /> &nbsp; &nbsp;Visitar
         LinkedIn do dador desse feedback</a
-      ><br /> <br /> 
-      <b-message :closable="false" title="Leituras de Referência" 
-        v-if="feedbackResponse.ReferenceBooks">
+      ><br />
+      <br />
+      <b-message
+        :closable="false"
+        title="Leituras de Referência"
+        v-if="feedbackResponse.ReferenceBooks"
+      >
         {{ feedbackResponse.ReferenceBooks }}
       </b-message>
-      <br />    <b-message :closable="false" title="Outro link de referência" 
-        v-if="feedbackResponse.ReferenceWorkLink">
-       
-         <a
-        :href="feedbackResponse.ReferenceWorkLink"
-       
-        target="blank"
-        class="button is-default"
-        ><b-icon icon="chain" /><b-icon icon="" /> {{feedbackResponse.ReferenceWorkLink}}
-         </a
+      <br />
+      <b-message
+        :closable="false"
+        title="Outro link de referência"
+        v-if="feedbackResponse.ReferenceWorkLink"
       >
-      </b-message> 
+        <a
+          :href="feedbackResponse.ReferenceWorkLink"
+          target="blank"
+          class="button is-default"
+          ><b-icon icon="chain" /><b-icon icon="" />
+          {{ feedbackResponse.ReferenceWorkLink }}
+        </a>
+      </b-message>
     </div>
   </div>
 </template>
@@ -105,16 +116,20 @@ export default {
   methods: {
     getData() {
       var thisVM = this;
-      thisVM.$root.startLoading();
+      //   thisVM.$root.startLoading();
+
+      thisVM.$store.commit("startLoading");
       var feedbackResponse = firebase
         .database()
         .ref(
           `FeedbackRequests/${thisVM.IdFeedbackRequest}/Feedbacks/${thisVM.IdFeedbackResponse}`
         );
       feedbackResponse.on("value", function (snapshot) {
-        thisVM.feedbackResponse = snapshot.val(); 
+        thisVM.feedbackResponse = snapshot.val();
         //thisVM.$buefy.toast.open(`Feedback ${thisVM.IdFeedbackResponse} carregado!`);
-        thisVM.$root.stopLoading();
+
+        thisVM.$store.commit("stopLoading");
+        //thisVM.$root.stopLoading();
       });
     },
   },

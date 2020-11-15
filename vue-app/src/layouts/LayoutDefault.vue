@@ -15,7 +15,7 @@
           <breadcrumbs />
 
           <div v-if="!isProduction" style="background-color: red">
-            DEBUGGER > LOADER COUNTER {{ $root.$loadCounter }}
+            DEBUGGER > LOADER COUNTER {{ $store.state.loadCounter }}
           </div>
           <slot />
         </div>
@@ -24,8 +24,6 @@
   </div>
 </template>
 <style>
-
-
 html {
   scroll-behavior: smooth;
 }
@@ -197,8 +195,6 @@ footer {
 .navbar-item {
   color: #484848;
 }
-
-
 
 html,
 body {
@@ -387,20 +383,17 @@ export default {
   },
   computed: {
     isLoading() {
-      return this.$root.$loadCounter > 0;
+      return this.$store.state.loadCounter > 0;
     },
   },
   mounted() {
     // alert('auth'+ firebase.auth());
     //debugger;
+    var thisVM = this;
     firebase.auth().onAuthStateChanged(() => {
-      this.$root.$isLogged = firebase.auth().currentUser != null;
 
-      this.$root.$displayName = "";
-      if (this.$root.$isLogged) {
-        this.$root.$currentUser = firebase.auth().currentUser;
-        this.$root.$displayName = this.$root.$currentUser.displayName;
-      }
+      thisVM.$store.commit("setCurrentUser", firebase.auth().currentUser);
+      
     });
   },
 };

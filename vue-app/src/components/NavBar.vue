@@ -24,13 +24,17 @@
         <div class="navbar-item">Versão 0.0.1 BETA</div>
       </b-navbar-dropdown> -->
 
-      <b-navbar-item
-        tag="router-link" 
-        :to="{ name: 'FeedbackDashboard' }"
-        >Feedbacks</b-navbar-item
+      <b-navbar-item tag="router-link" :to="{ name: 'FeedbackDashboard' }"
+        >Painel de Feedbacks</b-navbar-item
       >
+      <b-navbar-item tag="router-link" :to="{ name: 'Experts' }"
+        >Conheça nossa Equipe
+      </b-navbar-item>
       <b-navbar-item tag="router-link" :to="{ name: 'Sobre' }"
         >Sobre
+      </b-navbar-item>
+      <b-navbar-item tag="router-link" :to="{ name: 'Privacidade' }"
+        >Privacidade
       </b-navbar-item>
       <b-navbar-item
         href="https://blog.claytonfreitas.com.br/contact/"
@@ -47,10 +51,26 @@
             <strong>Sign up</strong>
           </a>-->
 
-          <router-link v-show="!$root.isLogged" to="/Login" class="button is-light"
+          <router-link
+            v-show="!$store.state.isLogged"
+            to="/Login"
+            class="button is-light"
             >Log in</router-link
           >
-          <router-link v-show="$root.isLogged" to="/Logoff" class="button is-warning"
+          <b-navbar-dropdown label="Meu Perfil" v-show="$store.state.isLogged">
+            <b-navbar-item
+              tag="router-link"
+              class="navbar-item"
+              :to="{ name: 'MeuPerfil' }"
+              >Perfil de {{ $store.state.displayName }}</b-navbar-item
+            >
+            <!-- <hr class="navbar-divider" />  -->
+          </b-navbar-dropdown>
+
+          <router-link
+            v-show="$store.state.isLogged"
+            to="/Logoff"
+            class="button is-warning"
             >Sair</router-link
           >
         </div>
@@ -64,9 +84,7 @@ export default {
   data() {
     return { logged: false };
   },
-  created() {
-   
-  },
+  created() {},
   mounted: function () {
     // var burger = document.querySelector('.burger');
     // var menu = document.querySelector('#' + burger.dataset.target);

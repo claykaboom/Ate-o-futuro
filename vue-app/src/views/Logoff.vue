@@ -1,22 +1,20 @@
 <template>
-
   <layout-default>
-  <transition name="slide">
-    <div class="box">
-      <h2 class="title is-4">Faça Logoff</h2>
-      Faça Log Off para entrar com outra conta ou se for deixar de usar o
-      sistema!
-      <br />
-      <br />
-      <button @click="logoff" class="button is-warning">
-        <span class="icon">
-          <i class="fa fa-sign-out-alt"></i>
-        </span>
-        <span>Fazer Logoff</span>
-      </button>
-    </div>
-  </transition>
-  
+    <transition name="slide">
+      <div class="box">
+        <h2 class="title is-4">Faça Logoff</h2>
+        Faça Log Off para entrar com outra conta ou se for deixar de usar o
+        sistema!
+        <br />
+        <br />
+        <button @click="logoff" class="button is-warning">
+          <span class="icon">
+            <i class="fa fa-sign-out-alt"></i>
+          </span>
+          <span>Fazer Logoff</span>
+        </button>
+      </div>
+    </transition>
   </layout-default>
 </template>
 
@@ -34,10 +32,14 @@ export default {
   methods: {
     logoff: function () {
       var theRouter = this.$router;
-      firebase.auth()
+      var theStore = this.$store;
+      firebase
+        .auth()
         .signOut()
         .then(function () {
           // Sign-out successful.
+
+          theStore.commit("setCurrentUser", null);
           theRouter.replace("login");
         })
         .catch(function () {

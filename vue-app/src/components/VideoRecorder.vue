@@ -109,7 +109,9 @@ export default {
     onUpload() {
       //  this.video = null;
       var thisVM = this;
-      thisVM.$root.startLoading();
+
+      thisVM.$store.commit("startLoading");
+      //thisVM.$root.startLoading();
       thisVM.isUploading = true;
       //const storageRef=firebase.storage().ref(this.$route.params.time`/${this.videoData.name}`).put(this.videoData);
       const storageRef = firebase
@@ -122,7 +124,8 @@ export default {
           this.uploadValue =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           if (this.uploadValue == 100) {
-            thisVM.$root.stopLoading();
+            thisVM.$store.commit("stopLoading");
+            //thisVM.$root.stopLoading();
             thisVM.isUploading = false;
           }
         },
@@ -137,7 +140,9 @@ export default {
           storageRef.snapshot.ref.getDownloadURL().then((url) => {
             this.video = url;
             this.$emit("uploadComplete", url);
-            thisVM.$root.stopLoading();
+            //thisVM.$root.stopLoading();
+
+            thisVM.$store.commit("stopLoading");
           });
         }
       );

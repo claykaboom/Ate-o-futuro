@@ -4,6 +4,8 @@ import VueRouter from 'vue-router'
 import firebase from 'firebase'
 import { page } from 'vue-analytics'
 
+import store from '../store/index'
+
 Vue.use(VueRouter)
 const routes = [
   // {
@@ -49,6 +51,24 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+  },
+  {
+    path: '/Privacidade',
+    name: 'Privacidade',
+    meta: {},
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/Privacidade.vue')
+  },
+  {
+    path: '/Nossos-Experts',
+    name: 'Experts',
+    meta: {},
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/Experts.vue')
   },
   {
     path: '/Home',
@@ -119,6 +139,15 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/Feedback/Dashboard.vue')
+  }, {
+    path: '/MeuPerfil',
+    name: 'MeuPerfil',
+    meta: {
+
+      requiresAuth: true,
+      friendlyName: "Meu Perfil"
+    },
+    component: () => import(/* webpackChunkName: "about" */ '../views/Perfil/MeuPerfil.vue')
   }
 ]
 
@@ -126,6 +155,7 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+
 })
 
 router.beforeEach((to, from, next) => {
@@ -138,10 +168,13 @@ router.beforeEach((to, from, next) => {
   }
 
   page(to.path)
-
   if (requiresAuth) {
     firebase.auth().onAuthStateChanged(
       function (user) {
+
+
+        store.commit("setCurrentUser", user);
+        //   this.$root.sharedUserState.state.setCurrentUser(user);
         if (!user) {
           next({
             path: '/login'

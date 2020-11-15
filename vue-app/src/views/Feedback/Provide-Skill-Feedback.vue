@@ -2,18 +2,18 @@
   <layout-default>
     <div class="box">
       <vue-headful
-        :title="'Feedback para ' + feedBackRequest.UserName"
+        :title="'Até o Futuro - Feedback para ' + feedBackRequest.UserName"
         description="Forneça Feedback para uma habilidade"
       />
       <section>
         <h1 class="title is-3">
           <b-icon pack="fas" icon="user" type="is-success"> </b-icon> De
-          {{ $root.$displayName }} para {{ feedBackRequest.UserName }}
+          {{  $store.state.displayName }} para {{ feedBackRequest.UserName }}
         </h1>
       </section>
       <br />
 
-      Agradecemos a generosidade de seu tempo, {{ $root.$displayName }}.
+      Agradecemos a generosidade de seu tempo, {{ $store.state.displayName }}.
       <b-icon pack="fas" icon="heart" type="is-danger"> </b-icon> <br /><br />
 
       <div v-if="!feedbackProvided">
@@ -121,7 +121,7 @@
               ></b-input>
             </b-field>
 
-            <b-field label="Quer incluir Link para seu LinkedIn?">
+            <b-field label="Quer incluir Link para seu LinkedIn? (Se Você fizer isso, poderá criar conexões com a pessoa, mas seu feedback não será anônimo)">
               <b-input
                 placeholder="Link para seu perfil no LinkedIn"
                 type="url"
@@ -225,9 +225,9 @@ export default {
           LinkedInURL: thisVM.LinkedInURL,
           ReferenceBooks: thisVM.ReferenceBooks,
           ReferenceWorkLink: thisVM.ReferenceWorkLink,
-          UserName: thisVM.$root.$currentUser.displayName,
-          UserId: thisVM.$root.$currentUser.uid,
-          UserEmail: thisVM.$root.$currentUser.email,
+          UserName: thisVM.$store.state.currentUser.displayName,
+          UserId: thisVM.$store.state.currentUser.uid,
+          UserEmail: thisVM.$store.state.currentUser.email,
           ClassificacaoFinal: thisVM.ClassificacaoFinal,
           RequesterUserId: thisVM.feedBackRequest.UserId,
           IdFeedbackRequest: thisVM.IdfeedBackRequest,
@@ -250,7 +250,9 @@ export default {
     },
     getData() {
       var thisVM = this;
-      thisVM.$root.startLoading();
+    //  thisVM.$root.startLoading();
+      
+      thisVM.$store.commit('startLoading');
       thisVM.clearData();
       var feedBackRequest = firebase
         .database()
@@ -274,7 +276,7 @@ export default {
               index
             ];
             const feedbackResponse = thisVM.feedBackRequest.Feedbacks[element];
-            if (feedbackResponse.UserId == thisVM.$root.$currentUser.uid) {
+            if (feedbackResponse.UserId == thisVM.$store.state.currentUser.uid) {
               thisVM.feedbackProvided = true;
               break;
             }
@@ -285,7 +287,9 @@ export default {
           thisVM.RatedAreas.push({ Name: area, Rating: null });
         });
 
-        thisVM.$root.stopLoading();
+      
+      thisVM.$store.commit('stopLoading');
+      //thisVM.$root.stopLoading();
       });
     },
   },

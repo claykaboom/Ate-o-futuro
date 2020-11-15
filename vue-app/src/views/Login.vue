@@ -167,7 +167,9 @@ export default {
       auth.languageCode = "pt";
       var thisVM = this;
 
-      thisVM.$root.startLoading();
+      // thisVM.$root.startLoading();
+
+      thisVM.$store.commit("startLoading");
       auth
         .signInWithPopup(provider)
         .then(function (result) {
@@ -179,7 +181,8 @@ export default {
               email: user.email,
             })
             .then(function () {
-              thisVM.$root.stopLoading();
+              thisVM.$store.commit("stopLoading");
+              //thisVM.$root.stopLoading();
 
               if (thisVM.$route.query.redirectToPath != null) {
                 window.location.hash = thisVM.$route.query.redirectToPath;

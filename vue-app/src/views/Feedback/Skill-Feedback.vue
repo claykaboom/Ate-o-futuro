@@ -2,11 +2,11 @@
   <layout-default
     ><div class="box">
       <vue-headful
-        title="Feedback sobre habilidade"
+        title="Até o Futuro - Feedback sobre habilidade"
         description="Peça Feedback sobre uma habilidade"
       />
       <h1 class="title is-3">
-        Habilidade - Pedir Feedback {{ IdFeedBackRequest }}
+        Habilidade - Pedir Feedback  <span v-if="ResumoHabilidade">sobre {{ResumoHabilidade}}</span>
       </h1>
       <section>
         <b-steps
@@ -380,8 +380,6 @@ const allTags = [
   "Matemática",
   "Liderança",
 
-  "Gerenciamento de Pessoas",
-
   "Tradução",
   "Inglês",
   "Espanhol",
@@ -419,10 +417,19 @@ const allTags = [
 
   "Clareza de Demonstração de Ideias",
   "Educação",
+  "Meta-aprendizado",
 
+  "Desenvolvimento Humano",
+  "RH", 
+  "Coaching", 
+  "Recrutamento",
+  "Entrevista", 
+  "Carreira",
+  "Gestão/Gerenciamento de Pessoas", 
+  "Aprendizagem",
   "OKRs",
   "Experimentação",
-  "Lean Startup", 
+  "Lean Startup",
   "Treinamento",
   "Marketing",
   "Desenvolvimento de Jogos",
@@ -541,9 +548,9 @@ export default {
           Areas: thisVM.Areas,
           VideoStorageURL: thisVM.VideoStorageURL,
           ExternalReferenceURL: thisVM.ExternalReferenceURL,
-          UserName: thisVM.$root.$currentUser.displayName,
-          UserId: thisVM.$root.$currentUser.uid,
-          UserEmail: thisVM.$root.$currentUser.email,
+          UserName: thisVM.$store.state.currentUser.displayName,
+          UserId: thisVM.$store.state.currentUser.uid,
+          UserEmail: thisVM.$store.state.currentUser.email,
           ExternalReferenceType: thisVM.ExternalReferenceType,
           WantsExternalReference: thisVM.WantsExternalReference,
         });

@@ -3,12 +3,12 @@
     <section class="hero is-medium">
       <div class="hero-body">
         <div class="container">
-          <h1 class="title is-1">Até o Futuro {{ $root.displayName }}</h1>
+          <h1 class="title is-1">Até o Futuro<span v-if="$store.state.currentUser">, {{$store.state.displayName}}</span></h1>
           <h2 class="subtitle">
             Um simples mecanismo de aprimoramento coletivo <br />
             baseado em feedbacks objetivos.<br />
             Peça feedbacks sobre habilidades que você está desenvolvendo e
-            receba retornos de experts sobre como você pode aprimorar o seu eu.
+            receba retornos de experts sobre possibilidades de aprimoramento.
           </h2>
 
           <router-link

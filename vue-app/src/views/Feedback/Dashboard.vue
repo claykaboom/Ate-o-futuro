@@ -2,7 +2,7 @@
   <layout-default>
     <div class="box">
       <vue-headful
-        title="Meu painel de feedbacks"
+        title="Até o Futuro - Meu painel de feedbacks"
         description="Veja os pedidos e envios de feedback"
       />
       <h1 class="title is-3">Meu painel de feedbacks</h1>
@@ -87,7 +87,8 @@
         </b-tab-item>
 
         <b-tab-item label="Feedbacks fornecidos" icon="forum">
-          Clique em uma linha da tabela, e depois no botão azul ao fim dela para ver os detalhes do feedback fornecido. <br /><br />
+          Clique em uma linha da tabela, e depois no botão azul ao fim dela para
+          ver os detalhes do feedback fornecido. <br /><br />
 
           <b-table
             :data="feedBackResponses"
@@ -103,11 +104,7 @@
             <b-table-column field="Id" label="ID FEEDBACK" v-slot="props">
               {{ props.row.id }}
             </b-table-column>
-            <b-table-column
-              field="Usuário"
-              label="Alvo do Feedback"
-              
-            >
+            <b-table-column field="Usuário" label="Alvo do Feedback">
               ######## ## ####
             </b-table-column>
             <b-table-column
@@ -124,13 +121,12 @@
               {{ props.row.ClassificacaoFinal == null ? "N/A" : "" }}
             </b-table-column>
           </b-table>
-<br /><br />
-          <skill-feedback-response-detail v-if="selectedResponse"
-                    :IdFeedbackResponse="selectedResponse.id"
-                    :IdFeedbackRequest="selectedResponse.IdFeedbackRequest"
-                  />
-
-
+          <br /><br />
+          <skill-feedback-response-detail
+            v-if="selectedResponse"
+            :IdFeedbackResponse="selectedResponse.id"
+            :IdFeedbackRequest="selectedResponse.IdFeedbackRequest"
+          />
         </b-tab-item>
       </b-tabs>
     </div>
@@ -196,9 +192,9 @@ export default {
           LinkedInURL: thisVM.LinkedInURL,
           ReferenceBooks: thisVM.ReferenceBooks,
           ReferenceWorkLink: thisVM.ReferenceWorkLink,
-          UserName: thisVM.$root.$currentUser.displayName,
-          UserId: thisVM.$root.$currentUser.uid,
-          UserEmail: thisVM.$root.$currentUser.email,
+          UserName: thisVM.$store.state.currentUser.displayName,
+          UserId: thisVM.$store.state.currentUser.uid,
+          UserEmail: thisVM.$store.state.currentUser.email,
         });
 
       this.$buefy.dialog.alert({
@@ -220,13 +216,15 @@ export default {
     },
     getData() {
       var thisVM = this;
-      thisVM.$root.startLoading();
+      // thisVM.$root.startLoading();
+
+      thisVM.$store.commit("startLoading");
       var feedBackRequests = firebase
         .database()
-        .ref(`Users/${thisVM.$root.$currentUser.uid}/FeedbackRequests`);
+        .ref(`Users/${thisVM.$store.state.currentUser.uid}/FeedbackRequests`);
       var feedBackResponses = firebase
         .database()
-        .ref(`Users/${thisVM.$root.$currentUser.uid}/FeedbackResponses`);
+        .ref(`Users/${thisVM.$store.state.currentUser.uid}/FeedbackResponses`);
 
       feedBackRequests.on("value", function (snapshot) {
         thisVM.clearRequestsData();
@@ -274,7 +272,9 @@ export default {
         });
 
         thisVM.$buefy.toast.open(`Tudo certo!`);
-        thisVM.$root.stopLoading();
+
+        thisVM.$store.commit("stopLoading");
+        //thisVM.$root.stopLoading();
       });
 
       feedBackResponses.on("value", function (snapshot) {
@@ -285,13 +285,15 @@ export default {
             thisVM.feedBackResponses.push({
               id: childSnapshot.key,
               ClassificacaoFinal: childData.ClassificacaoFinal,
-              IdFeedbackRequest: childData.IdFeedbackRequest
+              IdFeedbackRequest: childData.IdFeedbackRequest,
             });
           }
         });
 
         thisVM.$buefy.toast.open(`Tudo certo!`);
-        thisVM.$root.stopLoading();
+
+        thisVM.$store.commit("stopLoading");
+        //thisVM.$root.stopLoading();
       });
     },
   },
