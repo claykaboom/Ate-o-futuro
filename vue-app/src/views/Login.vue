@@ -178,7 +178,7 @@ export default {
           db.ref("Users/" + user.uid)
             .update({
               displayName: user.displayName,
-              email: user.email,
+              email: user.email 
             })
             .then(function () {
               thisVM.$store.commit("stopLoading");

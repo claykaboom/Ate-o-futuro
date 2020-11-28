@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-loading :is-full-page="true" v-model="isLoading"></b-loading>
+    <b-loading :is-full-page="true" v-model="$store.state.isLoading"></b-loading>
     <!-- <div class="vld-parent">
       <b-loading :is-full-page="true" :active.sync="$root.$loadCounter >0"></b-loading>
       <loading :active.sync="$root.$loadCounter >0"></loading>
@@ -375,12 +375,7 @@ export default {
       fullPage: true,
     };
   },
-  components: { Breadcrumbs, NavBar },
-  methods: {
-    toggleLoading() {
-      this.$root.isLoading = !this.$root.isLoading;
-    },
-  },
+  components: { Breadcrumbs, NavBar }, 
   computed: {
     isLoading() {
       return this.$store.state.loadCounter > 0;

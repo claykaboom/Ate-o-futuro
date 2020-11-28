@@ -13,13 +13,8 @@ import store from './store/index'
 
 import Vuex from 'vuex'
 
-import VueAnalytics from 'vue-analytics'
-
 import VueYouTubeEmbed from 'vue-youtube-embed'
 Vue.use(VueYouTubeEmbed)
-Vue.use(VueAnalytics, {
-  id: 'G-GFYJ74SRBH', router
-})
 
 Vue.use(Buefy)
 

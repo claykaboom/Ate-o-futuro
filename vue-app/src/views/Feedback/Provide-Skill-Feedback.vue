@@ -89,8 +89,8 @@
                 placeholder="Foque nas qualidades positivas demonstradas pela pessoa. Pense em momentos em que demonstrar determinados aspectos dessa habilidade, você vê que a pessoa inspira, ou move outros à ação e apreciação."
                 type="textarea"
                 minlength="10"
-                maxlength="365"
-                :loading="$root.isLoading"
+                maxlength="700"
+                :loading="$store.state.isLoading"
                 v-model="ContinuarFazendo"
               ></b-input>
             </b-field>
@@ -102,8 +102,8 @@
                 placeholder="Pense em momentos em que você demonstrou determinados traços dessa habilidade e que o resultado não foi o esperado, ou foi excessivamente negativo."
                 type="textarea"
                 minlength="10"
-                maxlength="365"
-                :loading="$root.isLoading"
+                maxlength="700"
+                :loading="$store.state.isLoading"
                 v-model="EvitarFazer"
               ></b-input>
             </b-field>
@@ -115,8 +115,8 @@
                 placeholder="O que você acha que vai potencializar ou maximizar a apreciação de outros na habilidade sendo aprimorada?"
                 type="textarea"
                 minlength="10"
-                maxlength="365"
-                :loading="$root.isLoading"
+                maxlength="700"
+                :loading="$store.state.isLoading"
                 v-model="PassarAFazer"
               ></b-input>
             </b-field>
@@ -246,7 +246,8 @@ export default {
     },
     clearData: function () {
       var thisVM = this;
-      thisVM.ItensfeedBackRequest.splice(0, this.ItensfeedBackRequest.length);
+      thisVM.ItensfeedBackRequest.splice(0, thisVM.ItensfeedBackRequest.length);
+      thisVM.RatedAreas.splice(0, thisVM.RatedAreas.length);
     },
     getData() {
       var thisVM = this;

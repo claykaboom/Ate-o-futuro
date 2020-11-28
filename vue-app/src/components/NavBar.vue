@@ -2,7 +2,7 @@
   <b-navbar>
     <template slot="brand">
       <b-navbar-item tag="router-link" :to="{ name: 'Sobre' }">
-        <img src="@/assets/Logo.png" alt="Recicladores Do Brasil" />
+        <img src="@/assets/Logo.png" alt="Até o Futuro" />
       </b-navbar-item>
     </template>
     <template slot="start">
@@ -24,11 +24,14 @@
         <div class="navbar-item">Versão 0.0.1 BETA</div>
       </b-navbar-dropdown> -->
 
-      <b-navbar-item tag="router-link" :to="{ name: 'FeedbackDashboard' }"
-        >Painel de Feedbacks</b-navbar-item
+      <b-navbar-item tag="router-link" :to="{ name: 'FeedbackDashboard' }">
+        Feedbacks</b-navbar-item
+      >
+      <b-navbar-item tag="router-link" :to="{ name: 'InitiativeDashboard' }">
+        Iniciativas</b-navbar-item
       >
       <b-navbar-item tag="router-link" :to="{ name: 'Experts' }"
-        >Conheça nossa Equipe
+        >Nossa Equipe
       </b-navbar-item>
       <b-navbar-item tag="router-link" :to="{ name: 'Sobre' }"
         >Sobre
@@ -46,6 +49,49 @@
     <template slot="end">
       <!-- <b-navbar-item tag="router-link" :to="{ name: 'MeuPerfil' }">Meu Perfil</b-navbar-item> -->
       <b-navbar-item tag="div">
+        <template v-if="notifications.length > 0">
+          <b-dropdown aria-role="list">
+            <button
+              class="button"
+              v-bind:class="{ 'is-primary': notifications.length > 0 }"
+              type="button"
+              slot="trigger"
+              :title="notifications.length + ' notificações'"
+            >
+              <b-icon icon="bell"></b-icon> <b-icon icon="menu-down"></b-icon>
+              <b-tag type="is-danger">{{ notifications.length }}</b-tag>
+            </button>
+
+            <b-dropdown-item
+              :value="false"
+              aria-role="listitem"
+              v-for="notification in notifications"
+              v-bind:key="notification.id"
+              @click="readAndNavigate(notification)"
+            >
+              <div class="media">
+                <b-icon class="media-left" :icon="notification.icon"></b-icon>
+                <div class="media-content">
+                  <h3>{{ notification.title }}</h3>
+                </div>
+              </div>
+            </b-dropdown-item>
+          </b-dropdown>
+        </template>
+        <template v-else>
+          <div>
+            <b-icon icon="bell-outline" title="Nenhuma notificação"></b-icon>
+          </div>
+        </template>
+        <b-navbar-dropdown label="Meu Perfil" v-show="$store.state.isLogged">
+          <b-navbar-item
+            tag="router-link"
+            class="navbar-item"
+            :to="{ name: 'MeuPerfil' }"
+            >Perfil de {{ $store.state.displayName }}</b-navbar-item
+          >
+          <!-- <hr class="navbar-divider" />  -->
+        </b-navbar-dropdown>
         <div class="buttons">
           <!-- <a class="button is-primary">
             <strong>Sign up</strong>
@@ -57,15 +103,6 @@
             class="button is-light"
             >Log in</router-link
           >
-          <b-navbar-dropdown label="Meu Perfil" v-show="$store.state.isLogged">
-            <b-navbar-item
-              tag="router-link"
-              class="navbar-item"
-              :to="{ name: 'MeuPerfil' }"
-              >Perfil de {{ $store.state.displayName }}</b-navbar-item
-            >
-            <!-- <hr class="navbar-divider" />  -->
-          </b-navbar-dropdown>
 
           <router-link
             v-show="$store.state.isLogged"
@@ -79,12 +116,35 @@
   </b-navbar>
 </template>
 <script>
+import firebase from "firebase";
+
 export default {
   name: "NavBar",
   data() {
-    return { logged: false };
+    return {
+      notifications: [
+        // {
+        //   id: "321",
+        //   description: "Novo(a) visionário(a) na sua iniciativa",
+        //   title: "Suporte na iniciativa",
+        //   link: "InitiativeDetail",
+        //   params: { IdInitiative: "-MMmc2dRBIeRekUE_aHA" },
+        //   icon: "earth",
+        // },
+        // {
+        //   id: "32131",
+        //   description: "Novo(a) visionário(a) na sua iniciativa",
+        //   title: "Suporte na iniciativa",
+        //   link: "https://google.com",
+        //   params: [],
+        //   icon: "comment",
+        // },
+      ],
+    };
   },
-  created() {},
+  created() {
+    this.setupData();
+  },
   mounted: function () {
     // var burger = document.querySelector('.burger');
     // var menu = document.querySelector('#' + burger.dataset.target);
@@ -97,13 +157,75 @@ export default {
     // });
   },
   methods: {
+    readAndNavigate(notification) {
+      var thisVM = this; 
+      firebase
+        .database()
+        .ref(
+          `Users/${thisVM.$store.state.currentUser.uid}/Notifications/${notification.id}`
+        )
+        .update({ read: true });
+      if (notification.link.toLowerCase().includes("http")) {
+        window.location.href = notification.link;
+      } else {
+        thisVM.$router.push({
+          name: notification.link,
+          params: notification.params,
+        });
+      }
+    },
+    clearNotifications() {
+      this.notifications.splice(0, this.notifications.length);
+    },
+
     setupData() {
-      this.logged = this.$root.$isLogged;
+      var thisVM = this;
+      if (thisVM.$store.state.isLogged) {
+        var notificationsRef = firebase
+          .database()
+          .ref(`Users/${thisVM.$store.state.currentUser.uid}/Notifications`)
+          .orderByChild("read")
+          .equalTo(false);
+
+        notificationsRef.on("value", function (snapshot) {
+          thisVM.clearNotifications();
+          snapshot.forEach(function (childSnapshot) {
+            var childData = childSnapshot.val();
+
+            if (childSnapshot.key != "_count") {
+              thisVM.notifications.push({
+                id: childSnapshot.key,
+
+                description: childData.description,
+                title: childData.title,
+                link: childData.link,
+                params: childData.params,
+                icon: childData.icon,
+              });
+            }
+          });
+
+          //thisVM.$root.stopLoading();
+        });
+      }
+    },
+  },
+  computed: {
+    loggedIn() {
+      return this.$store.state.isLogged;
     },
   },
   watch: {
-    $route() {
+    loggedIn() {
       this.setupData();
+    },
+    notifications() {
+      var thisVM = this;
+
+      thisVM.$store.commit(
+        "setNotificationCounter",
+        thisVM.notifications.length
+      );
     },
   },
 };

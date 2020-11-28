@@ -6,6 +6,9 @@ import { page } from 'vue-analytics'
 
 import store from '../store/index'
 
+
+import VueAnalytics from 'vue-analytics'
+
 Vue.use(VueRouter)
 const routes = [
   // {
@@ -85,10 +88,9 @@ const routes = [
     meta: {
       requiresAuth: true,
 
-      friendlyName: "Habilidades",
+      friendlyName: "Pedir Feedback",
       breadcrumb: [
         { name: 'Feedbacks', link: 'FeedbackDashboard' },
-        { name: 'Pedir Feedback', link: 'Feedback' },
       ]
     },
     // route level code-splitting
@@ -148,14 +150,76 @@ const routes = [
       friendlyName: "Meu Perfil"
     },
     component: () => import(/* webpackChunkName: "about" */ '../views/Perfil/MeuPerfil.vue')
-  }
+  }, {
+    path: '/Iniciativa/Nova',
+    name: 'NovaIniciativa',
+    meta: {
+
+      requiresAuth: true,
+      friendlyName: "Nova",
+      breadcrumb: [
+        { name: 'Iniciativas', link: 'InitiativeDashboard' }
+      ]
+    },
+    component: () => import(/* webpackChunkName: "about" */ '../views/Iniciativas/NovoConvite.vue')
+  }, {
+    path: '/Dashboard/Iniciativas',
+    name: 'InitiativeDashboard',
+    meta: {
+
+      requiresAuth: true,
+      friendlyName: "Iniciativas"
+    },
+    component: () => import(/* webpackChunkName: "about" */ '../views/Iniciativas/Dashboard.vue')
+  },
+  {
+    path: '/Iniciativas/Ver/:IdInitiative',
+    name: 'InitiativeDetail',
+    meta: {
+
+      requiresAuth: false,
+      friendlyName: "Ver Iniciativa",
+      breadcrumb: [
+        { name: 'Iniciativas', link: 'InitiativeDashboard' }
+      ]
+    },
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/Iniciativas/Details.vue')
+  },
+  {
+    path: '/Iniciativas/Suportar/:IdInitiative',
+    name: 'SupportInitiative',
+    meta: {
+
+      requiresAuth: true,
+      friendlyName: "Suportar Iniciativa",
+      breadcrumb: [
+        { name: 'Iniciativas', link: 'InitiativeDashboard' }
+      ]
+    },
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/Iniciativas/Suportar.vue')
+  },
 ]
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+  ,
+  scrollBehavior() {
+    return { x: 0, y: 0 };
 
+  }
+});
+
+
+Vue.use(VueAnalytics, {
+  id: 'G-96NDFQ3TWZ', router
 })
 
 router.beforeEach((to, from, next) => {

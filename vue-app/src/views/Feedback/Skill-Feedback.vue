@@ -6,7 +6,8 @@
         description="Peça Feedback sobre uma habilidade"
       />
       <h1 class="title is-3">
-        Habilidade - Pedir Feedback  <span v-if="ResumoHabilidade">sobre {{ResumoHabilidade}}</span>
+        Habilidade - Pedir Feedback
+        <span v-if="ResumoHabilidade">sobre {{ ResumoHabilidade }}</span>
       </h1>
       <section>
         <b-steps
@@ -93,7 +94,7 @@
                 type="textarea"
                 minlength="10"
                 maxlength="365"
-                :loading="$root.isLoading"
+                :loading="$store.state.isLoading"
                 placeholder="Detalhe alguns momentos em que você precisa dessa habilidade, dificuldades. Dados que ajudem seu feedback a ser mais específico."
                 @keyup="gravar()"
               >
@@ -414,18 +415,32 @@ const allTags = [
   "Pitch de Negócios",
   "Dicção",
   "Gamification",
+  "Inovação",
+  "Apresentações",
+  "Falar em público",
+  "Storytelling",
+  "RPA - Robotic Process Automation",
+  "Inovação aberta",
+  "Trabalho em equipe",
+
+  "Marketing pessoal ",
+  "Negociação",
+
+  "Processos ITIL",
+  "Gestão de Projetos",
+ 
 
   "Clareza de Demonstração de Ideias",
   "Educação",
   "Meta-aprendizado",
 
   "Desenvolvimento Humano",
-  "RH", 
-  "Coaching", 
+  "RH",
+  "Coaching",
   "Recrutamento",
-  "Entrevista", 
+  "Entrevista",
   "Carreira",
-  "Gestão/Gerenciamento de Pessoas", 
+  "Gestão - Gerenciamento de Pessoas",
   "Aprendizagem",
   "OKRs",
   "Experimentação",
@@ -441,7 +456,12 @@ const allTags = [
   "React",
   "RxJS",
   "Vue.js",
-  "No Code / Low Code",
+  "No Code - Low Code",
+
+  "Fotografia",
+  "Exposição (Fotografia)",
+  "Regra dos terços (Fotografia)",
+  "Iluminação (Fotografia)",
 ];
 
 export default {
@@ -476,6 +496,22 @@ export default {
       nextIcon: "chevron-right",
       labelPosition: "bottom",
       mobileMode: "minimalist",
+    };
+  },
+
+  metaInfo() {
+    return {
+      title: `Até o Futuro - Dê seu feedback`,
+      meta: [
+        { name: "description", content: `Que tal se tornar uma pessoa mais fantástica por compartilhar um feedback?` },
+        {
+          property: "og:title",
+          content: `Até o Futuro - Dê seu feedback`,
+        },
+        { property: "og:site_name", content: "Até o Futuro" },
+        { property: "og:type", content: "website" },
+        { name: "robots", content: "index,follow" },
+      ],
     };
   },
   computed: {

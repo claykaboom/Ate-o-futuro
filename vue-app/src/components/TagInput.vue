@@ -156,7 +156,7 @@ export default {
             "React",
             "RxJS",
             "Vue.js",
-            "No Code / Low Code",
+            "No Code - Low Code",
           ],
         },
       ],

@@ -22,7 +22,7 @@
             >
           </h2>
           <p>
-            {{ contributor.miniBio }}<br />
+            {{ contributor.miniBio }}<br /><br />
             <b-taglist>
               <b-tag
                 type="is-warning"
@@ -56,7 +56,7 @@ export default {
           photoUrl:
             "https://media-exp1.licdn.com/dms/image/C4D03AQG-cze3-YHXfA/profile-displayphoto-shrink_200_200/0?e=1608768000&v=beta&t=r2Fn9VlqIGtGXRJ_JeZeMQs6BOjJpdc6B3ZrORMA2jE",
           miniBio:
-            'Conhecido por dizer "Até o Futuro", é solucionador de  problemas e curioso por tecnologia e como ela pode destravar e potencializar as ações humanas.',
+            'Conhecido por dizer "Até o Futuro", é solucionador de  problemas e curioso por tecnologia e como ela pode destravar e potencializar as ações humanas. Perguntador e curioso, parece ser criativo, mas é mais colaborativo e procura despertar a criatividade do time.',
           Areas: [
             "Idiomas",
             "Comunicação",
@@ -77,6 +77,14 @@ export default {
             "Agilidade",
             "Desenvolvimento Humano",
             "Meta-aprendizado",
+
+            "Inovação",
+            "Apresentações",
+            "Falar em público",
+            "Storytelling",
+            "RPA - Robotic Process Automation",
+            "Inovação aberta",
+            "Trabalho em equipe",
           ],
         },
         {
@@ -106,7 +114,7 @@ export default {
           photoUrl:
             "https://media-exp1.licdn.com/dms/image/C4D03AQFCnDqJsSofwg/profile-displayphoto-shrink_800_800/0?e=1609977600&v=beta&t=BMf7dMsQKaJWUZpz4xTgtgrv9OSt8zvMAz26xjZ3Ikc",
           miniBio:
-            "Apaixonada por desenvolvimento humano e gosto muito de trabalhar com pessoas. Sou coach e executiva na área de Recursos Humanos. Aprender coisas novas me encanta. Sou uma  eterna aprendiz.",
+            '"Apaixonada por desenvolvimento humano e gosto muito de trabalhar com pessoas. Sou coach e executiva na área de Recursos Humanos. Aprender coisas novas me encanta. Sou uma  eterna aprendiz."',
 
           Areas: [
             "RH",
@@ -120,6 +128,53 @@ export default {
             "Gestão de Pessoas",
             "Desenvolvimento Humano",
             "Aprendizagem",
+          ],
+        },
+        {
+          name: "Fellipe Bonilha",
+          linkedIn: "https://www.linkedin.com/in/fellipe-bonilha/",
+          photoUrl:
+            "https://media-exp1.licdn.com/dms/image/C4D03AQEf9ObvRgIiRw/profile-displayphoto-shrink_800_800/0?e=1611187200&v=beta&t=evFhq_9t2BZBRND1-x9zNzgWf7oUhLQdXAg2pwAW8TY",
+          miniBio:
+            "Adora bater um papo e conhecer pessoas, investir em amizades de qualidade e de longa duração. Contador de histórias, jornalista, tecnologista. Trabalha hoje com Automação Robótica de Processos para fazer com que mais produtividade seja entregue às empresas.",
+
+          Areas: [
+            "Inovação",
+            "Apresentações",
+            "Falar em público",
+            "Storytelling",
+            "RPA - Robotic Process Automation",
+            "Inovação aberta",
+            "Trabalho em equipe",
+
+            "Marketing pessoal ",
+            "Negociação",
+            "Gestão de Pessoas",
+
+            "Processos ITIL",
+            "Gestão de Projetos",
+            "Liderança",
+          ],
+        },
+        {
+          name: "Carolina Piovesan Tuneli",
+          linkedIn:
+            "https://www.linkedin.com/in/carolina-piovesan-tuneli-a9bb4051/",
+          photoUrl:
+            "https://media-exp1.licdn.com/dms/image/C4D03AQFieieELYe-og/profile-displayphoto-shrink_200_200/0?e=1611187200&v=beta&t=qjs_PSWj3arIgl72tXWik_1NSwH8dtps3UEdbIzmzmg",
+          miniBio:
+            `Uma vez me perguntaram:  “Você sabe quem você é, sem falar onde você trabalha e o que estuda?”. Com base na Análise de Perfil Comportamental, eu ajudo pessoas a  se conhecerem melhor, a saber por quê reagem de determinadas maneiras, a identificar seus maiores motivadores, ter flexibilidade na comunicação e entender seus sentimentos, porque isso ajuda a gente a ter uma melhor performance em várias áreas da vida no nosso dia a dia. Vamos trabalhar juntos para mudar isso e ser mais conscientes sobre o nosso EU!  `,
+
+          Areas: [ 
+            "Colaboração",
+            "Coaching",
+            "Liderança", 
+            "Entrevista", 
+            "Carreira",
+            "Gestão de Pessoas",
+            "Desenvolvimento Humano", 
+
+ 
           ],
         },
       ],
