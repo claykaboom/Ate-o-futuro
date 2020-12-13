@@ -5,7 +5,7 @@
         title="Até o Futuro - Meu painel de feedbacks"
         description="Veja os pedidos e envios de feedback"
       />
-      <h1 class="title is-3">Meu painel de feedbacks</h1>
+      <h1 class="title is-3"> <b-icon icon="atom" size="is-medium"/>  Meu painel de feedbacks</h1>
       <div class="buttons">
         <router-link
           class="button is-success is-large"
@@ -278,6 +278,7 @@ export default {
       });
 
       feedBackResponses.on("value", function (snapshot) {
+        thisVM.clearResponsesData();
         snapshot.forEach(function (childSnapshot) {
           var childData = childSnapshot.val();
 

@@ -82,8 +82,9 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/Home.vue')
   },
+
   {
-    path: '/PedirFeedback/Habilidade',
+    path: '/Feedback/Pedir',
     name: 'SkillFeedback',
     meta: {
       requiresAuth: true,
@@ -96,8 +97,25 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/Feedback/Skill-Feedback.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/Feedback/FeedbackRequest.vue')
   },
+
+  // {
+  //   path: '/PedirFeedback/Habilidade',
+  //   name: 'SkillFeedback',
+  //   meta: {
+  //     requiresAuth: true,
+
+  //     friendlyName: "Pedir Feedback",
+  //     breadcrumb: [
+  //       { name: 'Feedbacks', link: 'FeedbackDashboard' },
+  //     ]
+  //   },
+  //   // route level code-splitting
+  //   // this generates a separate chunk (about.[hash].js) for this route
+  //   // which is lazy-loaded when the route is visited.
+  //   component: () => import(/* webpackChunkName: "about" */ '../views/Feedback/Skill-Feedback.vue')
+  // },
   {
     path: '/PedirFeedback/',
     name: 'Feedback',
@@ -141,7 +159,8 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/Feedback/Dashboard.vue')
-  }, {
+  },
+  {
     path: '/MeuPerfil',
     name: 'MeuPerfil',
     meta: {
@@ -150,7 +169,21 @@ const routes = [
       friendlyName: "Meu Perfil"
     },
     component: () => import(/* webpackChunkName: "about" */ '../views/Perfil/MeuPerfil.vue')
-  }, {
+  },
+  {
+    path: '/MeuPerfil/Futuro',
+    name: 'MeuPerfilFuturo',
+    meta: {
+
+      requiresAuth: true,
+      friendlyName: "Futuro",
+      breadcrumb: [
+        { name: 'Meu Perfil', link: 'MeuPerfil' }
+      ]
+    },
+    component: () => import(/* webpackChunkName: "about" */ '../views/Perfil/MapaFuturo.vue')
+  },
+  {
     path: '/Iniciativa/Nova',
     name: 'NovaIniciativa',
     meta: {
@@ -217,10 +250,11 @@ const router = new VueRouter({
   }
 });
 
-
-Vue.use(VueAnalytics, {
-  id: 'G-96NDFQ3TWZ', router
-})
+if (process.env.NODE_ENV === "production") {
+  Vue.use(VueAnalytics, {
+    id: 'G-96NDFQ3TWZ', router
+  })
+}
 
 router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);

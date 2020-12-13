@@ -14,6 +14,10 @@ import store from './store/index'
 import Vuex from 'vuex'
 
 import VueYouTubeEmbed from 'vue-youtube-embed'
+
+ 
+
+
 Vue.use(VueYouTubeEmbed)
 
 Vue.use(Buefy)
@@ -67,7 +71,7 @@ if (!app) {
     components: {
       LayoutDefault, EmptyLayout
     },
-    data: { 
+    data: {
 
     },
     computed: {
@@ -79,7 +83,7 @@ if (!app) {
     },
     mounted() {
       //this.$loadCounter = 0;
-      
+
       this.$store.commit('resetLoader');
       //       //Initialize Firebase
       //       let firebaseConfig = JSON.parse(process.env.VUE_APP_FIREBASE_JSON_CONFIG)
@@ -93,7 +97,7 @@ if (!app) {
       auth.onAuthStateChanged(() => {
 
         thisVM.$store.commit('setCurrentUser', auth.currentUser);
- 
+
       });
     },
     router,

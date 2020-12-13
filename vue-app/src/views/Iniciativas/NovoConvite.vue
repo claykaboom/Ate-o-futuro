@@ -148,6 +148,7 @@
             >
             </b-datepicker>
           </b-field>
+          <!-- <OKR /> -->
           <b-progress
             format="percent"
             type="is-success"
@@ -185,8 +186,11 @@
 </style>
 <script>
 import firebase from "firebase";
+import OKR from "../../components/OKR"
+
 export default {
   name: "CreateInitiative",
+  components:{OKR},
   data() {
     return {
       name: null,

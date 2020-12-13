@@ -46,8 +46,6 @@
           :open-on-focus="true"
         >
         </b-taginput>
-
-      
       </b-field>
     </section>
     <footer class="modal-card-foot">
@@ -59,109 +57,12 @@
   </div>
 </template>
 <script>
-const allTags = [
-  "Idiomas",
-  "Comunicação",
-  "Criatividade",
-  "Colaboração",
-  "Adaptabilidade",
-  "Flexibilidade",
-  "Raciocínio Analítico",
-  "Vendas",
-  "Processamento de Linguagem Natural",
-  "Estratégias Corporativas",
-  "Agilidade",
-  "Kanban",
-  "Scrum",
-  "Parenting",
-  "Matemática",
-  "Liderança",
-
-  "Tradução",
-  "Inglês",
-  "Espanhol",
-  "Sueco",
-  "Produção de Vídeos",
-  "Produção de Áudio",
-  "Desenvolvimento de Software",
-  "Computação em Nuvem",
-  "Inteligência Artificial",
-  "Aplicações Móveis",
-  "Persuasão",
-  "Discurso",
-  "Prática para Entrevista",
-  "Comunicação Corporativa",
-  "Marketing Digital",
-  "Marketing em Mídias Sociais",
-  "Mídias Sociais",
-  "Jornalismo",
-  "Desenho",
-  "Desenho Digital",
-  "Pintura",
-  "Pintura Aquarela",
-  "Pintura Óleo",
-  "Pintura com Lápis de Cor",
-  "Pintura Digital",
-  "Tratamento de Imagens",
-  "Photoshop (e ferramentas de imagens)",
-  "Arquitetura de TI",
-  "Arquitetura de Corporativa",
-  "Inteligência Interpessoal",
-  "Planejamento de Carreiras",
-  "Pitch de Negócios",
-  "Dicção",
-  "Gamification",
-  "Inovação",
-  "Apresentações",
-  "Falar em público",
-  "Storytelling",
-  "RPA - Robotic Process Automation",
-  "Inovação aberta",
-  "Trabalho em equipe",
-
-  "Marketing pessoal ",
-  "Negociação",
-
-  "Processos ITIL",
-  "Gestão de Projetos",
-
-  "Clareza de Demonstração de Ideias",
-  "Educação",
-  "Meta-aprendizado",
-
-  "Desenvolvimento Humano",
-  "RH",
-  "Coaching",
-  "Recrutamento",
-  "Entrevista",
-  "Carreira",
-  "Gestão - Gerenciamento de Pessoas",
-  "Aprendizagem",
-  "OKRs",
-  "Experimentação",
-  "Lean Startup",
-  "Treinamento",
-  "Marketing",
-  "Desenvolvimento de Jogos",
-  "Teste de Software",
-  "Javascript",
-  "Python",
-  "Node.js",
-  "Polymer",
-  "React",
-  "RxJS",
-  "Vue.js",
-  "No Code - Low Code",
-
-  "Fotografia",
-  "Exposição (Fotografia)",
-  "Regra dos terços (Fotografia)",
-  "Iluminação (Fotografia)",
-];
+import Areas from "../../CommonData/Areas";
+const allTags = [...Areas];
 
 export default {
   name: "EditPerfil",
-  props: ["miniBio", "photoURL", "areas","allow-new"],
+  props: ["miniBio", "photoURL", "areas", "allow-new"],
   data() {
     return {
       Areas: [],
@@ -172,13 +73,12 @@ export default {
     };
   },
   watch: {
-    areas() { 
+    areas() {
       this.mutableAreas = this.areas;
     },
   },
-  mounted(){
-
-      this.mutableAreas = this.areas;
+  mounted() {
+    this.mutableAreas = this.areas;
   },
 
   methods: {
@@ -188,9 +88,7 @@ export default {
       });
     },
     save() {
-      
-
-      if ((this.mutableAreas == null || this.mutableAreas.length == 0)) {
+      if (this.mutableAreas == null || this.mutableAreas.length == 0) {
         this.$buefy.dialog.alert({
           message: "Selecione pelo menos uma área de expertise",
           onConfirm: () => {},

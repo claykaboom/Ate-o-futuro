@@ -8,7 +8,7 @@
       <section>
         <h1 class="title is-3">
           <b-icon pack="fas" icon="user" type="is-success"> </b-icon> De
-          {{  $store.state.displayName }} para {{ feedBackRequest.UserName }}
+          {{ $store.state.displayName }} para {{ feedBackRequest.UserName }}
         </h1>
       </section>
       <br />
@@ -72,7 +72,7 @@
               >
             </p>
             <b-field
-              label="Avalie como a habilidade se manifesta nas áreas de conhecimento envolvidas"
+              label="Avalie como as áreas de conhecimento envolvidas se manifestam nesse pedido. Caso não seja possível avaliar, não é necessário preencher."
             >
               <b-message>
                 <div v-for="area in RatedAreas" :key="area.Name">
@@ -89,7 +89,7 @@
                 placeholder="Foque nas qualidades positivas demonstradas pela pessoa. Pense em momentos em que demonstrar determinados aspectos dessa habilidade, você vê que a pessoa inspira, ou move outros à ação e apreciação."
                 type="textarea"
                 minlength="10"
-                maxlength="700"
+                maxlength="2048"
                 :loading="$store.state.isLoading"
                 v-model="ContinuarFazendo"
               ></b-input>
@@ -102,7 +102,7 @@
                 placeholder="Pense em momentos em que você demonstrou determinados traços dessa habilidade e que o resultado não foi o esperado, ou foi excessivamente negativo."
                 type="textarea"
                 minlength="10"
-                maxlength="700"
+                maxlength="2048"
                 :loading="$store.state.isLoading"
                 v-model="EvitarFazer"
               ></b-input>
@@ -115,13 +115,15 @@
                 placeholder="O que você acha que vai potencializar ou maximizar a apreciação de outros na habilidade sendo aprimorada?"
                 type="textarea"
                 minlength="10"
-                maxlength="700"
+                maxlength="2048"
                 :loading="$store.state.isLoading"
                 v-model="PassarAFazer"
               ></b-input>
             </b-field>
 
-            <b-field label="Quer incluir Link para seu LinkedIn? (Se Você fizer isso, poderá criar conexões com a pessoa, mas seu feedback não será anônimo)">
+            <b-field
+              label="Quer incluir Link para seu LinkedIn? (Se Você fizer isso, poderá criar conexões com a pessoa, mas seu feedback não será anônimo)"
+            >
               <b-input
                 placeholder="Link para seu perfil no LinkedIn"
                 type="url"
@@ -202,47 +204,66 @@ export default {
   methods: {
     gravarFinal: function () {
       var thisVM = this;
-      var feedbackResponseId = firebase
-        .database()
-        .ref()
-        .child(`/FeedbackRequests/${thisVM.IdfeedBackRequest}/Feedbacks`)
-        .push().key;
-
-      firebase
-        .database()
-        .ref(
-          "/FeedbackRequests/" +
-            thisVM.IdfeedBackRequest +
-            "/Feedbacks/" +
-            feedbackResponseId
-        )
-        .set({
-          RatedAreas: thisVM.RatedAreas,
-          ContinuarFazendo: thisVM.ContinuarFazendo,
-          EvitarFazer: thisVM.EvitarFazer,
-          PassarAFazer: thisVM.PassarAFazer,
-          feedbackText: thisVM.feedbackText,
-          LinkedInURL: thisVM.LinkedInURL,
-          ReferenceBooks: thisVM.ReferenceBooks,
-          ReferenceWorkLink: thisVM.ReferenceWorkLink,
-          UserName: thisVM.$store.state.currentUser.displayName,
-          UserId: thisVM.$store.state.currentUser.uid,
-          UserEmail: thisVM.$store.state.currentUser.email,
-          ClassificacaoFinal: thisVM.ClassificacaoFinal,
-          RequesterUserId: thisVM.feedBackRequest.UserId,
-          IdFeedbackRequest: thisVM.IdfeedBackRequest,
+      if (
+        thisVM.ClassificacaoFinal == null ||
+        isNaN(thisVM.ClassificacaoFinal) ||
+        (thisVM.ContinuarFazendo == null &&
+          thisVM.EvitarFazer == null &&
+          thisVM.PassarAFazer == null)
+      ) {
+        this.$buefy.dialog.alert({
+          title: "Tente preencher algo!",
+          message: `Para que seu feedback tenha relevância e seja descritivo, específico, dirigido, oportuno e esclarecedor, tente avaliar pelo menos uma das áreas de conhecimento e fornecer alguma informação nos campos de texto.`,
+          type: "is-info",
+          hasIcon: true,
+          icon: "info",
+          iconPack: "fa",
+          ariaRole: "alertdialog",
+          ariaModal: true,
         });
+      } else {
+        var feedbackResponseId = firebase
+          .database()
+          .ref()
+          .child(`/FeedbackRequests/${thisVM.IdfeedBackRequest}/Feedbacks`)
+          .push().key;
 
-      this.$buefy.dialog.alert({
-        message:
-          "Deu tudo certo! Obrigado pela generosidade de seu tempo. Depois faremos um Debriefing do processo com você!",
-        onConfirm: () => {
-          this.$buefy.toast.open(`Feito`);
-          this.$router.replace({
-            name: "FeedbackDashboard",
+        firebase
+          .database()
+          .ref(
+            "/FeedbackRequests/" +
+              thisVM.IdfeedBackRequest +
+              "/Feedbacks/" +
+              feedbackResponseId
+          )
+          .set({
+            RatedAreas: thisVM.RatedAreas,
+            ContinuarFazendo: thisVM.ContinuarFazendo,
+            EvitarFazer: thisVM.EvitarFazer,
+            PassarAFazer: thisVM.PassarAFazer,
+            feedbackText: thisVM.feedbackText,
+            LinkedInURL: thisVM.LinkedInURL,
+            ReferenceBooks: thisVM.ReferenceBooks,
+            ReferenceWorkLink: thisVM.ReferenceWorkLink,
+            UserName: thisVM.$store.state.currentUser.displayName,
+            UserId: thisVM.$store.state.currentUser.uid,
+            UserEmail: thisVM.$store.state.currentUser.email,
+            ClassificacaoFinal: thisVM.ClassificacaoFinal,
+            RequesterUserId: thisVM.feedBackRequest.UserId,
+            IdFeedbackRequest: thisVM.IdfeedBackRequest,
           });
-        },
-      });
+
+        this.$buefy.dialog.alert({
+          message:
+            "Deu tudo certo! Obrigado pela generosidade de seu tempo. Depois faremos um Debriefing do processo com você!",
+          onConfirm: () => {
+            this.$buefy.toast.open(`Feito`);
+            this.$router.replace({
+              name: "FeedbackDashboard",
+            });
+          },
+        });
+      }
     },
     clearData: function () {
       var thisVM = this;
@@ -251,9 +272,9 @@ export default {
     },
     getData() {
       var thisVM = this;
-    //  thisVM.$root.startLoading();
-      
-      thisVM.$store.commit('startLoading');
+      //  thisVM.$root.startLoading();
+
+      thisVM.$store.commit("startLoading");
       thisVM.clearData();
       var feedBackRequest = firebase
         .database()
@@ -277,7 +298,9 @@ export default {
               index
             ];
             const feedbackResponse = thisVM.feedBackRequest.Feedbacks[element];
-            if (feedbackResponse.UserId == thisVM.$store.state.currentUser.uid) {
+            if (
+              feedbackResponse.UserId == thisVM.$store.state.currentUser.uid
+            ) {
               thisVM.feedbackProvided = true;
               break;
             }
@@ -288,9 +311,8 @@ export default {
           thisVM.RatedAreas.push({ Name: area, Rating: null });
         });
 
-      
-      thisVM.$store.commit('stopLoading');
-      //thisVM.$root.stopLoading();
+        thisVM.$store.commit("stopLoading");
+        //thisVM.$root.stopLoading();
       });
     },
   },

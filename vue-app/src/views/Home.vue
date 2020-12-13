@@ -8,30 +8,30 @@
               >, {{ $store.state.displayName }}</span
             >
           </h1>
-          <h2 class="subtitle">
-            Um simples mecanismo de aprimoramento coletivo <br />
-            baseado em feedbacks objetivos.<br />
-            Peça feedbacks sobre habilidades que você está desenvolvendo e
-            receba retornos de experts sobre possibilidades de aprimoramento.<br />
-            Convide amigos e colegas para iniciativas inovadoras!
-          </h2>
-
-          <router-link
+          <br /><router-link
             class="button is-dark is-inverted is-large pulse-button"
             :to="{ name: 'SkillFeedback' }"
           >
             <b-icon size="is-small" icon="arrow-right"></b-icon
             ><b-icon size="is-small" icon=""></b-icon> Peça seu
             feedback</router-link
-          >
+          ><br />
+          <br />
+          <h2 class="subtitle">
+            Um simples mecanismo de aprimoramento coletivo baseado em feedbacks
+            objetivos.<br />
+            <br />Receba feedbacks de especialistas, líderes, e executivos
+            renomados sobre possibilidades de aprimoramento para evoluir na sua
+            carreira, com base em habilidades que você quer desenvolver.
+            <br /><br />
+            Convide amigos e colegas para iniciativas inovadoras!
+          </h2>
 
-          <br />
-          <br />
           <router-link
             :to="{ name: 'Sobre' }"
             class="button is-white is-large is-inverted"
           >
-            Conheça mais &nbsp;&nbsp;&nbsp;&nbsp;&ensp;<b-icon
+            Conheça mais / Ingressar &nbsp;&nbsp;&nbsp;&nbsp;&ensp;<b-icon
               size="is-small"
               icon=" "
             ></b-icon
@@ -124,6 +124,12 @@
       <div class="container">
         <div class="columns">
           <div class="column is-6">
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
             <h1 class="title is-1">
               <b-icon size="is-small" icon="email"></b-icon
               ><b-icon size="is-small" icon=" "></b-icon>

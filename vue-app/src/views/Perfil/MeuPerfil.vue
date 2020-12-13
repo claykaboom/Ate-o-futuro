@@ -174,6 +174,33 @@
             </div>
             <br />
           </div>
+          <div class="column is-6-tablet is-6-mobile" v-if="isExpert">
+            <div class="card">
+              <div class="card-image">
+                <figure class="image is-3by1">
+                  <img
+                    class=" "
+                    alt=""
+                    src="https://via.placeholder.com/600x200/?text=Funcionalidades BETA"
+                  />
+                </figure>
+              </div>
+              <div class="card-content">
+                <div class="content">
+                 Como expert você tem direito de testar funcionalidades ainda experimentais: <br />
+                   
+                     <ul>
+                       <li>
+                         <router-link :to="{'name':'MeuPerfilFuturo'}">Mapa do EU Futuro</router-link>
+                       </li>
+                     </ul>
+                
+                </div>
+              </div>
+             
+            </div>
+            <br />
+          </div>
           <!-- <div class="column is-3-tablet is-6-mobile">
               <div class="card">
                 <div class="card-image">

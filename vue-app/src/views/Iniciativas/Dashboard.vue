@@ -5,7 +5,7 @@
         title="Até o Futuro - Painel de Iniciativas"
         description="Painel de Iniciativas"
       />
-      <h1 class="title is-3">Painel de Iniciativas</h1>
+      <h1 class="title is-3"><b-icon icon="eye-outline" size="is-medium"/> Painel de Iniciativas</h1>
       <div class="buttons">
         <router-link
           class="button is-success is-large"

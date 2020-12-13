@@ -10,7 +10,7 @@
         tag="router-link"
         class="navbar-item"
         :to="{ name: 'Home' }"
-        >Home</b-navbar-item
+        > <b-icon icon="home-outline" /> <span>&nbsp;</span>HOME</b-navbar-item
       >
       <!-- <b-navbar-dropdown label="Home">
    
@@ -25,10 +25,10 @@
       </b-navbar-dropdown> -->
 
       <b-navbar-item tag="router-link" :to="{ name: 'FeedbackDashboard' }">
-        Feedbacks</b-navbar-item
+      <b-icon icon="atom" /> <span>&nbsp;</span>  Feedbacks</b-navbar-item
       >
       <b-navbar-item tag="router-link" :to="{ name: 'InitiativeDashboard' }">
-        Iniciativas</b-navbar-item
+       <b-icon icon="eye-outline" /> <span>&nbsp;</span>  Iniciativas</b-navbar-item
       >
       <b-navbar-item tag="router-link" :to="{ name: 'Experts' }"
         >Nossa Equipe
