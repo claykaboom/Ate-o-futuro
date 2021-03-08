@@ -1,5 +1,6 @@
 <template>
   <layout-default>
+    <vue-headful title="Até o Futuro - Meu Perfil" description="Meu Perfil" />
     <div class="box">
       <h1 class="title is-4">Meu Perfil</h1>
       <b-modal
@@ -16,6 +17,8 @@
         <edit-perfil
           :miniBio="miniBio"
           :photoURL="photoURL"
+          :linkedInURL="linkedInURL"
+          :whatsAppNumber="whatsAppNumber"
           :areas="areas"
           :allow-new="isExpert"
           @save="saveData($event)"
@@ -193,6 +196,23 @@
                        <li>
                          <router-link :to="{'name':'MeuPerfilFuturo'}">Mapa do EU Futuro</router-link>
                        </li>
+                       <li>
+                         <router-link :to="{'name':'CreateQuiz'}">Criar Quiz</router-link>
+                       </li>
+                       <li>
+                         <router-link :to="{'name':'ArvoreConhecimento'}">Árvore do Conhecimento</router-link>
+                       </li>
+                       <li>
+                         <router-link :to="{'name':'EditorPaginas'}">Criar Conteúdo</router-link>
+                       </li>
+                       <li>
+                         <router-link :to="{'name':'MeusOKRs'}">Criador de OKRs</router-link>
+                       </li>  <li>
+                         <router-link :to="{'name':'CriarAgenda'}">Criador de Agenda de Entrevista</router-link>
+                       </li>
+                       <li>
+                         <a href="https://wa.me/+14792529866"> 🤖💬 ChatBot Via WhatsApp</a>
+                         </li>
                      </ul>
                 
                 </div>
@@ -351,6 +371,8 @@ export default {
       qtdIniciativas: 0,
       miniBio: "",
       photoURL: "",
+      linkedInURL:"",
+      whatsAppNumber:"",
       areas: [],
       isExpert: false,
       isPreferencesOpen: false,
@@ -384,6 +406,8 @@ export default {
         .update({
           miniBio: data.miniBio,
           photoURL: data.photoURL,
+          linkedInURL:data.linkedInURL,
+          whatsAppNumber:data.whatsAppNumber,
           areas: data.areas,
         })
         .then(function () {
@@ -434,6 +458,8 @@ export default {
         var data = snapshot.val();
         thisVM.miniBio = data.miniBio ? data.miniBio : null;
         thisVM.isExpert = data.isExpert ? data.isExpert : false;
+        thisVM.linkedInURL = data.linkedInURL ? data.linkedInURL : null; 
+        thisVM.whatsAppNumber = data.whatsAppNumber ? data.whatsAppNumber : null; 
 
         thisVM.areas = data.areas ? data.areas : [];
 

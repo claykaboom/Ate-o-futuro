@@ -14,7 +14,6 @@ import store from './store/index'
 import Vuex from 'vuex'
 
 import VueYouTubeEmbed from 'vue-youtube-embed'
-
  
 
 
@@ -24,7 +23,7 @@ Vue.use(Buefy)
 
 
 Vue.use(Vuex)
-
+Vue.use(require('vue-moment'));
 
 Vue.component('vue-headful', vueHeadful);
 Vue.component('layout-default', LayoutDefault);

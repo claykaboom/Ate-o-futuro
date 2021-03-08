@@ -1,15 +1,20 @@
 <template>
-  <div>
-    <b-loading :is-full-page="true" v-model="$store.state.isLoading"></b-loading>
+  <div >
+    <b-loading
+      :is-full-page="true"
+      v-model="$store.state.isLoading"
+    ></b-loading>
     <!-- <div class="vld-parent">
       <b-loading :is-full-page="true" :active.sync="$root.$loadCounter >0"></b-loading>
       <loading :active.sync="$root.$loadCounter >0"></loading>
     </div> -->
     <!-- START NAV -->
     <nav-bar />
-
+    <br />
+    <br />
+    <br />
     <!-- END NAV -->
-    <div class="container">
+    <div class="container" >
       <div class="columns">
         <div class="column is-12">
           <breadcrumbs />
@@ -375,7 +380,7 @@ export default {
       fullPage: true,
     };
   },
-  components: { Breadcrumbs, NavBar }, 
+  components: { Breadcrumbs, NavBar },
   computed: {
     isLoading() {
       return this.$store.state.loadCounter > 0;
@@ -386,9 +391,7 @@ export default {
     //debugger;
     var thisVM = this;
     firebase.auth().onAuthStateChanged(() => {
-
       thisVM.$store.commit("setCurrentUser", firebase.auth().currentUser);
-      
     });
   },
 };

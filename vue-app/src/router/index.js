@@ -137,16 +137,31 @@ const routes = [
     meta: {
 
       requiresAuth: true,
-      friendlyName: "Habilidades",
+      friendlyName: "Dar Feedback",
       breadcrumb: [
         { name: 'Feedbacks', link: 'FeedbackDashboard' },
-        { name: 'Dar Feedback', link: 'Feedback' },
       ]
     },
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/Feedback/Provide-Skill-Feedback.vue')
+  },
+  {
+    path: '/VerFeedback/:IdFeedbackRequest/:IdFeedbackResponse',
+    name: 'VerFeedback',
+    meta: {
+
+      requiresAuth: true,
+      friendlyName: "Ver Feedback",
+      breadcrumb: [
+        { name: 'Feedbacks', link: 'FeedbackDashboard' },
+      ]
+    },
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/Feedback/VerFeedback.vue')
   }, {
     path: '/Dashboard/Feedbacks',
     name: 'FeedbackDashboard',
@@ -237,6 +252,158 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/Iniciativas/Suportar.vue')
   },
+  {
+    path: '/Contato',
+    name: 'Contato',
+    meta: {
+
+      requiresAuth: false,
+      friendlyName: "Contato"
+    },
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/Contato.vue')
+  },
+  {
+    path: '/Notificacoes',
+    name: 'Notificacoes',
+    meta: {
+
+      requiresAuth: true,
+      friendlyName: "Notificações"
+    },
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/Notificacoes.vue')
+  },
+
+  {
+    path: '/OKRs/MeusOKRs',
+    name: 'MeusOKRs',
+    meta: {
+
+      requiresAuth: true,
+      friendlyName: "Meus OKRs"
+    },
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/OKRs/MeusOKRs.vue')
+  },
+  {
+    path: '/ArvoreConhecimento',
+    name: 'ArvoreConhecimento',
+    meta: {
+
+      requiresAuth: true,
+      friendlyName: "Árvore do Conhecimento"
+    },
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/KnowledgeTree/ArvoreConhecimento.vue')
+  },
+  {
+    path: '/EditorPaginas/:IdPage?',
+    name: 'EditorPaginas',
+    meta: {
+
+      requiresAuth: true,
+      friendlyName: "Editor de Páginas"
+    },
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/Paginas/PageCreator.vue')
+  },
+  {
+    path: '/Conteudo/:IdPage/:permalink?',
+    name: 'PageContent',
+    meta: {
+
+      requiresAuth: false,
+      friendlyName: "Conteúdo",
+
+      breadcrumb: [
+        { name: 'Árvore do Conhecimento', link: 'ArvoreConhecimento' }
+      ]
+    },
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/Paginas/PageDisplayer.vue')
+  },
+  {
+    path: '/Quiz/Responder/:IdQuiz',
+    name: 'Quiz',
+    meta: {
+
+      requiresAuth: false,
+      friendlyName: "QUIZ",
+
+      breadcrumb: [
+        { name: 'Árvore do Conhecimento', link: 'ArvoreConhecimento' }
+      ]
+    },
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/Quiz/Quiz.vue')
+  }, {
+    path: '/Quiz/Criar/:IdQuiz?',
+    name: 'CreateQuiz',
+    meta: {
+
+      requiresAuth: false,
+      friendlyName: "QUIZ",
+
+      breadcrumb: [
+        { name: 'Árvore do Conhecimento', link: 'ArvoreConhecimento' }
+      ]
+    },
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/Quiz/QuizCreator.vue')
+  }, {
+    path: '/Entrevistas/CriarAgenda',
+    name: 'CriarAgenda',
+    meta: {
+
+      requiresAuth: true,
+      friendlyName: "Criar Agenda de Entrevista",
+
+      breadcrumb: [
+        { name: 'Entrevistas', link: 'Entrevistas' }
+      ]
+    }, component: () => import(/* webpackChunkName: "about" */ '../views/Entrevistas/CriarAgenda.vue')
+  }, {
+    path: '/Entrevistas/Demandas',
+    name: 'DemandasEntrevistas',
+    meta: {
+
+      requiresAuth: true,
+      friendlyName: "Demandas de Entrevistas",
+
+      breadcrumb: [
+        { name: 'Entrevistas', link: 'Entrevistas' }
+      ]
+    }, component: () => import(/* webpackChunkName: "about" */ '../views/Entrevistas/Demandas.vue')
+  }, {
+    path: '/Entrevistas/:InviterCode?',
+    name: 'AgendarEntrevista',
+    meta: {
+
+      requiresAuth: false,
+      friendlyName: "Agendar Entrevista",
+
+      // breadcrumb: [
+      //   { name: 'Entrevistas', link: 'Entrevistas' }
+      // ]
+    }, component: () => import(/* webpackChunkName: "about" */ '../views/Entrevistas/Agendar.vue')
+  },
 ]
 
 const router = new VueRouter({
@@ -283,12 +450,20 @@ router.beforeEach((to, from, next) => {
         }
       });
   } else {
-    firebase.auth().onAuthStateChanged(function () {
+    firebase.auth().onAuthStateChanged(
+      function (user) {
 
-      next();
-    }
-    );
-    next();
+
+        store.commit("setCurrentUser", user);
+        //   this.$root.sharedUserState.state.setCurrentUser(user);
+
+        // firebase.auth().onAuthStateChanged(function () {
+
+        //   next();
+        // }
+        // );
+        next();
+      });
   }
 
 

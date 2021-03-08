@@ -1,5 +1,5 @@
 <template>
-  <b-navbar>
+  <b-navbar :fixed-top="true">
     <template slot="brand">
       <b-navbar-item tag="router-link" :to="{ name: 'Sobre' }">
         <img src="@/assets/Logo.png" alt="Até o Futuro" />
@@ -10,7 +10,8 @@
         tag="router-link"
         class="navbar-item"
         :to="{ name: 'Home' }"
-        > <b-icon icon="home-outline" /> <span>&nbsp;</span>HOME</b-navbar-item
+      >
+        <b-icon icon="home-outline" /> <span>&nbsp;</span>HOME</b-navbar-item
       >
       <!-- <b-navbar-dropdown label="Home">
    
@@ -23,27 +24,36 @@
         <hr class="navbar-divider" />
         <div class="navbar-item">Versão 0.0.1 BETA</div>
       </b-navbar-dropdown> -->
-
+<b-navbar-item tag="router-link" :to="{ name: 'AgendarEntrevista' }" alt="Faça uma Simulação de Entrevista e Mentoria Grátis">
+       🌐 <span>&nbsp;</span> Simulador de Processo Seletivo </b-navbar-item
+      >
       <b-navbar-item tag="router-link" :to="{ name: 'FeedbackDashboard' }">
-      <b-icon icon="atom" /> <span>&nbsp;</span>  Feedbacks</b-navbar-item
+        <b-icon icon="atom" /> <span>&nbsp;</span> Feedbacks</b-navbar-item
       >
       <b-navbar-item tag="router-link" :to="{ name: 'InitiativeDashboard' }">
-       <b-icon icon="eye-outline" /> <span>&nbsp;</span>  Iniciativas</b-navbar-item
+        <b-icon icon="eye-outline" />
+        <span>&nbsp;</span> Iniciativas</b-navbar-item
       >
-      <b-navbar-item tag="router-link" :to="{ name: 'Experts' }"
-        >Nossa Equipe
-      </b-navbar-item>
-      <b-navbar-item tag="router-link" :to="{ name: 'Sobre' }"
-        >Sobre
-      </b-navbar-item>
-      <b-navbar-item tag="router-link" :to="{ name: 'Privacidade' }"
-        >Privacidade
-      </b-navbar-item>
-      <b-navbar-item
-        href="https://blog.claytonfreitas.com.br/contact/"
-        target="blank"
-        >Contato</b-navbar-item
-      >
+
+      <b-navbar-dropdown label="Ajuda e Contato" icon="help">
+        <b-navbar-item tag="router-link" :to="{ name: 'Sobre' }"
+          ><b-icon icon="help" size="is-small" /> <span>&nbsp;&nbsp;</span>Sobre
+          o Até o Futuro
+        </b-navbar-item>
+        <b-navbar-item tag="router-link" :to="{ name: 'Contato' }">
+          <b-icon icon="email" size="is-small" />
+          <span>&nbsp;&nbsp;</span> Contato</b-navbar-item
+        >
+        <b-navbar-item tag="router-link" :to="{ name: 'Experts' }"
+          ><b-icon icon="account-group" size="is-small" />
+          <span>&nbsp;&nbsp; &nbsp;&nbsp; </span>Nossa Equipe
+        </b-navbar-item>
+        <hr class="navbar-divider" />
+        <b-navbar-item tag="router-link" :to="{ name: 'Privacidade' }"
+          ><b-icon icon="file" size="is-small" />
+          <span>&nbsp;&nbsp; &nbsp;&nbsp; </span>Privacidade
+        </b-navbar-item>
+      </b-navbar-dropdown>
     </template>
 
     <template slot="end">
@@ -83,7 +93,13 @@
             <b-icon icon="bell-outline" title="Nenhuma notificação"></b-icon>
           </div>
         </template>
-        <b-navbar-dropdown label="Meu Perfil" v-show="$store.state.isLogged">
+        <b-navbar-dropdown label="Perfil & Notificações" v-show="$store.state.isLogged">
+          <b-navbar-item
+            tag="router-link"
+            class="navbar-item"
+            :to="{ name: 'Notificacoes' }"
+            >Notificações</b-navbar-item
+          >
           <b-navbar-item
             tag="router-link"
             class="navbar-item"
@@ -122,24 +138,7 @@ export default {
   name: "NavBar",
   data() {
     return {
-      notifications: [
-        // {
-        //   id: "321",
-        //   description: "Novo(a) visionário(a) na sua iniciativa",
-        //   title: "Suporte na iniciativa",
-        //   link: "InitiativeDetail",
-        //   params: { IdInitiative: "-MMmc2dRBIeRekUE_aHA" },
-        //   icon: "earth",
-        // },
-        // {
-        //   id: "32131",
-        //   description: "Novo(a) visionário(a) na sua iniciativa",
-        //   title: "Suporte na iniciativa",
-        //   link: "https://google.com",
-        //   params: [],
-        //   icon: "comment",
-        // },
-      ],
+      notifications: [],
     };
   },
   created() {
@@ -158,7 +157,7 @@ export default {
   },
   methods: {
     readAndNavigate(notification) {
-      var thisVM = this; 
+      var thisVM = this;
       firebase
         .database()
         .ref(

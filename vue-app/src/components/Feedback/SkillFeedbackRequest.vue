@@ -21,7 +21,7 @@
       {{ LABEL_TipoDeFeedback }} <b-icon :icon="ICON_TipoDeFeedback" />
     </h2>
 
-    <div class="columns box" style="background-color:#efefdd">
+    <div class="columns box" style="background-color: #efefdd">
       <div class="column is-2">
         <vue-svg-gauge
           v-bind:class="{
@@ -43,7 +43,6 @@
         A força do pedido indica o nível de detalhamento fornecido para que seu
         feedback seja:
         <b>descritivo, específico, dirigido, oportuno e esclarecedor.</b>
-        
       </div>
     </div>
 
@@ -54,12 +53,10 @@
         </b-message>
       </section>
     </b-field>
-    <b-field
-      label="Detalhes sobre como a Habilidade é exercitada, dificuldades, etc."
-    >
+    <b-field :label="LABEL_Detalhes">
       <section>
         <b-message type="is-success">
-          {{ feedBackRequest.DescricaoHabilidade }}
+          <div v-html="ComputedDetalhes"></div>
         </b-message>
       </section>
     </b-field>
@@ -96,11 +93,14 @@
       "
       label="Link de Referência"
     >
-      <youtube :video-id="videoId" v-if="videoId != null"></youtube>
-      <br />
-      <a :href="feedBackRequest.ExternalReferenceURL" target="blank">{{
+    <b-field expanded> <a :href="feedBackRequest.ExternalReferenceURL" target="blank">{{
         feedBackRequest.ExternalReferenceURL
-      }}</a>
+      }}</a
+      ></b-field> 
+      <div class="columns">
+        <youtube expanded :video-id="videoId" v-if="videoId != null"></youtube>
+      </div>
+      <br />
     </b-field>
 
     <b-field label="Finalidade do aprimoramento:">
@@ -114,7 +114,7 @@
     >
       <section>
         <b-message type="is-success">
-          {{ feedBackRequest.AcoesTomadas }}
+          <div v-html="ComputedAcoesTomadas"></div>
         </b-message>
       </section>
     </b-field>
@@ -129,7 +129,8 @@
         v-bind:key="reflexao.pergunta"
         :title="reflexao.pergunta"
         :closable="false"
-        >{{ reflexao.resposta }}
+      >
+        <div v-html="reflexao.resposta.replaceAll('\n', '<br />')"></div>
       </b-message>
     </div>
   </div>
@@ -216,7 +217,7 @@ export default {
       }
       return "";
     },
-    
+
     LABEL_TipoDeFeedbackEsperado() {
       if (this.feedBackRequest.TipoFeedback == null)
         return "Habilidade Esperada";
@@ -232,6 +233,29 @@ export default {
           return "Ideia";
       }
       return "";
+    },
+    LABEL_Detalhes() {
+      if (this.feedBackRequest.TipoFeedback == null)
+        return "Detalhes sobre como a Habilidade é exercitada, dificuldades, etc.";
+
+      switch (this.feedBackRequest.TipoFeedback) {
+        case "Habilidade":
+          return "Detalhes sobre como a Habilidade é exercitada, dificuldades, etc.";
+
+        case "Evento":
+          return "Objetivo do evento, importância de realizá-lo, dificuldades e desafios. ";
+
+        case "Ideia":
+          return "Objetivo da Ideia, dificuldades e desafios.";
+      }
+      return "";
+    },
+    ComputedDetalhes() {
+      debugger;
+      return this.feedBackRequest.DescricaoHabilidade? this.feedBackRequest.DescricaoHabilidade.replaceAll("\n", "<br />"):null;
+    },
+    ComputedAcoesTomadas() {
+      return this.feedBackRequest.AcoesTomadas? this.feedBackRequest.AcoesTomadas.replaceAll("\n", "<br />"):null;
     },
     FinalidadeHabilidade() {
       var obj = this.OPTIONS_FinalidadeUsoFeedback.filter((obj) => {

@@ -23,9 +23,17 @@
         <br />
         <br />
         Ao fornecer um feedback, seus dados não são compartilhados com o pedinte
-        de feedback. No caso de violações éticas
+        de feedback. No caso de violações éticas pedimos que nos comunique e anexe as evidências para que tomemos as medidas necessárias e cabíveis.
         <br />
         <br />
+
+          <br />
+        <br />
+        Nosso processo de simulação de processo seletivo, bem como mentoria e coaching, são totalmente customizados, mas baseados na quantidade de informações que você decidir compartilhar conosco. Não obrigamos a detalhar suas informações, mas não podemos nos comprometer com qualquer resultado empregatício com base nas simulações feitas.
+        <br />
+        <br />
+
+
         Baseado nisso, é importante frisar que o Até o Futuro se isenta de
         qualquer responsabilidade sobre os feedbacks fornecidos pelas pessoas
         para as quais você distribuir o seu link de pedido de feedback.
@@ -157,7 +165,9 @@
         ofertas de serviços e estratégias do Até o Futuro e/ou de suas
         Afiliadas.
       </p>
-
+     <p>
+        (ix) usamos as interações com os usuários internamente para melhorar nossas experiências de mentoria e coaching.
+      </p>
       <br />
       <p>
         O Até o Futuro e suas Afiliadas preservam a privacidade dos Usuários e

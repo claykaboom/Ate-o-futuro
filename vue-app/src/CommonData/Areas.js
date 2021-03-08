@@ -16,7 +16,7 @@ export const Areas =
         "Colaboração",
         "Adaptabilidade",
         "Flexibilidade",
-        "Franchising - Fraquias e Franqueamento",
+        "Franchising - Franquias e Franqueamento",
         "Raciocínio Analítico",
         "Vendas",
         "Processamento de Linguagem Natural",

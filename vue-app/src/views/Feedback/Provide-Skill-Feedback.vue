@@ -1,6 +1,6 @@
 <template>
   <layout-default>
-    <div class="box">
+    <div class="box" v-if="feedBackRequest">
       <vue-headful
         :title="'Até o Futuro - Feedback para ' + feedBackRequest.UserName"
         description="Forneça Feedback para uma habilidade"
@@ -157,6 +157,30 @@
         </b-field>
       </div>
     </div>
+    <div class="box" v-else>
+      <vue-headful
+        title="Até o Futuro - Pedido de Feedback não encontrado"
+        description="Pedido de Feedback não encontrado"
+      />
+      <section>
+        <h1 class="title is-3">😮 Pedido de Feedback não encontrado!</h1>
+      </section>
+      <br />
+      Verifique se o endereço está correto, por favor!
+      <br />
+      <br />
+      Enquanto isso, você também pode tentar:
+      <br />
+      <br />
+      <router-link
+        class="button is-success is-large"
+        :to="{ name: 'SkillFeedback' }"
+      >
+        <b-icon size="is-small" icon="arrow-right"></b-icon
+        ><b-icon size="is-small" icon=""></b-icon> Pedir um 
+        feedback</router-link
+      >
+    </div>
   </layout-default>
 </template>
 <script>
@@ -251,6 +275,9 @@ export default {
             ClassificacaoFinal: thisVM.ClassificacaoFinal,
             RequesterUserId: thisVM.feedBackRequest.UserId,
             IdFeedbackRequest: thisVM.IdfeedBackRequest,
+            RequesterUserName : thisVM.feedBackRequest.UserName,
+            FeedBackRequestTipoFeedback: thisVM.feedBackRequest.TipoFeedback,
+            FeedBackRequestResumo: thisVM.feedBackRequest.Resumo
           });
 
         this.$buefy.dialog.alert({
@@ -306,11 +333,11 @@ export default {
             }
           }
         }
-
-        thisVM.feedBackRequest.Areas.forEach((area) => {
-          thisVM.RatedAreas.push({ Name: area, Rating: null });
-        });
-
+        if (thisVM.feedBackRequest != null) {
+          thisVM.feedBackRequest.Areas.forEach((area) => {
+            thisVM.RatedAreas.push({ Name: area, Rating: null });
+          });
+        }
         thisVM.$store.commit("stopLoading");
         //thisVM.$root.stopLoading();
       });

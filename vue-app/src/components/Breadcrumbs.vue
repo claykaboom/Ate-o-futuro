@@ -1,5 +1,5 @@
 <template>
-  <nav class="breadcrumb" aria-label="breadcrumbs">   
+  <nav class="breadcrumb box" aria-label="breadcrumbs">   
     <ul><li>
        <router-link :to="{ name: 'Home'}"> 
       <b-icon

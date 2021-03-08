@@ -1,7 +1,8 @@
 <template>
   <div>
-    <b-button @click="getData()" type="is-info"
-      >Clique para ver detalhes do Feedback</b-button
+    <b-button @click="getData()" type="is-info"   expanded
+      ><b-icon size="is-small" icon="eye-outline"></b-icon
+        ><b-icon size="is-small" icon=" "></b-icon>Clique para ver detalhes do Feedback</b-button
     >
     <div v-if="feedbackResponse">
       <br />
@@ -14,21 +15,27 @@
       </b-message>
 
       <br />
+      <b-message :closable="false" class="is-centered has-text-centered ">
+        <h3 class="subtitle is-4">
+          Sua classificação média:
+        </h3>
+        <b-rate
+          size="is-large"
+          class="is-centered"
+          v-model="feedbackResponse.ClassificacaoFinal"
+          disabled  
+          :showScore="true"
+        ></b-rate>
+        Entenda melhor essa classificação olhando os detalhes a
+        seguir.</b-message
+      >
 
-      Nota média:
-      <b-rate
-        v-model="feedbackResponse.ClassificacaoFinal"
-        disabled
-        :showScore="true"
-      ></b-rate
-      ><br />
-      <br />
       <b-message
         :closable="false"
         type="is-success"
         title="O que você pode continuar fazendo"
       >
-        {{ feedbackResponse.ContinuarFazendo }}
+        <div v-html="htmlContinuarFazendo"></div>
       </b-message>
       <br />
       <b-message
@@ -36,7 +43,7 @@
         type="is-danger"
         title="O que você pode poderia evitar fazer"
       >
-        {{ feedbackResponse.EvitarFazer }}
+        <div v-html="htmlEvitarFazer"></div>
       </b-message>
       <br />
       <b-message
@@ -44,7 +51,7 @@
         type="is-warning"
         title="O que você pode passar a fazer"
       >
-        {{ feedbackResponse.PassarAFazer }}
+        <div v-html="htmlPassarAFazer"></div>
       </b-message>
 
       <b-message>
@@ -111,6 +118,23 @@ export default {
     },
     IdFeedbackRequest() {
       this.getData();
+    },
+  },
+  computed: {
+    htmlPassarAFazer() {
+      return this.feedbackResponse && this.feedbackResponse.PassarAFazer
+        ? this.feedbackResponse.PassarAFazer.replaceAll("\n", "<br />")
+        : "";
+    },
+    htmlEvitarFazer() {
+      return this.feedbackResponse && this.feedbackResponse.EvitarFazer
+        ? this.feedbackResponse.EvitarFazer.replaceAll("\n", "<br />")
+        : "";
+    },
+    htmlContinuarFazendo() {
+      return this.feedbackResponse && this.feedbackResponse.ContinuarFazendo
+        ? this.feedbackResponse.ContinuarFazendo.replaceAll("\n", "<br />")
+        : "";
     },
   },
   methods: {

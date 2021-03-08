@@ -69,8 +69,7 @@
 
               <h1 class="title">FEEDBACK GRÁTIS</h1>
               <p>
-                Faça Login para experimentar esse presente. O feedback é grátis,
-                mas vai funcionar por tempo limitado até 16/12/2020.<br /><br />
+                Faça Login para experimentar esse presente.  <br /><br />
               </p>
 
               <div class="notification is-warning">

@@ -33,6 +33,23 @@
           v-model="mutablePhotoURL"
         ></b-input>
       </b-field>
+      <b-field label="URL do seu perfil no LinkedIn">
+        <b-input
+          placeholder="https://linkedin.com/in/SEUPERFIL"
+          type="url"
+          icon="linkedin"
+          v-model="mutableLinkedInURL"
+        ></b-input>
+      </b-field>
+      <b-field label="WhatsApp para contato com nosso chatbot">
+        <b-input
+          placeholder="+5511XXXXX-XXXX"
+          type="phone"
+          icon="phone"
+          v-cleave="masks.phone"
+          v-model="mutableWhatsAppNumber"
+        ></b-input>
+      </b-field>
       <b-field label="Quais são suas áreas de expertise?">
         <b-taginput
           v-model="mutableAreas"
@@ -58,18 +75,51 @@
 </template>
 <script>
 import Areas from "../../CommonData/Areas";
+require("cleave.js/dist/addons/cleave-phone.br");
+import Cleave from "cleave.js";
+
 const allTags = [...Areas];
 
+const cleave = {
+  name: "cleave",
+  bind(el, binding) {
+    const input = el.querySelector("input");
+    input._vCleave = new Cleave(input, binding.value);
+  },
+  unbind(el) {
+    const input = el.querySelector("input");
+    input._vCleave.destroy();
+  },
+};
+
 export default {
+  directives: { cleave },
   name: "EditPerfil",
-  props: ["miniBio", "photoURL", "areas", "allow-new"],
+  props: [
+    "miniBio",
+    "linkedInURL",
+    "photoURL",
+    "whatsAppNumber",
+    "areas",
+    "allow-new",
+  ],
   data() {
     return {
       Areas: [],
       possibleTags: allTags,
       mutableMiniBio: this.miniBio ? this.miniBio.toString() : "",
+      mutableLinkedInURL: this.linkedInURL ? this.linkedInURL.toString() : "",
       mutablePhotoURL: this.photoURL ? this.photoURL.toString() : "",
+      mutableWhatsAppNumber: this.whatsAppNumber
+        ? this.whatsAppNumber.toString()
+        : "",
       mutableAreas: [],
+      masks: {
+        phone: {
+          phone: true,
+          phoneRegionCode: "BR",
+        },
+      },
     };
   },
   watch: {
@@ -97,6 +147,8 @@ export default {
         var data = {
           miniBio: this.mutableMiniBio,
           photoURL: this.mutablePhotoURL,
+          linkedInURL: this.mutableLinkedInURL,
+          whatsAppNumber: this.mutableWhatsAppNumber,
           areas: this.mutableAreas,
         };
         this.$emit("save", data);

@@ -1,5 +1,5 @@
 <template>
-  <b-message title="Descreva o Objetivo" :canClose="false">
+  <b-message title="Descreva o Objetivo" :closable="false">
     <b-field label="Descreva o Objetivo">
       <b-input
         v-model="goal"
@@ -8,9 +8,9 @@
     </b-field>
 
     <b-field label="Resultado-Chave">
-      <b-input type="number" v-model="newKeyResultTarget"></b-input>
+      <b-numberinput v-model="newKeyResultTarget" min="1"></b-numberinput>
       <b-input
-        v-model="newKeyResult"
+        v-model="newKeyResult" 
         expanded
         placeholder="Pense em algo que você pode quantificar o progresso (ex.: três reuniões com o time) "
       ></b-input>
@@ -20,11 +20,12 @@
       >Adicionar Resultado-Chave</b-button
     >
     <div>
-        <br />
-        <h2 class="subtitle is-4">Resultados-chave</h2>
-    <b-checkbox disabled v-for="kr in keyResults" v-bind:key="kr.name">
-      {{ kr.target }} - {{ kr.name }}
-    </b-checkbox>
+      <br />
+      <h2 class="subtitle is-4">Resultados-chave</h2>
+      <div v-for="kr in keyResults" v-bind:key="kr.name">
+        <b-checkbox disabled> ({{ kr.target }}x) {{ kr.name }} </b-checkbox>
+        <b-progress :max="kr.target" :value="kr.fulfilled" />
+      </div>
     </div>
   </b-message>
 </template>
@@ -36,7 +37,7 @@ export default {
     return {
       goal: "",
       newKeyResult: "",
-      newKeyResultTarget: 0,
+      newKeyResultTarget: 1,
       keyResults: [],
     };
   },
@@ -47,6 +48,7 @@ export default {
         thisVM.keyResults.push({
           name: thisVM.newKeyResult,
           target: thisVM.newKeyResultTarget,
+          fulfilled : 0
         });
       }
     },

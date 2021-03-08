@@ -81,7 +81,7 @@
                     icon-pack="fas"
                     icon-right="forward"
                     :disabled="isNextDisabled"
-                    @click.prevent="next.action" 
+                    @click.prevent="next.action"
                     v-if="activeStep != 4"
                   >
                     Próximo </b-button
@@ -244,7 +244,7 @@
                     minlength="10"
                     maxlength="2048"
                     :loading="$store.state.isLoading"
-                    :placeholder="LABEL_ComoDemonstraPlaceholder" 
+                    :placeholder="LABEL_ComoDemonstraPlaceholder"
                   >
                   </b-input>
                 </b-field>
@@ -259,7 +259,7 @@
                     minlength="10"
                     maxlength="2048"
                     :loading="$store.state.isLoading"
-                    :placeholder="LABEL_OQueVoceJafezPlaceholder" 
+                    :placeholder="LABEL_OQueVoceJafezPlaceholder"
                   >
                   </b-input>
                 </b-field>
@@ -1270,7 +1270,10 @@ export default {
   },
   methods: {
     RemoverAutoReflexao(reflexao) {
-      this.reflectionQuestions.pop(reflexao);
+      this.reflectionQuestions.splice(
+        this.reflectionQuestions.indexOf(reflexao),
+        1
+      );
     },
     AdicionarAutoReflexao() {
       if (this.SelectedReflectionQuestion != null) {
@@ -1319,11 +1322,10 @@ export default {
     },
     videoUploaded(url) {
       this.startFeedbackRequest();
-      this.VideoStorageURL = url; 
+      this.VideoStorageURL = url;
       this.$buefy.toast.open(`Vídeo gravado!`);
     },
-    gravarFinal() { 
-
+    gravarFinal() {
       this.startFeedbackRequest();
       var thisVM = this;
       firebase

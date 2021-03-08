@@ -1,5 +1,6 @@
 <template>
   <layout-default>
+    <vue-headful title="Até o Futuro - Login" description="Faça seu Login." />
     <transition name="slide">
       <div class="html">
         <section class="hero is-fullheight">
@@ -178,7 +179,7 @@ export default {
           db.ref("Users/" + user.uid)
             .update({
               displayName: user.displayName,
-              email: user.email 
+              email: user.email,
             })
             .then(function () {
               thisVM.$store.commit("stopLoading");
@@ -223,6 +224,8 @@ export default {
           //function(error) {
           // debugger;
           alert(error);
+          thisVM.$store.commit("stopLoading");
+
           // Handle Errors here.
           /* var errorCode = error.code;
           var errorMessage = error.message;

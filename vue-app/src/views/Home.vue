@@ -1,5 +1,9 @@
 <template>
   <empty-layout>
+    <vue-headful
+      title="Até o Futuro 💡"
+      description="Seu EU do Futuro aprimorado."
+    />
     <section class="hero is-medium">
       <div class="hero-body">
         <div class="container">
@@ -8,18 +12,28 @@
               >, {{ $store.state.displayName }}</span
             >
           </h1>
-          <br /><router-link
+          <video autoplay muted loop id="myVideo">
+            <source src="@/assets/Empregabilidade.mp4" type="video/mp4" />
+          </video>
+          <br />
+          <br />
+          <router-link
+            class="button is-dark is-inverted is-large pulse-button"
+            :to="{ name: 'AgendarEntrevista' , params :{InviterCode:InviterCode} }"
+          >
+            ❤ Teste sua empregabilidade! </router-link
+          >
+          <!--  <router-link
             class="button is-dark is-inverted is-large pulse-button"
             :to="{ name: 'SkillFeedback' }"
           >
-            <b-icon size="is-small" icon="arrow-right"></b-icon
-            ><b-icon size="is-small" icon=""></b-icon> Peça seu
-            feedback</router-link
-          ><br />
-          <br />
+          Peça um feedback</router-link
+          >  -->
+          <br /><br />
           <h2 class="subtitle">
-            Um simples mecanismo de aprimoramento coletivo baseado em feedbacks
-            objetivos.<br />
+            Somos um simples mecanismo de aprimoramento coletivo baseado em
+            feedbacks objetivos & mentorias práticas para o mercado de
+            trabalho.<br />
             <br />Receba feedbacks de especialistas, líderes, e executivos
             renomados sobre possibilidades de aprimoramento para evoluir na sua
             carreira, com base em habilidades que você quer desenvolver.
@@ -31,12 +45,8 @@
             :to="{ name: 'Sobre' }"
             class="button is-white is-large is-inverted"
           >
-            Conheça mais / Ingressar &nbsp;&nbsp;&nbsp;&nbsp;&ensp;<b-icon
-              size="is-small"
-              icon=" "
-            ></b-icon
-            ><b-icon size="is-small" icon="information"></b-icon
-          ></router-link>
+            Explore o Até o Futuro &nbsp;&nbsp;&ensp;⚡
+          </router-link>
         </div>
       </div>
     </section>
@@ -109,12 +119,22 @@
                 futuro mais palatável para todos; Se você é uma pessoa criativa,
                 bora conversar!
               </h2>
+
               <a
                 href="https://calendly.com/claytonfreitas/batepapo"
                 target="blank"
                 class="button is-white is-inverted"
                 >Marque um horário aqui&ensp;<i class="fad fa-chevron-right"></i
               ></a>
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br /><br />
+              <br />
+              <br />
+              <br />
             </div>
           </div>
         </div>
@@ -126,23 +146,25 @@
           <div class="column is-6">
             <br />
             <br />
+
+            <br />
+            <br />
             <br />
             <br />
             <br />
             <br />
             <h1 class="title is-1">
-              <b-icon size="is-small" icon="email"></b-icon
-              ><b-icon size="is-small" icon=" "></b-icon>
+              <b-icon size="is-large" icon="email"></b-icon
+              ><b-icon size="is-large" icon=" "></b-icon>
             </h1>
             <hr class="content-divider" />
             <h2 class="subtitle">
-              Dúvidas? Ideias? Críticas? O Até o Futuro é uma plataforma de
-              código aberto e está aberta para feedbacks!
+              Dúvidas? Ideias? Críticas? Estamos abertos para Feedbacks!
             </h2>
           </div>
           <div class="column is-6">
             <div class="field">
-              <label class="label">Name</label>
+              <label class="label">Nome</label>
               <div class="control">
                 <input
                   v-model="Nome"
@@ -170,7 +192,7 @@
                 type="textarea"
                 class="textarea"
                 v-model="Mensagem"
-                maxlength="360"
+                maxlength="800"
                 style="background-color: #000"
                 placeholder="Sua mensagem "
               >
@@ -185,6 +207,10 @@
                 >
                   Enviar
                 </button>
+                <br />
+                <br />
+                <br />
+                <br />
               </div>
             </div>
           </div>
@@ -193,11 +219,15 @@
     </section>
     <footer class="footer">
       <div class="content has-text-centered">
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
         <p>
           <strong>Até o Futuro</strong> by
-          <a href="https://claytonfreitas.com.br">Clayton Freitas</a>. O código
-          fonte está disponível no
-          <a href="https://github.com/claykaboom/Ate-o-futuro">GitHub</a>.
+          <a href="https://claytonfreitas.com.br">Clayton Freitas</a>.
         </p>
       </div>
     </footer>
@@ -348,6 +378,7 @@ export default {
       Nome: "",
       Email: null,
       Mensagem: null,
+      InviterCode: null,
     };
   },
 
@@ -366,30 +397,59 @@ export default {
       ],
     };
   },
+  mounted() {
+    var thisVM = this;
+    if (thisVM.$route.query.ic != null) {
+      thisVM.InviterCode = thisVM.$route.query.ic;
+    }
+  },
   methods: {
     enviarEmail() {
       if (this.Nome != null && this.Email != null && this.Mensagem != null) {
-        var idContato = firebase.database().ref().child("/Contatos").push().key;
+        const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        var isValidEmail = re.test(String(this.Email).toLowerCase());
 
-        firebase
-          .database()
-          .ref("/Contatos/" + idContato)
-          .set({
-            Nome: this.Nome,
-            Email: this.Email,
-            Mensagem: this.Mensagem,
+        if (!isValidEmail) {
+          this.$buefy.dialog.alert({
+            message: "😢 Ops! Parece que esse e-mail não está legal.",
+            onConfirm: () => {
+              this.$buefy.toast.open(`Ops! E-mail inválido`);
+            },
           });
+        } else {
+          var idContato = firebase.database().ref().child("/Contatos").push()
+            .key;
 
-        this.$buefy.dialog.alert({
-          message: "Deu tudo certo! Vamos ler sua mensagem com carinho!",
-          onConfirm: () => {
-            this.$buefy.toast.open(`Feito`);
+          firebase
+            .database()
+            .ref("/Contatos/" + idContato)
+            .set({
+              Nome: this.Nome,
+              Email: this.Email,
+              Mensagem: this.Mensagem,
+            })
+            .then(() => {
+              this.$buefy.dialog.alert({
+                message: "Deu tudo certo! Vamos ler sua mensagem com carinho!",
+                onConfirm: () => {
+                  this.$buefy.toast.open(`Feito`);
 
-            this.Nome = null;
-            this.Email = null;
-            this.Mensagem = null;
-          },
-        });
+                  this.Nome = null;
+                  this.Email = null;
+                  this.Mensagem = null;
+                },
+              });
+            })
+            .catch(() => {
+              this.$buefy.dialog.alert({
+                message:
+                  "😢 Ops! Algo errado aconteceu. Tente novamente agora, ou  <a href='https://blog.claytonfreitas.com.br/contact/'>clique neste link como um plano B </a> ",
+                onConfirm: () => {
+                  this.$buefy.toast.open(`Ops! Deu ruim.`);
+                },
+              });
+            });
+        }
       } else {
         this.$buefy.dialog.alert({
           message:
