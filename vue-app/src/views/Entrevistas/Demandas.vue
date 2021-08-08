@@ -6,7 +6,27 @@
       <div class="columns">
         <div class="column is-12">
           <h2 class="subtitle is-3">Backlog</h2>
-
+ <layout-default>
+    <b-table
+      style="background-color: #fff"
+      :data="demandedAgenda"
+      :bordered="false"
+      :striped="false"
+      :narrowed="true"
+      :hoverable="true"
+      :loading="$store.state.isLoading"
+      :focusable="false"
+      :mobile-cards="false"
+    >
+    
+      <b-table-column field="Name" label="Name" v-slot="props">
+        {{ props.row.Name }}
+      </b-table-column>
+      <b-table-column field="Email" label="Email" v-slot="props">
+        {{ props.row.Email }}
+      </b-table-column>
+    </b-table>
+  </layout-default>
           <b-table
             style="background-color: #fff"
             :data="demandedAgenda"
@@ -43,9 +63,8 @@
                   <a>Public</a>
                   <a>Private</a>
                 </p> -->
-                <div >
-                  <b>Emails:</b> {{ props.row.Email }}, EXPERT_1 , EXPERT_2,
-                  contato.ateofuturo@gmail.com
+                <div>
+                  <b>Emails:</b> {{ props.row.Email }},contato.ateofuturo@gmail.com,  srjleite@gmail.com , fellipe.bonilha@outlook.com, graziela.ger@gmail.com, sotiumkaboom@gmail.com,averonezi.br@gmail.com , aaronmorlocks@gmail.com
                   <hr />
                   <b>Assunto:</b> ⭐🚀 Oi, {{ props.row.Name }}, quando podemos
                   testar sua empregabilidade?
@@ -81,30 +100,28 @@
                   </ul>
 
                   <br /><br />
-                  Para ajudar no seu teste de empregabilidade, escalamos duas
-                  pessoas (em cópia neste e-mail):<br />
-                  <br />
-                  <ul>
-                    <li>EXPERT 1</li>
-                    <li>EXPERT 2</li>
-                  </ul>
-                  <br />
-                  Para nos conhecer mais, entre em nossa página:
-                  https://ateOfuturo.com.br/Nossos-Experts<br /><br />
-                  Para essa primeira etapa gostaríamos que você nos respondesse
-                  (pode responder a todos deste e-mail) em qual dos seguintes
-                  horários podemos nos falar:<br /><br />
-                  <ul style="list-style: decimal">
-                    <li>YYYYY-feira (XX/XX/XX) às ZZ:ZZ</li>
-                    <li>YYYYY-feira (XX/XX/XX) às ZZ:ZZ</li>
-                  </ul>
+                  Para ajudar no seu teste de empregabilidade, vamos escalar
+                  duas pessoas! Para nos conhecer mais, entre em nossa página:
+                  <a href="https://ateOfuturo.com.br/Nossos-Experts">
+                    https://ateOfuturo.com.br/Nossos-Experts </a
+                  ><br /><br />
+                  Para essa primeira etapa, gostaríamos que você escolhesse um
+                  horário neste link:
+                  <a href="http://bit.ly/marcar-ate-o-futuro"
+                    ><b>http://bit.ly/marcar-ate-o-futuro</b></a
+                  ><br /><br />
+
                   <br />
                   O nosso papo deve levar no máximo 30 minutos e vai servir como
                   base para personalização da sua experiência
-                  <b>(CORRE PORQUE A DISPONIBILIDADE PODE MUDAR! 🏃‍♂️🏃🏽‍♀️)</b>.
+                  <b>(CORRE PORQUE A DISPONIBILIDADE PODE MUDAR! 🏃‍♂️🏃🏽‍♀️ )</b>.
                   <br /><br />
-                  Até o Futuro,<br /><br />
-                  Clayton
+
+                  No caso de dúvidas, pode responder a todos deste e-mail.
+                  <br /><br />
+
+                  Até o Futuro!<br /><br />
+                  😊
                 </div>
               </b-collapse>
             </b-table-column>
@@ -244,8 +261,8 @@ export default {
               Expert1Email: childData.Expert1Email,
               Expert2Email: childData.Expert2Email,
               DiasEHorasPropostos: childData.DiasEHorasPropostos,
-              URLVaga: thisVM.URLVaga,
-              isOpen :false,
+              URLVaga: childData.URLVaga,
+              isOpen: false,
             });
           }
         });

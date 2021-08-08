@@ -392,7 +392,7 @@ const routes = [
       ]
     }, component: () => import(/* webpackChunkName: "about" */ '../views/Entrevistas/Demandas.vue')
   }, {
-    path: '/Entrevistas/:InviterCode?',
+    path: '/Entrevistas/Solicitar/:InviterCode?',
     name: 'AgendarEntrevista',
     meta: {
 
@@ -403,7 +403,152 @@ const routes = [
       //   { name: 'Entrevistas', link: 'Entrevistas' }
       // ]
     }, component: () => import(/* webpackChunkName: "about" */ '../views/Entrevistas/Agendar.vue')
+  }, {
+    path: '/Feedback/TesteEmpregabilidade',
+    name: 'FeedbackTesteEmpregabilidade',
+    meta: {
+
+      requiresAuth: false,
+      friendlyName: "O que achou do papo?",
+
+      // breadcrumb: [
+      //   { name: 'Entrevistas', link: 'Entrevistas' }
+      // ]
+    }, component: () => import(/* webpackChunkName: "about" */ '../views/Feedback/Feedback-TesteEmpregabilidade.vue')
+  }, {
+    path: '/Feedback/EventoAteOFuturo/:IdEvento?',
+    name: 'FeedbackDesignThinkingFuturo',
+    meta: {
+
+      requiresAuth: false,
+      friendlyName: "O que achou do papo?",
+
+      // breadcrumb: [
+      //   { name: 'Entrevistas', link: 'Entrevistas' }
+      // ]
+    }, component: () => import(/* webpackChunkName: "about" */ '../views/Feedback/Feedback-DesignThinkingFuturo.vue')
+  }, {
+    path: '/Entrevistas/MarcarSessao',
+    name: 'MarcarSessao',
+    meta: {
+
+      requiresAuth: false,
+      friendlyName: "Marcar Sessão",
+
+      // breadcrumb: [
+      //   { name: 'Entrevistas', link: 'Entrevistas' }
+      // ]
+    }, component: () => import(/* webpackChunkName: "about" */ '../views/Entrevistas/MarcarSessao.vue')
   },
+
+  {
+    path: '/FeedFuture/Pedir/:IdFeedFuture?',
+    name: 'FeedFuturePedir',
+    meta: {
+      requiresAuth: true,
+
+      friendlyName: "Pedir Feedback",
+      breadcrumb: [
+        { name: 'Feedbacks', link: 'FeedbackDashboard' },
+      ]
+    },
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/Feedback/FeedFuture-Pedir.vue')
+  },
+  {
+    path: '/FeedFuture/Modelos',
+    name: 'FeedFutureModelos',
+    meta: {
+      requiresAuth: true,
+
+      friendlyName: "Modelos de Pedido de Feedback",
+      breadcrumb: [
+        { name: 'Feedbacks', link: 'FeedbackDashboard' },
+      ]
+    },
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/Feedback/FeedFuture-Modelos.vue')
+  },
+  {
+    path: '/FeedFuture/Criar/:IdFeedFuture?',
+    name: 'FeedFutureCriar',
+    meta: {
+      requiresAuth: true,
+
+      friendlyName: "Criar Modelo de Pedido de Feedback",
+      breadcrumb: [
+        { name: 'Feedbacks', link: 'FeedbackDashboard' },
+      ]
+    },
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/Feedback/FeedFuture-Criar.vue')
+  },
+
+  {
+    path: '/Certificados/Validar/:CertificateId?',
+    name: 'ValidaCertificado',
+    meta: {
+      requiresAuth: false,
+
+      friendlyName: "Validar Autenticidade do Certificado",
+      // breadcrumb: [
+      //   { name: 'Certificados', link: 'ValidaCertificado' },
+      // ]
+    },
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/Certificados/ValidaCertificado.vue')
+  },
+
+  {
+    path: '/Certificados/Emitir',
+    name: 'EmitirCertificado',
+    meta: {
+      requiresAuth: false,
+
+      friendlyName: "Emitir Certificado",
+      // breadcrumb: [
+      //   { name: 'Certificados', link: 'ValidaCertificado' },
+      // ]
+    },
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/Certificados/EmitirCertificado.vue')
+  },
+  {
+    path: '/Obrigado',
+    name: 'ObrigadoCompra',
+    meta: {
+      requiresAuth: false,
+
+      friendlyName: "Obrigado pela confiança!",
+
+    },
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/Obrigado-Compra.vue')
+  },
+  {
+    path: '/Users/Management',
+    name: 'ManageUsers',
+    meta: {
+      requiresAuth: true,
+
+      friendlyName: "Gestão de Usuarios",
+
+    },
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/Usuarios/ListaUsuarios.vue')
+  }
 ]
 
 const router = new VueRouter({

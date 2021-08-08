@@ -5,9 +5,9 @@
       description="Mentoria Gratuita"
     />
     <div class="box">
-      <h1 class="title is-3">📅 Agende seu Processo Seletivo + Mentoria</h1>
+      <h1 class="title is-3">📅 Agende sua conversa com nossos Experts</h1>
       <h2 class="subtitle is-3">
-        Faça um simulado e teste sua empregabilidade  
+        Fale com a gente para uma mentoria/teste de empregabilidade bem bacana
       </h2> 
       <div class="columns">
         <div class="column is-6">
@@ -241,8 +241,7 @@
 
             <br />
             <b>1️⃣</b> Assim que você registrar seu interesse, vamos mandar
-            sugestões de datas para você escolher e agendar a sua simulação de
-            processo seletivo!
+            sugestões de datas para você escolher e agendar seu teste de empregabilidade/mentoria!
             <br />
             <br />
 

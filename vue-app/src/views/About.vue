@@ -20,7 +20,7 @@
             <br />
             Peça feedback sobre suas habilidades e ideias de negócio de forma
             gratuita. Conecte-se com pessoas fantásticas que são referência de
-            mercado. Faça uma simulação de um processo seletivo junto com mentoria prática para entender sua empregabilidade.
+            mercado. Faça um teste de empregabilidade junto com mentoria prática para entender sua empregabilidade.
 
             <br />
             <br />
@@ -51,7 +51,7 @@
               <p>
                 Se você está aqui é porque tem interesse em receber
                 feedbacks.<br />
-                Agende uma sessão bem legal de mentoria com a gente para simular um processo seletivo e receber feedbacks bem bacanas que podem te ajudar a atravessar o rio que te separa da sua versão futura.
+                Agende uma sessão bem legal de mentoria com a gente para fazer um teste de empregabilidade e receber feedbacks bem bacanas que podem te ajudar a atravessar o rio que te separa da sua versão futura.
               </p>
               <br />
  

@@ -24,8 +24,8 @@
         <hr class="navbar-divider" />
         <div class="navbar-item">Versão 0.0.1 BETA</div>
       </b-navbar-dropdown> -->
-<b-navbar-item tag="router-link" :to="{ name: 'AgendarEntrevista' }" alt="Faça uma Simulação de Entrevista e Mentoria Grátis">
-       🌐 <span>&nbsp;</span> Simulador de Processo Seletivo </b-navbar-item
+<b-navbar-item tag="router-link" :to="{ name: 'AgendarEntrevista' }" alt="Faça seu Teste de Empregabilidade e Mentoria Grátis">
+       🌐 <span>&nbsp;</span> Teste de Empregabilidade </b-navbar-item
       >
       <b-navbar-item tag="router-link" :to="{ name: 'FeedbackDashboard' }">
         <b-icon icon="atom" /> <span>&nbsp;</span> Feedbacks</b-navbar-item

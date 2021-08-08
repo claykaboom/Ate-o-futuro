@@ -19,10 +19,13 @@
           <br />
           <router-link
             class="button is-dark is-inverted is-large pulse-button"
-            :to="{ name: 'AgendarEntrevista' , params :{InviterCode:InviterCode} }"
+            :to="{
+              name: 'AgendarEntrevista',
+              params: { InviterCode: InviterCode },
+            }"
           >
-            ❤ Teste sua empregabilidade! </router-link
-          >
+            ❤ Fale com nossos Experts!
+          </router-link>
           <!--  <router-link
             class="button is-dark is-inverted is-large pulse-button"
             :to="{ name: 'SkillFeedback' }"
@@ -120,12 +123,15 @@
                 bora conversar!
               </h2>
 
-              <a
-                href="https://calendly.com/claytonfreitas/batepapo"
-                target="blank"
-                class="button is-white is-inverted"
-                >Marque um horário aqui&ensp;<i class="fad fa-chevron-right"></i
-              ></a>
+              <router-link
+                class="button is-dark is-inverted is-large pulse-button"
+                :to="{
+                  name: 'AgendarEntrevista',
+                  params: { InviterCode: InviterCode },
+                }"
+              >
+                ❤ Fale com nossos Experts!
+              </router-link>
               <br />
               <br />
               <br />

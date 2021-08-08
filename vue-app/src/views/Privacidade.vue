@@ -29,7 +29,7 @@
 
           <br />
         <br />
-        Nosso processo de simulação de processo seletivo, bem como mentoria e coaching, são totalmente customizados, mas baseados na quantidade de informações que você decidir compartilhar conosco. Não obrigamos a detalhar suas informações, mas não podemos nos comprometer com qualquer resultado empregatício com base nas simulações feitas.
+        Nosso processo de teste de empregabilidade, bem como mentoria e coaching, são totalmente customizados, mas baseados na quantidade de informações que você decidir compartilhar conosco. Não obrigamos a detalhar suas informações, mas não podemos nos comprometer com qualquer resultado empregatício com base nas simulações feitas.
         <br />
         <br />
 
