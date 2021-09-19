@@ -4,12 +4,24 @@ import VueRouter from 'vue-router'
 import firebase from 'firebase'
 import { page } from 'vue-analytics'
 
+import Meta from 'vue-meta'
+ 
 import store from '../store/index'
 
 
 import VueAnalytics from 'vue-analytics'
 
 Vue.use(VueRouter)
+Vue.use(Meta
+//   , {
+//   keyName: 'metaInfo',
+//   attribute: 'data-vue-meta',
+//   ssrAttribute: 'data-vue-meta-server-rendered',
+//   tagIDKeyName: 'vmid',
+//   refreshOnceOnNavigation: true
+// }
+)
+
 const routes = [
   // {
   //   path: '/',
@@ -84,7 +96,7 @@ const routes = [
   },
 
   {
-    path: '/Feedback/Pedir',
+    path: '/Feedback/Pedir/:IdTemplate?',
     name: 'SkillFeedback',
     meta: {
       requiresAuth: true,

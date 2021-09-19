@@ -71,7 +71,19 @@
           >
         </b-taglist>
       </section>
-    </b-field>
+    </b-field> 
+    <b-field label="Métricas de Avaliação (⭐)" v-if="feedBackRequest.QuestoesFeedback">
+      <section>
+        <b-taglist>
+          <b-tag
+            type="is-success"
+            v-for="tag in feedBackRequest.QuestoesFeedback"
+            :key="tag.texto"
+            >{{ tag.texto }}</b-tag
+          >
+        </b-taglist>
+      </section>
+    </b-field> 
     <b-field
       v-if="
         feedBackRequest.WantsExternalReference &&
@@ -251,7 +263,7 @@ export default {
       return "";
     },
     ComputedDetalhes() {
-      debugger;
+ 
       return this.feedBackRequest.DescricaoHabilidade? this.feedBackRequest.DescricaoHabilidade.replaceAll("\n", "<br />"):null;
     },
     ComputedAcoesTomadas() {

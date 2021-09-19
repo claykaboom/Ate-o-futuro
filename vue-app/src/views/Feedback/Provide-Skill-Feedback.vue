@@ -72,12 +72,14 @@
               >
             </p>
             <b-field
-              label="Avalie como as áreas de conhecimento envolvidas se manifestam nesse pedido. Caso não seja possível avaliar, não é necessário preencher."
+              label="Avalie os parâmetros abaixo da maneira mais imparcial possível"
             >
               <b-message>
                 <div v-for="area in RatedAreas" :key="area.Name">
-                  <b-tag type="is-warning">{{ area.Name }}</b-tag>
-                  <b-rate v-model="area.Rating"></b-rate><br />
+                  <b-tag type="is-warning">{{ area.Name }}</b-tag>   <b-rate v-model="area.Rating"></b-rate><br />
+ <div style=" border: 1px solid black" v-if="area.Description != null && area.Description != ''">Como medir <b>{{area.Name}}</b>:<br />
+                  <span ><b-input type="textarea" disabled :value= "area.Description" /></span>
+                         </div>       <br />  
                 </div>
               </b-message>
             </b-field>
@@ -177,7 +179,7 @@
         :to="{ name: 'SkillFeedback' }"
       >
         <b-icon size="is-small" icon="arrow-right"></b-icon
-        ><b-icon size="is-small" icon=""></b-icon> Pedir um 
+        ><b-icon size="is-small" icon=""></b-icon> Pedir um
         feedback</router-link
       >
     </div>
@@ -197,6 +199,7 @@ export default {
       feedBackRequest: {},
       feedbackText: null,
       RatedAreas: [],
+
       ContinuarFazendo: null,
       EvitarFazer: null,
       PassarAFazer: null,
@@ -211,12 +214,25 @@ export default {
     ClassificacaoFinal() {
       var count = 0;
       var soma = 0;
-      this.RatedAreas.forEach((area) => {
-        if (area.Rating != null) {
-          count++;
-          soma += area.Rating;
-        }
-      });
+      if (this.feedBackRequest.version <= 2) {
+        //nesta versão feedbacks são dados às áreas
+        this.RatedAreas.forEach((area) => {
+          if (area.Rating != null) {
+            count++;
+            soma += area.Rating;
+          }
+        });
+      } else if (this.feedBackRequest.version >= 3) {
+        this.RatedAreas.forEach((area) => {
+          if (area.Rating != null) {
+            count++;
+            soma += area.Rating;
+          } else {
+            return null;
+          }
+        });
+      }
+
       return soma / count;
     },
   },
@@ -237,7 +253,7 @@ export default {
       ) {
         this.$buefy.dialog.alert({
           title: "Tente preencher algo!",
-          message: `Para que seu feedback tenha relevância e seja descritivo, específico, dirigido, oportuno e esclarecedor, tente avaliar pelo menos uma das áreas de conhecimento e fornecer alguma informação nos campos de texto.`,
+          message: `Para que seu feedback tenha relevância e seja descritivo, específico, dirigido, oportuno e esclarecedor, preenchar os parâmetros ⭐ e forneça alguma informação nos campos de texto.`,
           type: "is-info",
           hasIcon: true,
           icon: "info",
@@ -262,6 +278,7 @@ export default {
           )
           .set({
             RatedAreas: thisVM.RatedAreas,
+
             ContinuarFazendo: thisVM.ContinuarFazendo,
             EvitarFazer: thisVM.EvitarFazer,
             PassarAFazer: thisVM.PassarAFazer,
@@ -275,9 +292,9 @@ export default {
             ClassificacaoFinal: thisVM.ClassificacaoFinal,
             RequesterUserId: thisVM.feedBackRequest.UserId,
             IdFeedbackRequest: thisVM.IdfeedBackRequest,
-            RequesterUserName : thisVM.feedBackRequest.UserName,
+            RequesterUserName: thisVM.feedBackRequest.UserName,
             FeedBackRequestTipoFeedback: thisVM.feedBackRequest.TipoFeedback,
-            FeedBackRequestResumo: thisVM.feedBackRequest.Resumo
+            FeedBackRequestResumo: thisVM.feedBackRequest.Resumo,
           });
 
         this.$buefy.dialog.alert({
@@ -334,10 +351,27 @@ export default {
           }
         }
         if (thisVM.feedBackRequest != null) {
-          thisVM.feedBackRequest.Areas.forEach((area) => {
-            thisVM.RatedAreas.push({ Name: area, Rating: null });
-          });
+          if (thisVM.feedBackRequest.version <= 2) {
+            thisVM.feedBackRequest.Areas.forEach((area) => {
+              thisVM.RatedAreas.push({
+                Name: area,
+                Description: "",
+                Rating: null,
+              });
+            });
+          } else if (thisVM.feedBackRequest.version >= 3) {
+            ///VERSAO 3 , baseada em parametros de feedback
+
+            thisVM.feedBackRequest.QuestoesFeedback.forEach((qfb) => {
+              thisVM.RatedAreas.push({
+                Name: qfb.texto,
+                Description: qfb.descricao,
+                Rating: null,
+              });
+            });
+          }
         }
+
         thisVM.$store.commit("stopLoading");
         //thisVM.$root.stopLoading();
       });

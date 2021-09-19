@@ -284,7 +284,7 @@
         por qualquer conteúdo ou informações ofensivos, inadequados, obscenos,
         ilegais ou questionáveis que você possa encontrar no Até o Futuro. Não
         nos responsabilizamos pela conduta, online ou offline, de qualquer
-        usuário do Até o Futuro.
+        usuário do Até o Futuro. Todos os dados fornecidos são anônimos exceto se você ou algum usuário decidir colocar informações pessoais
       </p>
       <br />
 
@@ -295,7 +295,7 @@
         coletamos o conteúdo, comunicações e outras informações que você fornece
         quando usa nossos Produtos, inclusive quando você se cadastra para criar
         uma conta, cria ou compartilha conteúdo, envia mensagens, dá feedbacks,
-        pede feedbacks, ou se comunica com outras pessoas.
+        pede feedbacks, ou se comunica com outras pessoas.Todos os dados fornecidos são anônimos exceto se você ou algum usuário decidir colocar informações pessoais
       </p>
       <br />
 
@@ -305,7 +305,14 @@
         informações não serão compartilhados com terceiros.
       </p>
       <br />
-
+      <p>
+Todos os dados fornecidos são anônimos exceto se você ou algum usuário decidir colocar informações pessoais nos campos disponíveis.
+Interações feitas no site enquanto você está "logado" são registradas em seu histórico de usuário.
+ Podem ser usadas em caso de demanda judicial para atestar a sua conduta. Nenhum funcionário, afiliado, ou Expert do Até o Futuro tem acesso ao seus dados de modo isolado, exceto no caso de você entrar em contato com a nossa equipe técnica para análise ou suporte.
+ Não armazenamos senhas e fazemos login federado com o Google até o momento da revisão de nossos termos.
+         
+      </p>
+      <br />
       <h2 class="subtitle is-3">
         ISENÇÃO DE GARANTIAS E LIMITAÇÕES DE RESPONSABILIDADE
       </h2>
@@ -380,6 +387,7 @@
       <h2>MUDANÇAS DESTE DOCUMENTO</h2>
       <br />
       <p>07 de outubro de 2020 (primeira versão)</p>
+      <p>19 de setembro de 2021 (segunda versão)</p>
     </div>
   </layout-default>
 </template>

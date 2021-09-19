@@ -5,7 +5,9 @@
         title="Até o Futuro - Meu painel de feedbacks"
         description="Veja os pedidos e envios de feedback"
       />
-      <h1 class="title is-3"> <b-icon icon="atom" size="is-medium"/>  Meu painel de feedbacks</h1>
+      <h1 class="title is-3">
+        <b-icon icon="atom" size="is-medium" /> Meu painel de feedbacks
+      </h1>
       <div class="buttons">
         <router-link
           class="button is-success is-large"
@@ -102,14 +104,14 @@
             :selected.sync="selectedResponse"
           >
             <b-table-column field="Id" label="ID FEEDBACK" v-slot="props">
-              {{ props.row.id }}
+              {{ props.row.id }}    {{ props.row.DateTime | moment("DD/MM/YYYY HH:mm")}} 
             </b-table-column>
-            <b-table-column field="Usuário" label="Alvo do Feedback">
-              ######## ## ####
+            <b-table-column field="Usuário" label="Alvo do Feedback" v-slot="props">
+          {{ props.row.RequesterUserName }}     
             </b-table-column>
             <b-table-column
               field="ClassificacaoFinal"
-              label="Classificação"
+              label="Classificação dada"
               v-slot="props"
             >
               <b-rate
@@ -166,48 +168,6 @@ export default {
     this.getData();
   },
   methods: {
-    gravarFinal: function () {
-      var thisVM = this;
-      var feedbackResponseId = firebase
-        .database()
-        .ref()
-        .child(`/FeedbackRequests/${thisVM.IdfeedBackRequest}/Feedbacks`)
-        .push().key;
-
-      firebase
-        .database()
-        .ref(
-          "/FeedbackRequests/" +
-            thisVM.IdfeedBackRequest +
-            "/Feedbacks/" +
-            feedbackResponseId
-        )
-        .set({
-          RatedAreas: thisVM.RatedAreas,
-          ContinuarFazendo: thisVM.ContinuarFazendo,
-          EvitarFazer: thisVM.EvitarFazer,
-          PassarAFazer: thisVM.PassarAFazer,
-          feedbackText: thisVM.feedbackText,
-
-          LinkedInURL: thisVM.LinkedInURL,
-          ReferenceBooks: thisVM.ReferenceBooks,
-          ReferenceWorkLink: thisVM.ReferenceWorkLink,
-          UserName: thisVM.$store.state.currentUser.displayName,
-          UserId: thisVM.$store.state.currentUser.uid,
-          UserEmail: thisVM.$store.state.currentUser.email,
-        });
-
-      this.$buefy.dialog.alert({
-        message:
-          "Deu tudo certo! Obrigado pela generosidade de seu tempo. Depois faremos um Debriefing do processo com você!",
-        onConfirm: () => {
-          this.$buefy.toast.open(`Feito`);
-          this.$router.replace({
-            name: "Home",
-          });
-        },
-      });
-    },
     clearRequestsData: function () {
       this.feedBackRequests.splice(0, this.feedBackRequests.length);
     },
@@ -283,10 +243,13 @@ export default {
           var childData = childSnapshot.val();
 
           if (childSnapshot.key != "_count") {
+  
             thisVM.feedBackResponses.push({
               id: childSnapshot.key,
               ClassificacaoFinal: childData.ClassificacaoFinal,
               IdFeedbackRequest: childData.IdFeedbackRequest,
+              RequesterUserName: childData.RequesterUserName,
+              DateTime: childData.DateTime? childData.DateTime : new Date(),
             });
           }
         });

@@ -92,6 +92,14 @@
                   >
                     Finalizar
                   </button>
+
+                  <button
+                    v-if="activeStep == 4 && isExpert"
+                    @click="gravarTemplate"
+                    class="button is-info"
+                  >
+                    Gravar Template
+                  </button>
                 </section>
               </template>
               <b-step-item step="1" label="Preparação" :clickable="true">
@@ -201,8 +209,18 @@
                   icon="arrow-right"
                   class="animate__animated animate__headShake animate__infinite"
                   size="is-medium"
-                /><b-checkbox v-model="wantsExpert">
-                  Sim, quero um(a) expert para me dar feedback!
+                /><b-checkbox v-model="wantsExpert" :disabled="!isExpert">
+                  Sim, quero um(a) expert para me dar feedback! (Somente conta
+                  premium para receber feedbacks dos Experts do Futuro)
+                </b-checkbox>
+
+                <br /><b-icon
+                  icon="arrow-right"
+                  class="animate__animated animate__headShake animate__infinite"
+                  size="is-medium"
+                /><b-checkbox v-model="oneFeedbackPerPerson" disabled>
+                  Garantir somente um feedback por pessoa? <br />(Somente conta
+                  premium para permitir feedbacks sem login)
                 </b-checkbox>
               </b-step-item>
               <b-step-item
@@ -325,7 +343,7 @@
 
               <b-step-item
                 step="3"
-                label="Áreas"
+                label="Métricas"
                 :clickable="
                   DescricaoHabilidade != null && DescricaoHabilidade != ''
                 "
@@ -347,8 +365,60 @@
                     :allow-new="allowNew"
                     :open-on-focus="openOnFocus"
                   >
-                  </b-taginput>
-                </b-field>
+                  </b-taginput> </b-field
+                ><br />
+                <h1 class="title has-text-centered">
+                  Métricas de Feedback (⭐)
+                </h1>
+                <h2 class="subtitle is-5 has-text-centered">
+                  Adicione formas objetivas de medir numa escala de 1 a 5 , que
+                  podem ajudar você a ter parâmetro de sua evolução ao longo do
+                  tempo
+                </h2>
+                <b-field label="Métrica de Feedback">
+                  <b-input
+                    placeholder="Que métrica OBJETIVA você gostaria de usar para medir numa escala de 1 a 5?"
+                    type="text"
+                    v-model="questaoFeedbackAtual.texto"
+                  ></b-input
+                ></b-field>
+                <b-field label="Descrição da Métrica"
+                  ><b-input
+                    placeholder="Descreva como quem vai dar o feedback para você vai usar essa escala."
+                    type="textarea"
+                    v-model="questaoFeedbackAtual.descricao"
+                  ></b-input
+                ></b-field>
+
+                <p class="control">
+                  <b-button
+                    type="is-primary"
+                    @click="AdicionarParametroFeedback"
+                    title="Adicionar reflexão"
+                  >
+                    <b-icon icon="plus" /> Adicionar métrica de feedback
+                  </b-button>
+                </p>
+                <br />
+                <b-message>
+                  Aproveite e já faça uma auto-avaliação inicial para cada uma
+                  das métricas adicionadas.
+                  <div v-for="questao in questoesFeedback" v-bind:key="questao.texto">
+                    <b>{{ questao.texto }}</b>
+                    <b-field>
+                      <b-rate v-model="questao.Rating"></b-rate><br />
+                      <p class="control">
+                        <b-button
+                          type="is-danger"
+                          @click="RemoverParametroFeedback(questao)"
+                          title="Remover reflexão"
+                        >
+                          <b-icon icon="delete" /> Remover
+                        </b-button>
+                      </p></b-field
+                    >
+                  </div>
+                </b-message>
               </b-step-item>
 
               <b-step-item
@@ -481,9 +551,25 @@
                       </b-taglist>
                     </section>
                   </b-field>
+                </div>
+
+                <div class="box">
+                  <b-field label="Métricas de Avaliação (⭐)">
+                    <section>
+                      <b-taglist>
+                        <b-tag
+                          type="is-success"
+                          v-for="tag in questoesFeedback"
+                          :key="tag"
+                          >{{ tag.texto }}</b-tag
+                        >
+                      </b-taglist>
+                    </section>
+                  </b-field>
                   Cada uma dessas áreas será classificada de 1 a 5 pelo seu
                   dador de feedback.
                 </div>
+
                 <b-field
                   v-if="
                     WantsExternalReference &&
@@ -535,8 +621,12 @@
                   <b
                     >COPIE A SUA URL DE FEEDBACK SE QUISER PEDIR FEEDBACKS PARA
                     AMIGOS E COLEGAS (Este link ficará disponível em seu painel
-                    de feedbacks.):</b
-                  >
+                    de feedbacks.):
+                    <span style="color: #ff0000"
+                      >ESTE LINK SÓ SERÁ VALIDO QUANDO VOCÊ CLICAR EM
+                      FINALIZAR!</span
+                    >
+                  </b>
                   <span> {{ finalAteOFuturoShareURL }} </span>
                   <br />
                 </b-message>
@@ -603,9 +693,14 @@ export default {
   components: { VideoRecorder, VueSvgGauge },
   data() {
     return {
-      // PREPARATION
-      wantsExpert: true,
+      /////USER DATA
 
+      isExpert: false,
+
+      // PREPARATION
+      IdTemplate: null,
+      wantsExpert: false,
+      oneFeedbackPerPerson: true,
       isScrollable: false,
       maxHeight: 200,
       finalidadeAtual: { icon: "bike", text: "Habilidade" },
@@ -648,6 +743,9 @@ export default {
       nextIcon: "chevron-right",
       labelPosition: "bottom",
       mobileMode: "minimalist",
+
+      questoesFeedback: [],
+      questaoFeedbackAtual: { texto: "", descricao: "" },
 
       perguntasAutoFeedbackDisponiveis: [
         {
@@ -723,7 +821,7 @@ export default {
 
   metaInfo() {
     return {
-      title: `Até o Futuro - Dê seu feedback`,
+      title: `Até o Futuro - Peça seu feedback`,
       meta: [
         {
           name: "description",
@@ -731,7 +829,7 @@ export default {
         },
         {
           property: "og:title",
-          content: `Até o Futuro - Dê seu feedback`,
+          content: `Até o Futuro - Peça seu feedback`,
         },
         { property: "og:site_name", content: "Até o Futuro" },
         { property: "og:type", content: "website" },
@@ -957,13 +1055,24 @@ export default {
     },
 
     LABEL_AreasDeConexao() {
+      var suffixExplanation = "";
+      if (this.wantsExpert) {
+        suffixExplanation =
+          " Escolher as áreas vai ajudar a gente a escolher a(s) pessoa(s) mais capacitada(s) para te dar um retorno de qualidade 👨‍🎓👥. Recomendamos pelo menos 3️⃣ TRÊS áreas.";
+      } else {
+        suffixExplanation =
+          " Escolher áreas de conhecimento vai ajudar o Até o Futuro a personalizar a experiência para feedbacks parecidos no futuro 🧞‍♂️. Recomendamos pelo menos 3️⃣ TRÊS áreas.";
+      }
       switch (this.finalidadeAtual.text) {
         case "Habilidade":
-          return "A quais competências ou áreas ela está ligada? Escolher as áreas vai ajudar a gente a escolher a(s) pessoa(s) mais capacitada(s) para te dar um retorno de qualidade. Recomendamos pelo menos TRÊS áreas.";
+          return (
+            "A quais competências ou áreas ela está ligada? " +
+            suffixExplanation
+          );
         case "Ideia":
-          return "A quais áreas essa ideia está ligada? Escolher as áreas vai ajudar a gente a escolher a(s) pessoa(s) mais capacitada(s) para te dar um retorno de qualidade. Recomendamos pelo menos TRÊS áreas.";
+          return "A quais áreas essa ideia está ligada? " + suffixExplanation;
         case "Evento":
-          return "A quais áreas esse evento está ligado? Escolher as áreas vai ajudar a gente a escolher a(s) pessoa(s) mais capacitada(s) para te dar um retorno de qualidade. Recomendamos pelo menos TRÊS áreas.";
+          return "A quais áreas esse evento está ligado? " + suffixExplanation;
       }
       return "";
     },
@@ -1047,7 +1156,7 @@ export default {
       return returning;
     },
     dicasParaMelhora() {
-      var amountCriteria = 15;
+      var amountCriteria = 16;
       var finalSum = 0;
       var percent = 0;
       var dicasLocais = [];
@@ -1160,7 +1269,16 @@ export default {
           "Etapa 3 - Se você escolher três áreas pelo menos, a chance de você ter uma resposta do expert certo aumenta bastante!"
         );
       }
+
       finalSum += Math.min(this.Areas.length, 3);
+
+      if (this.questoesFeedback.length == 0) {
+        dicasLocais.push(
+          "Etapa 3 - Adicione pelo menos uma métrica  de avaliação! ⭐⭐⭐⭐⭐"
+        );
+      }
+
+      finalSum++;
 
       if (this.temMaterialReferencia) {
         finalSum++;
@@ -1253,6 +1371,29 @@ export default {
   },
   mounted() {
     this.startFeedbackRequest();
+    this.startFromTemplate();
+    var thisVM = this;
+    var userDataRef = firebase
+      .database()
+      .ref(`Users/${thisVM.$store.state.currentUser.uid}/PersonalData`);
+
+    userDataRef.on("value", function (snapshot) {
+      var data = snapshot.val();
+      // thisVM.miniBio = data.miniBio ? data.miniBio : null;
+      thisVM.isExpert = data.isExpert ? data.isExpert : false;
+      thisVM.linkedInURL = data.linkedInURL ? data.linkedInURL : null;
+      //thisVM.whatsAppNumber = data.whatsAppNumber ? data.whatsAppNumber : null;
+
+      //thisVM.areas = data.areas ? data.areas : [];
+
+      // thisVM.photoURL = data.photoURL
+      //   ? data.photoURL
+      //   : "https://source.unsplash.com/featured/?paint";
+
+      thisVM.$buefy.toast.open(`Dados de usuário in place!`);
+
+      thisVM.$store.commit("stopLoading");
+    });
   },
   watch: {
     dicasParaMelhora() {
@@ -1292,6 +1433,31 @@ export default {
         });
       }
     },
+    RemoverParametroFeedback(questao) {
+      this.questoesFeedback.splice(this.questoesFeedback.indexOf(questao), 1);
+    },
+    AdicionarParametroFeedback() {
+      if (
+        this.questaoFeedbackAtual != null &&
+        this.questaoFeedbackAtual.texto != ""
+      ) {
+        this.questoesFeedback.push({
+          texto: this.questaoFeedbackAtual.texto,
+          descricao: this.questaoFeedbackAtual.descricao,
+          Rating: null,
+        });
+        this.questaoFeedbackAtual = { texto: "", descricao: "" };
+      } else {
+        this.$buefy.dialog.alert({
+          title: "Como medir? ⭐⭐⭐⭐⭐",
+          message:
+            "Digite um texto e uma descrição que pode indicar como você terá sua avaliação feita, essa métrica será avaliada numa escala de 1 a 5.",
+          type: "is-info",
+          ariaRole: "alertdialog",
+          ariaModal: true,
+        });
+      }
+    },
     MostrarDicas() {
       var dicas = "";
       this.dicasParaMelhora.dicas.forEach((dica) => {
@@ -1311,6 +1477,71 @@ export default {
         ariaModal: true,
       });
     },
+
+    startFromTemplate() {
+      var thisVM = this;
+      //IdTemplate
+
+      if (thisVM.$route.params.IdTemplate != null) {
+        thisVM.IdTemplate = thisVM.$route.params.IdTemplate;
+        var templateFeedBackRequestREF = firebase
+          .database()
+          .ref(`TemplateFeedbackRequests/${thisVM.IdTemplate}`);
+
+        templateFeedBackRequestREF.on("value", function (snapshot) {
+          thisVM.$buefy.toast.open(`Template carregado!`);
+          var template = snapshot.val();
+
+          //   thisVM.finalidadeAtual.text :template.TipoFeedback ,
+          thisVM.wantsExpert = template.QuerExpert;
+          thisVM.ResumoHabilidade = template.Resumo;
+          thisVM.DescricaoHabilidade = template.Detalhamento;
+          if (template.AcoesTomadas != null) {
+            thisVM.OQueJaFez = template.AcoesTomadas;
+          }
+          thisVM.JaRefletiu = template.JaRefletiu;
+          if (template.Reflexoes != null) {
+            thisVM.reflectionQuestions = template.Reflexoes;
+          }
+          //QUALIDADE DO PEDIDO É COMPUTADA
+          thisVM.temMaterialReferencia = template.TemMaterialReferencia;
+          ////////RETROCOMPATIBILIDADE VERSAO 1
+
+          thisVM.FinalidadeHabilidade = template.FinalidadeHabilidade;
+          thisVM.ResumoHabilidade = template.ResumoHabilidade;
+          thisVM.DescricaoHabilidade = template.DescricaoHabilidade;
+          ///////////////
+
+          ///VERSAO 3
+          if (template.QuestoesFeedback != null) {
+            
+            template.QuestoesFeedback.forEach((element) => {
+              thisVM.questoesFeedback.push({
+                texto: element.texto,
+                descricao: element.descricao,
+                Rating: null,
+              });
+            });
+          }
+          ////
+
+          thisVM.Areas = template.Areas;
+          if (template.VideoStorageURL != null) {
+            thisVM.VideoStorageURL = template.VideoStorageURL;
+          }
+          if (template.ExternalReferenceURL != null) {
+            thisVM.ExternalReferenceURL = template.ExternalReferenceURL;
+          }
+          //   template. UserName= thisVM.$store.state.currentUser.displayName,
+          //  template.  UserId= thisVM.$store.state.currentUser.uid,
+          //  template.  UserEmail= thisVM.$store.state.currentUser.email,
+          thisVM.ExternalReferenceType = template.ExternalReferenceType;
+          thisVM.WantsExternalReference = template.WantsExternalReference;
+          thisVM.$store.commit("stopLoading");
+          //thisVM.$root.stopLoading();
+        });
+      }
+    },
     startFeedbackRequest() {
       if (this.IdFeedBackRequest == null) {
         this.IdFeedBackRequest = firebase
@@ -1325,14 +1556,16 @@ export default {
       this.VideoStorageURL = url;
       this.$buefy.toast.open(`Vídeo gravado!`);
     },
+
     gravarFinal() {
+     
       this.startFeedbackRequest();
       var thisVM = this;
       firebase
         .database()
         .ref("/FeedbackRequests/" + this.IdFeedBackRequest)
         .set({
-          version: 2,
+          version: 3,
           TipoFeedback: this.finalidadeAtual.text,
           QuerExpert: thisVM.wantsExpert,
           DateTime: firebase.firestore.Timestamp.fromMillis(Date.now()),
@@ -1344,13 +1577,78 @@ export default {
           TemMaterialReferencia: thisVM.temMaterialReferencia,
           QualidadePedido: thisVM.feedbackRequestQuality,
 
-          ////////RETROCOMPATIBILIDADE
+          ////////RETROCOMPATIBILIDADE VERSAO 1
 
           FinalidadeHabilidade: thisVM.FinalidadeHabilidade,
           ResumoHabilidade: thisVM.ResumoHabilidade,
           DescricaoHabilidade: thisVM.DescricaoHabilidade,
 
           ///////////////
+
+          ///VERSAO 3
+          QuestoesFeedback: thisVM.questoesFeedback,
+          ////
+
+          Areas: thisVM.Areas,
+          VideoStorageURL: thisVM.VideoStorageURL,
+          ExternalReferenceURL: thisVM.ExternalReferenceURL,
+          UserName: thisVM.$store.state.currentUser.displayName,
+          UserId: thisVM.$store.state.currentUser.uid,
+          UserEmail: thisVM.$store.state.currentUser.email,
+          ExternalReferenceType: thisVM.ExternalReferenceType,
+          WantsExternalReference: thisVM.WantsExternalReference,
+        });
+
+      var suffixExplanation = thisVM.wantsExpert
+        ? "Em breve você receberá um feedback sobre sua habilidade!"
+        : "Compartilhe o link de seu pedido com amigos e colegas!";
+
+      this.$buefy.dialog.alert({
+        message: "Deu tudo certo! " + suffixExplanation,
+        onConfirm: () => {
+          this.$buefy.toast.open(`Feito`);
+          this.$router.replace({
+            name: "FeedbackDashboard",
+          });
+        },
+      });
+    },
+
+    gravarTemplate() {
+      var IdTemplate = firebase
+        .database()
+        .ref()
+        .child("/TemplateFeedbackRequests")
+        .push().key;
+
+      var thisVM = this;
+      firebase
+        .database()
+        .ref("/TemplateFeedbackRequests/" + IdTemplate)
+        .set({
+          version: 3,
+          TipoFeedback: this.finalidadeAtual.text,
+          QuerExpert: thisVM.wantsExpert,
+          DateTime: firebase.firestore.Timestamp.fromMillis(Date.now()),
+          Resumo: thisVM.ResumoHabilidade,
+          Detalhamento: thisVM.DescricaoHabilidade,
+          AcoesTomadas: thisVM.OQueJaFez,
+          JaRefletiu: thisVM.JaRefletiu,
+          Reflexoes: thisVM.reflectionQuestions,
+          TemMaterialReferencia: thisVM.temMaterialReferencia,
+          QualidadePedido: thisVM.feedbackRequestQuality,
+
+          ////////RETROCOMPATIBILIDADE VERSAO 1
+
+          FinalidadeHabilidade: thisVM.FinalidadeHabilidade,
+          ResumoHabilidade: thisVM.ResumoHabilidade,
+          DescricaoHabilidade: thisVM.DescricaoHabilidade,
+
+          ///////////////
+
+          ///VERSAO 3
+          QuestoesFeedback: thisVM.questoesFeedback,
+          ////
 
           Areas: thisVM.Areas,
           VideoStorageURL: thisVM.VideoStorageURL,
@@ -1364,12 +1662,13 @@ export default {
 
       this.$buefy.dialog.alert({
         message:
-          "Deu tudo certo! Em breve você receberá um feedback sobre sua habilidade!",
+          "Deu tudo certo! Template salvo. Use a URL a seguir  para permitir que outros iniciem um pedido a partir desse template: https://AteOFuturo.com.br/Feedback/Pedir/" +
+          IdTemplate,
         onConfirm: () => {
           this.$buefy.toast.open(`Feito`);
-          this.$router.replace({
-            name: "FeedbackDashboard",
-          });
+          // this.$router.replace({
+          //   name: "FeedbackDashboard",
+          // });
         },
       });
     },

@@ -1,21 +1,27 @@
 <template>
   <layout-default>
- <vue-headful title="Até o Futuro - Validar Certificado" description="Até o Futuro" />
+    <vue-headful
+      title="Até o Futuro - Validar Certificado"
+      description="Até o Futuro"
+    />
     <div class="box">
       <h1 class="title is-3">🏆 Validar Certificado</h1>
-      <br /> <b>
-        Validação de autenticidade do certificado. Não aceite um PRINT desta tela. Acesse o Link ou QR Code no certificado
-        para validar a autenticidade.</b>
+      <br />
+      <b>
+        Validação de autenticidade do certificado. Não aceite um PRINT desta
+        tela. Acesse o Link ou QR Code no certificado para validar a
+        autenticidade.</b
+      >
       <div v-if="certificate">
-      Se você é o(a) dono(a) do certificado, adicione o certificado ao seu LinkedIn!<br />
+        Se você é o(a) dono(a) do certificado, adicione o certificado ao seu
+        LinkedIn!<br />
         <a :href="linkedInCertificateURL" target="blank"
           ><img
             src="https://download.linkedin.com/desktop/add2profile/buttons/pt_BR.png "
             alt="Adicionar este certificado ao seu perfil"
         /></a>
       </div>
-     
-      
+
       <br />
       <br />
       <article class="media" v-if="$store.state.isLoading">
@@ -125,6 +131,11 @@ export default {
   data() {
     return { CertificateId: null, certificate: null };
   },
+  // metaInfo() {
+  //   return {
+  //     meta: [{ property: "og:image", content: this.certificate.CertificateImageURL }],
+  //   };
+  // },
   mounted() {
     this.loadCertificate();
   },

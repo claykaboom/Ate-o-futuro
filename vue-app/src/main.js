@@ -8,6 +8,8 @@ import 'buefy/dist/buefy.css'
 import vueHeadful from 'vue-headful';
 import EmptyLayout from './layouts/EmptyLayout.vue';
 import LayoutDefault from './layouts/LayoutDefault.vue';
+import VueMeta from 'vue-meta'
+
 
 import store from './store/index'
 
@@ -23,6 +25,7 @@ Vue.use(Buefy)
 
 
 Vue.use(Vuex)
+Vue.use(VueMeta)
 Vue.use(require('vue-moment'));
 
 Vue.component('vue-headful', vueHeadful);
