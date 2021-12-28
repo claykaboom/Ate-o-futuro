@@ -16,8 +16,13 @@ import store from './store/index'
 import Vuex from 'vuex'
 
 import VueYouTubeEmbed from 'vue-youtube-embed'
- 
 
+import VueChartsCSS from "vue.charts.css";
+import PrimeVue from 'primevue/config';
+
+import Chat from 'vue-beautiful-chat'
+Vue.use(Chat);
+Vue.use(VueChartsCSS);
 
 Vue.use(VueYouTubeEmbed)
 
@@ -27,6 +32,8 @@ Vue.use(Buefy)
 Vue.use(Vuex)
 Vue.use(VueMeta)
 Vue.use(require('vue-moment'));
+
+Vue.use(PrimeVue);
 
 Vue.component('vue-headful', vueHeadful);
 Vue.component('layout-default', LayoutDefault);

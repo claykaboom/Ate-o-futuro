@@ -1,14 +1,26 @@
 <template>
-  <layout-default>
+  <empty-layout>
     <vue-headful title="Até o Futuro - Login" description="Faça seu Login." />
-    <transition name="slide">
-      <div class="html">
-        <section class="hero is-fullheight">
-          <div class="hero-body">
-            <div class="container has-text-centered">
-              <div class="column is-4 is-offset-4">
-                <div class="box">
-                  <p class="subtitle is-4">Faça Login para ir Até o Futuro.</p>
+        <div class="hero-head">
+        <div class="first_nav">
+          <div class="container">
+            <!-- Menu -->
+            <nav-bar :fixedTop="true" />
+          </div>
+        </div>
+      </div>     
+    <section class="hero main_hero is-fullheight AteOFuturoBG" :style="`background-image: url('${require('@/assets/Background-Login.jpg')}');  background-size: cover;`">
+  
+      <div class="hero-body">
+        <div class="container has-text-centered">
+          <div class="slider-content animated zoomIn pb-6">
+            <div>
+              <p class="title is-1 main-text">
+               Faça Login para ir Até o Futuro. 
+                
+              </p>
+            <div class="box is-rounded">
+                  <p class="subtitle is-4">Escolha o seu método de login abaixo:</p>
                   <br />
                   <span v-if="$route.query.redirectToPath">
                     Para acessar esta tela ou fazer esta operação é necessário
@@ -51,7 +63,7 @@
                   <button class="button is-block is-info is-large is-fullwidth">
                     Login</button
                   ><br /> -->
-                  <button @click="loginGoogle" class="button is-primary">
+                  <button @click="loginGoogle" class="button is-primary is-large">
                     <span class="icon">
                       <i class="fab fa-google"></i>
                     </span>
@@ -82,79 +94,26 @@
                     </a>
                   </div> -->
                 </div>
-              </div>
             </div>
           </div>
-        </section>
+          
+        </div>
       </div>
-    </transition>
-  </layout-default>
+    </section>
+    
+  </empty-layout>
 </template>
 <style scoped>
-html,
-body {
-  font-family: "Quicksand", serif;
-  font-size: 14px;
-  font-weight: 300;
-}
-
-.html {
-  overflow-y: hidden !important;
-  background-image: url("https://cdn.pixabay.com/photo/2016/08/04/14/40/landscape-1569186_960_720.jpg") !important;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-.box {
-  background-color: #f2f6fa;
-}
-
-.hero.is-success {
-  background: #f2f6fa;
-}
-.hero .nav,
-.hero.is-success .nav {
-  -webkit-box-shadow: none;
-  box-shadow: none;
-}
-.box {
-  margin-top: 5rem;
-  background-color: rgba(255, 255, 255, 0.8);
-}
-input {
-  font-weight: 300;
-}
-p {
-  font-weight: 700;
-}
-p.subtitle {
-  padding-top: 1rem;
-}
-
-a {
-  color: #fff;
-}
-
-a:hover {
-  color: #bababa;
-}
-
-.languages {
-  margin-top: 10px;
-}
-
-.footer-text {
-  font-weight: initial;
-}
+ 
 </style>
 <script>
 import { auth, db, googleProvider } from "../firebase";
 
+import NavBar from "../components/NavBar";
+
 export default {
   name: "login",
+  components: { NavBar },
   data() {
     return {
       uid: "",

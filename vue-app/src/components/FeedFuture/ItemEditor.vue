@@ -31,7 +31,7 @@
           </b-field>
           <b-field label="Item Obrigatório?">
             <b-checkbox v-model="feedbackItem.isMandatory">
-              Sim, este item é de respota obrigatória
+              Sim, este item é de resposta obrigatória
             </b-checkbox>
           </b-field>
 

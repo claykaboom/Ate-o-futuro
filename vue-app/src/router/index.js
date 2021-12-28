@@ -5,7 +5,7 @@ import firebase from 'firebase'
 import { page } from 'vue-analytics'
 
 import Meta from 'vue-meta'
- 
+
 import store from '../store/index'
 
 
@@ -13,13 +13,13 @@ import VueAnalytics from 'vue-analytics'
 
 Vue.use(VueRouter)
 Vue.use(Meta
-//   , {
-//   keyName: 'metaInfo',
-//   attribute: 'data-vue-meta',
-//   ssrAttribute: 'data-vue-meta-server-rendered',
-//   tagIDKeyName: 'vmid',
-//   refreshOnceOnNavigation: true
-// }
+  //   , {
+  //   keyName: 'metaInfo',
+  //   attribute: 'data-vue-meta',
+  //   ssrAttribute: 'data-vue-meta-server-rendered',
+  //   tagIDKeyName: 'vmid',
+  //   refreshOnceOnNavigation: true
+  // }
 )
 
 const routes = [
@@ -560,6 +560,28 @@ const routes = [
     },
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/Usuarios/ListaUsuarios.vue')
+  }, {
+    path: '/Comprar',
+    name: 'Comprar',
+    meta: {
+      requiresAuth: true,
+
+      friendlyName: "Comprar",
+
+    },
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/Comprar/CompraCredito.vue')
+  }, {
+    path: '/Sala/:RoomId',
+    name: 'Sala',
+    meta: {
+      requiresAuth: true,
+
+      friendlyName: "Sala",
+
+    },
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/Salas/Sala.vue')
   }
 ]
 

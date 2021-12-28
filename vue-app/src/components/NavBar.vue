@@ -1,5 +1,5 @@
 <template>
-  <b-navbar :fixed-top="true">
+  <b-navbar :fixed-top="fixedTop">
     <template slot="brand">
       <b-navbar-item tag="router-link" :to="{ name: 'Sobre' }">
         <img src="@/assets/Logo.png" alt="Até o Futuro" />
@@ -11,7 +11,7 @@
         class="navbar-item"
         :to="{ name: 'Home' }"
       >
-        <b-icon icon="home-outline" /> <span>&nbsp;</span>HOME</b-navbar-item
+        <b-icon icon="home-outline" /> <span>&nbsp;</span>HOME </b-navbar-item
       >
       <!-- <b-navbar-dropdown label="Home">
    
@@ -30,7 +30,7 @@
       <b-navbar-item tag="router-link" :to="{ name: 'FeedbackDashboard' }">
         <b-icon icon="atom" /> <span>&nbsp;</span> Feedbacks</b-navbar-item
       >
-      <b-navbar-item tag="router-link" :to="{ name: 'InitiativeDashboard' }">
+      <b-navbar-item tag="router-link" :to="{ name: 'InitiativeDashboard' }" v-if="$store.state.currentUser !=null && (  $store.state.currentUserIsPremium || $store.state.currentUserIsExpert )">
         <b-icon icon="eye-outline" />
         <span>&nbsp;</span> Iniciativas</b-navbar-item
       >
@@ -140,6 +140,9 @@ export default {
     return {
       notifications: [],
     };
+  },
+  props:{
+    fixedTop: { type: Boolean, default: true },
   },
   created() {
     this.setupData();

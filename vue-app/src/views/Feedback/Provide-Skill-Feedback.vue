@@ -77,7 +77,7 @@
               <b-message>
                 <div v-for="area in RatedAreas" :key="area.Name">
                   <b-tag type="is-warning">{{ area.Name }}</b-tag>   <b-rate v-model="area.Rating"></b-rate><br />
- <div style=" border: 1px solid black" v-if="area.Description != null && area.Description != ''">Como medir <b>{{area.Name}}</b>:<br />
+ <div style=" border: 1px solid black" v-if="area.Description != null && area.Description != ''">Instruções de como medir <b>{{area.Name}}</b>:<br />
                   <span ><b-input type="textarea" disabled :value= "area.Description" /></span>
                          </div>       <br />  
                 </div>
@@ -277,6 +277,15 @@ export default {
               feedbackResponseId
           )
           .set({
+            version: thisVM.feedBackRequest.version,
+
+//////////////AFTER VERSION 3
+ 
+///////////////////
+
+
+
+
             RatedAreas: thisVM.RatedAreas,
 
             ContinuarFazendo: thisVM.ContinuarFazendo,

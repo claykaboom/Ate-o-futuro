@@ -104,45 +104,7 @@
               </template>
               <b-step-item step="1" label="Preparação" :clickable="true">
                 <h1 class="title has-text-centered">Preparação</h1>
-                Vamos nos preparar para um feedback de qualidade.
-                <br />
-                <br />
-
-                Você vai notar que poucos campos são obrigatórios, e você sempre
-                voltar aqui e pedir feedbacks com mais nível de detalhe à medida
-                que você recebe retornos dos outros.
-                <br />
-                <br />
-                <b>
-                  💪 Quanto mais informações essenciais você der no seu pedido
-                  de feedback, mais força ele vai ter,</b
-                >
-                fazendo com que o feedback que você vai receber seja mais
-                relevante e específico para sua situação!
-                <br /><br />
-                <b
-                  >⚡ Pedidos com mais força serão priorizados por nossos
-                  experts e mentores.</b
-                ><br />
-                <br />
-                <b style="color: #48c774"
-                  >🎯 SUA MISSÃO É tentar deixar a barrinha no topo o mais perto
-                  do verde e cheia possível!</b
-                >
-                Mesmo assim, se você não tiver os detalhes agora, ficaremos
-                felizes em tentar ajudar da melhor maneira possível 😁.
-                <br />
-                <br />
-                <b
-                  >❗ IMPORTANTE: Ao prosseguir pedindo o feedback, isso
-                  significa que você deu seu consentimento sobre nossa política
-                  de privacidade, e reconhece que ninguém da equipe Até o Futuro
-                  pode utilizar seus dados pessoais para outros fins diferentes
-                  de te dar um feedback. Utilizaremos somente as informações
-                  providas por você para te dar um feedback.</b
-                >
-                <br />
-                <br />
+                <div v-html="TemplateInstructions"></div>
                 <b-field
                   label="Vamos nessa?! Você quer um feedback sobre o quê?"
                 >
@@ -182,46 +144,48 @@
                     </b-dropdown-item>
                   </b-dropdown>
                 </b-field>
+                <div v-if="isExpert || isPremium">
+                  <b-field
+                    label="Quer que encontremos um especialista automaticamente para te dar um feedback?"
+                  >
+                    <b-message type="is-primary">
+                      Marcar esta opção significa que seu nome e os dados que
+                      você preencher aqui serão compartilhados com um de nossos
+                      experts. Nenhum outro dado como seu e-mail será
+                      compartilhado. Nossos experts também se comprometem a não
+                      divulgar seus dados para outras pessoas.
+                      <br />
+                      <br />
 
-                <b-field
-                  label="Quer que encontremos um especialista automaticamente para te dar um feedback?"
-                >
-                  <b-message type="is-primary">
-                    Marcar esta opção significa que seu nome e os dados que você
-                    preencher aqui serão compartilhados com um de nossos
-                    experts. Nenhum outro dado como seu e-mail será
-                    compartilhado. Nossos experts também se comprometem a não
-                    divulgar seus dados para outras pessoas.
-                    <br />
-                    <br />
+                      Caso contrário você pode distribuir o link de pedido a
+                      pessoas confiáveis.
 
-                    Caso contrário você pode distribuir o link de pedido a
-                    pessoas confiáveis.
+                      <br />
+                      <br />
 
-                    <br />
-                    <br />
+                      Se você não marcar esta opção você mesmo precisará
+                      compartilhar o pedido de feedback com seus amigos e
+                      colegas.
+                    </b-message>
+                  </b-field>
+                  <b-icon
+                    icon="arrow-right"
+                    class="animate__animated animate__headShake animate__infinite"
+                    size="is-medium"
+                  /><b-checkbox v-model="wantsExpert" :disabled="!isExpert">
+                    Sim, quero um(a) expert para me dar feedback! (Somente conta
+                    premium para receber feedbacks dos Experts do Futuro)
+                  </b-checkbox>
 
-                    Se você não marcar esta opção você mesmo precisará
-                    compartilhar o pedido de feedback com seus amigos e colegas.
-                  </b-message>
-                </b-field>
-                <b-icon
-                  icon="arrow-right"
-                  class="animate__animated animate__headShake animate__infinite"
-                  size="is-medium"
-                /><b-checkbox v-model="wantsExpert" :disabled="!isExpert">
-                  Sim, quero um(a) expert para me dar feedback! (Somente conta
-                  premium para receber feedbacks dos Experts do Futuro)
-                </b-checkbox>
-
-                <br /><b-icon
-                  icon="arrow-right"
-                  class="animate__animated animate__headShake animate__infinite"
-                  size="is-medium"
-                /><b-checkbox v-model="oneFeedbackPerPerson" disabled>
-                  Garantir somente um feedback por pessoa? <br />(Somente conta
-                  premium para permitir feedbacks sem login)
-                </b-checkbox>
+                  <br /><b-icon
+                    icon="arrow-right"
+                    class="animate__animated animate__headShake animate__infinite"
+                    size="is-medium"
+                  /><b-checkbox v-model="oneFeedbackPerPerson" disabled>
+                    Garantir somente um feedback por pessoa? <br />(Somente
+                    conta premium para permitir feedbacks sem login)
+                  </b-checkbox>
+                </div>
               </b-step-item>
               <b-step-item
                 step="2"
@@ -403,7 +367,10 @@
                 <b-message>
                   Aproveite e já faça uma auto-avaliação inicial para cada uma
                   das métricas adicionadas.
-                  <div v-for="questao in questoesFeedback" v-bind:key="questao.texto">
+                  <div
+                    v-for="questao in questoesFeedback"
+                    v-bind:key="questao.texto"
+                  >
                     <b>{{ questao.texto }}</b>
                     <b-field>
                       <b-rate v-model="questao.Rating"></b-rate><br />
@@ -560,7 +527,7 @@
                         <b-tag
                           type="is-success"
                           v-for="tag in questoesFeedback"
-                          :key="tag"
+                          :key="tag.texto"
                           >{{ tag.texto }}</b-tag
                         >
                       </b-taglist>
@@ -661,6 +628,11 @@
                   <br />
                   <br />
                 </div>
+
+                <div v-if="isExpert || isPremium">
+                <br /><b>  Caso decida salvar este pedido de feedback como template, dê instruções para a pessoa que vai pedir o feedback se preparar.</b><br />
+                  <vue-editor v-model="TemplateInstructions"></vue-editor>
+                </div>
               </b-step-item>
             </b-steps>
           </section>
@@ -682,6 +654,7 @@
 </template>
  
 <script>
+import { VueEditor } from "vue2-editor";
 import VideoRecorder from "../../components/VideoRecorder";
 import firebase from "firebase";
 import Areas from "../../CommonData/Areas.js";
@@ -690,14 +663,51 @@ import { VueSvgGauge } from "vue-svg-gauge";
 const allTags = [...Areas];
 
 export default {
-  components: { VideoRecorder, VueSvgGauge },
+  components: { VideoRecorder, VueSvgGauge, VueEditor },
   data() {
     return {
       /////USER DATA
 
       isExpert: false,
-
+      isPremium: false,
       // PREPARATION
+      TemplateInstructions: ` Vamos nos preparar para um feedback de qualidade.
+                <br />
+                
+                Você vai notar que poucos campos são obrigatórios, e você sempre
+                voltar aqui e pedir feedbacks com mais nível de detalhe à medida
+                que você recebe retornos dos outros.
+                <br />
+            
+                <b>
+                  💪 Quanto mais informações essenciais você der no seu pedido
+                  de feedback, mais força ele vai ter,</b
+                >
+                fazendo com que o feedback que você vai receber seja mais
+                relevante e específico para sua situação!
+                <br /> 
+                <b
+                  >⚡ Pedidos com mais força serão priorizados por nossos
+                  experts e mentores.</b
+                ><br />
+                 
+                <b style="color: #48c774"
+                  >🎯 SUA MISSÃO É tentar deixar a barrinha no topo o mais perto
+                  do verde e cheia possível!</b
+                >
+                Mesmo assim, se você não tiver os detalhes agora, ficaremos
+                felizes em tentar ajudar da melhor maneira possível 😁.
+                <br />
+              
+                <b
+                  >❗ IMPORTANTE: Ao prosseguir pedindo o feedback, isso
+                  significa que você deu seu consentimento sobre nossa política
+                  de privacidade, e reconhece que ninguém da equipe Até o Futuro
+                  pode utilizar seus dados pessoais para outros fins diferentes
+                  de te dar um feedback. Utilizaremos somente as informações
+                  providas por você para te dar um feedback.</b
+                >
+                <br /> `,
       IdTemplate: null,
       wantsExpert: false,
       oneFeedbackPerPerson: true,
@@ -1390,7 +1400,7 @@ export default {
       //   ? data.photoURL
       //   : "https://source.unsplash.com/featured/?paint";
 
-      thisVM.$buefy.toast.open(`Dados de usuário in place!`);
+      thisVM.$buefy.toast.open(`Dados de usuário carregados!`);
 
       thisVM.$store.commit("stopLoading");
     });
@@ -1491,52 +1501,61 @@ export default {
         templateFeedBackRequestREF.on("value", function (snapshot) {
           thisVM.$buefy.toast.open(`Template carregado!`);
           var template = snapshot.val();
+          if (template != null) {
+            //   thisVM.finalidadeAtual.text :template.TipoFeedback ,
 
-          //   thisVM.finalidadeAtual.text :template.TipoFeedback ,
-          thisVM.wantsExpert = template.QuerExpert;
-          thisVM.ResumoHabilidade = template.Resumo;
-          thisVM.DescricaoHabilidade = template.Detalhamento;
-          if (template.AcoesTomadas != null) {
-            thisVM.OQueJaFez = template.AcoesTomadas;
-          }
-          thisVM.JaRefletiu = template.JaRefletiu;
-          if (template.Reflexoes != null) {
-            thisVM.reflectionQuestions = template.Reflexoes;
-          }
-          //QUALIDADE DO PEDIDO É COMPUTADA
-          thisVM.temMaterialReferencia = template.TemMaterialReferencia;
-          ////////RETROCOMPATIBILIDADE VERSAO 1
-
-          thisVM.FinalidadeHabilidade = template.FinalidadeHabilidade;
-          thisVM.ResumoHabilidade = template.ResumoHabilidade;
-          thisVM.DescricaoHabilidade = template.DescricaoHabilidade;
-          ///////////////
-
-          ///VERSAO 3
-          if (template.QuestoesFeedback != null) {
-            
-            template.QuestoesFeedback.forEach((element) => {
-              thisVM.questoesFeedback.push({
-                texto: element.texto,
-                descricao: element.descricao,
-                Rating: null,
+            thisVM.wantsExpert = template.QuerExpert
+              ? template.QuerExpert
+              : false;
+            thisVM.ResumoHabilidade = template.Resumo;
+            thisVM.TemplateInstructions = template.TemplateInstructions;
+            thisVM.DescricaoHabilidade = template.Detalhamento;
+            if (template.AcoesTomadas != null) {
+              thisVM.OQueJaFez = template.AcoesTomadas;
+            }
+            thisVM.JaRefletiu = template.JaRefletiu;
+            if (template.Reflexoes != null) {
+              template.Reflexoes.forEach((element) => {
+                thisVM.reflectionQuestions.push({
+                  pergunta: element.pergunta,
+                  resposta: element.resposta,
+                });
               });
-            });
-          }
-          ////
+            }
+            //QUALIDADE DO PEDIDO É COMPUTADA
+            thisVM.temMaterialReferencia = template.TemMaterialReferencia;
+            ////////RETROCOMPATIBILIDADE VERSAO 1
 
-          thisVM.Areas = template.Areas;
-          if (template.VideoStorageURL != null) {
-            thisVM.VideoStorageURL = template.VideoStorageURL;
+            thisVM.FinalidadeHabilidade = template.FinalidadeHabilidade;
+            thisVM.ResumoHabilidade = template.ResumoHabilidade;
+            thisVM.DescricaoHabilidade = template.DescricaoHabilidade;
+            ///////////////
+
+            ///VERSAO 3
+            if (template.QuestoesFeedback != null) {
+              template.QuestoesFeedback.forEach((element) => {
+                thisVM.questoesFeedback.push({
+                  texto: element.texto,
+                  descricao: element.descricao,
+                  Rating: null,
+                });
+              });
+            }
+            ////
+
+            thisVM.Areas = template.Areas;
+            if (template.VideoStorageURL != null) {
+              thisVM.VideoStorageURL = template.VideoStorageURL;
+            }
+            if (template.ExternalReferenceURL != null) {
+              thisVM.ExternalReferenceURL = template.ExternalReferenceURL;
+            }
+            //   template. UserName= thisVM.$store.state.currentUser.displayName,
+            //  template.  UserId= thisVM.$store.state.currentUser.uid,
+            //  template.  UserEmail= thisVM.$store.state.currentUser.email,
+            thisVM.ExternalReferenceType = template.ExternalReferenceType;
+            thisVM.WantsExternalReference = template.WantsExternalReference;
           }
-          if (template.ExternalReferenceURL != null) {
-            thisVM.ExternalReferenceURL = template.ExternalReferenceURL;
-          }
-          //   template. UserName= thisVM.$store.state.currentUser.displayName,
-          //  template.  UserId= thisVM.$store.state.currentUser.uid,
-          //  template.  UserEmail= thisVM.$store.state.currentUser.email,
-          thisVM.ExternalReferenceType = template.ExternalReferenceType;
-          thisVM.WantsExternalReference = template.WantsExternalReference;
           thisVM.$store.commit("stopLoading");
           //thisVM.$root.stopLoading();
         });
@@ -1558,7 +1577,6 @@ export default {
     },
 
     gravarFinal() {
-     
       this.startFeedbackRequest();
       var thisVM = this;
       firebase
@@ -1587,6 +1605,9 @@ export default {
 
           ///VERSAO 3
           QuestoesFeedback: thisVM.questoesFeedback,
+          IdTemplateFeedbackRequest: thisVM.IdTemplate,
+
+          TemplateInstructions: thisVM.TemplateInstructions,
           ////
 
           Areas: thisVM.Areas,
@@ -1648,6 +1669,8 @@ export default {
 
           ///VERSAO 3
           QuestoesFeedback: thisVM.questoesFeedback,
+          IdTemplateFeedbackRequest: thisVM.IdTemplate,
+          TemplateInstructions: thisVM.TemplateInstructions,
           ////
 
           Areas: thisVM.Areas,

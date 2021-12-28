@@ -18,6 +18,8 @@
           feedback</router-link
         >
       </div>
+
+      
       <b-tabs type="is-boxed">
         <b-tab-item label="Pedidos de Feedback" icon="silverware-spoon">
           <div class="box">
@@ -37,7 +39,14 @@
                 label="Resumo"
                 v-slot="props"
               >
-                {{ props.row.ResumoHabilidade }}
+                <span :title="`Feedback sobre ${props.row.TipoFeedback}`"
+                  ><b-icon
+                    class="media-left"
+                    :icon="props.row.TipoFeedbackIcon"
+                  ></b-icon></span
+                >
+  {{ props.row.ResumoHabilidade }}
+               
               </b-table-column>
               <b-table-column
                 field="QtdFeedbacks"
@@ -103,11 +112,31 @@
             :mobile-cards="false"
             :selected.sync="selectedResponse"
           >
-            <b-table-column field="Id" label="ID FEEDBACK" v-slot="props">
-              {{ props.row.id }}    {{ props.row.DateTime | moment("DD/MM/YYYY HH:mm")}} 
+            <b-table-column field="Id" label="Tipo de Feedback" v-slot="props">
+              <span
+                :title="
+                  props.row.FeedBackRequestTipoFeedback +
+                  ': ' +
+                  props.row.FeedBackRequestResumo
+                "
+              >
+                <b-icon
+                  class="media-left"
+                  :icon="props.row.FeedBackRequestTipoFeedbackIcon"
+                ></b-icon>
+
+                {{ props.row.FeedBackRequestResumo }}</span
+              >
             </b-table-column>
-            <b-table-column field="Usuário" label="Alvo do Feedback" v-slot="props">
-          {{ props.row.RequesterUserName }}     
+            <b-table-column field="Data" label="Data" v-slot="props">
+              {{ props.row.Data | moment("DD/MM/YYYY HH:mm") }}
+            </b-table-column>
+            <b-table-column
+              field="Usuário"
+              label="Alvo do Feedback"
+              v-slot="props"
+            >
+              {{ props.row.RequesterUserName }}
             </b-table-column>
             <b-table-column
               field="ClassificacaoFinal"
@@ -136,16 +165,27 @@
 </template>
 
 <script>
+import LineChart from "../../components/Charts/LineChart";
 import firebase from "firebase";
 import SkillFeedbackRequest from "../../components/Feedback/SkillFeedbackRequest";
 import SkillFeedbackResponseDetail from "../../components/Feedback/SkillFeedbackResponseDetail";
 
 export default {
   name: "provide-skill-feedback",
-  components: { SkillFeedbackRequest, SkillFeedbackResponseDetail },
+  components: { SkillFeedbackRequest, SkillFeedbackResponseDetail, LineChart },
   //props: ["IdfeedBackRequest"],
   data() {
     return {
+      datacollection: {
+        labels: ["January", "February"],
+        datasets: [
+          {
+            label: "Data One",
+            backgroundColor: "#f87979",
+            data: [40, 20],
+          },
+        ],
+      },
       IdfeedBackRequest: null,
       selected: null,
       selectedResponse: null,
@@ -217,10 +257,27 @@ export default {
               CountClassificacao > 0
                 ? ClassificacaoTotal / CountClassificacao
                 : null;
-
+            var icon = "bike";
+            switch (childData.TipoFeedback) {
+              case "Habilidade":
+                icon = "bike";
+                break;
+              case "Ideia":
+                icon = "lightbulb";
+                break;
+              case "Evento":
+                icon = "flash";
+                break;
+              default:
+                icon = "comment-question";
+                break;
+            } 
             thisVM.feedBackRequests.push({
               id: childSnapshot.key,
               ResumoHabilidade: childData.ResumoHabilidade,
+              TipoFeedback:
+                childData.TipoFeedback,
+              TipoFeedbackIcon: icon,
               ClassificacaoMedia: ClassificacaoMedia,
               QtdFeedbacks:
                 childData.Feedbacks != null && Object.keys(childData.Feedbacks)
@@ -243,13 +300,34 @@ export default {
           var childData = childSnapshot.val();
 
           if (childSnapshot.key != "_count") {
-  
+            var icon = "bike";
+            switch (childData.FeedBackRequestTipoFeedback) {
+              case "Habilidade":
+                icon = "bike";
+                break;
+              case "Ideia":
+                icon = "lightbulb";
+                break;
+              case "Evento":
+                icon = "flash";
+                break;
+              default:
+                icon = "comment-question";
+                break;
+            }
             thisVM.feedBackResponses.push({
               id: childSnapshot.key,
               ClassificacaoFinal: childData.ClassificacaoFinal,
               IdFeedbackRequest: childData.IdFeedbackRequest,
               RequesterUserName: childData.RequesterUserName,
-              DateTime: childData.DateTime? childData.DateTime : new Date(),
+              FeedBackRequestTipoFeedback:
+                childData.FeedBackRequestTipoFeedback,
+              FeedBackRequestTipoFeedbackIcon: icon,
+              FeedBackRequestResumo: childData.FeedBackRequestResumo
+                ? childData.FeedBackRequestResumo
+                : "Feedback",
+
+              Data: childData.Data ? childData.Data : new Date(),
             });
           }
         });

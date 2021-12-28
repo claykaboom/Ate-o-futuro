@@ -12,7 +12,9 @@ export default new Vuex.Store({
     isLogged: false,
     loadCounter: 0,
     isLoading: false,
-    notificationCounter: 0
+    notificationCounter: 0,
+    currentUserIsExpert: false,
+    currentUserIsPremium: false,
   },
   mutations: {
     setNotificationCounter(state, newValue) {
@@ -47,7 +49,7 @@ export default new Vuex.Store({
       state.isLoading = false;
     },
     setCurrentUser(state, newValue) {
-      if (this.debug) console.log('setCurrentUser triggered with', newValue)
+       if (this.debug) console.log('setCurrentUser triggered with', newValue)
       state.currentUser = newValue;
       if (newValue != null) {
         state.displayName = this.state.currentUser.displayName;
@@ -58,7 +60,32 @@ export default new Vuex.Store({
         db.ref(`Users/${newValue.uid}/stats`)
           .update({ stub: 1 });
 
+        var userDataRef = db
+          .ref(`Users/${state.currentUser.uid}/PersonalData`);
 
+
+        userDataRef.on("value", function (snapshot) {
+          var data = snapshot.val();
+          // thisVM.miniBio = data.miniBio ? data.miniBio : null;
+          state.currentUserIsExpert = data.isExpert ? data.isExpert : false;
+          state.currentUserIsPremium = data.isExpert ? data.isExpert : false;
+          state.currentUserLinkedInURL = data.linkedInURL ? data.linkedInURL : null;
+          state.currentUserProfilePicURL = data.photoURL
+           ? data.photoURL
+            : "https://source.unsplash.com/featured/?paint"
+          //thisVM.whatsAppNumber = data.whatsAppNumber ? data.whatsAppNumber : null;
+
+          //thisVM.areas = data.areas ? data.areas : [];
+
+          // thisVM.photoURL = data.photoURL
+          //   ? data.photoURL
+          //   : "https://source.unsplash.com/featured/?paint";
+
+          //  thisVM.$buefy.toast.open(`Dados de usuário carregados!`);
+
+
+
+        });
 
 
       }

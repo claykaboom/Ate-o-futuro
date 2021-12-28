@@ -4,14 +4,63 @@
       title="Até o Futuro 💡"
       description="Seu EU do Futuro aprimorado."
     />
+    <section class="hero main_hero is-fullheight AteOFuturoBG" :style="`background-image: url('${require('@/assets/Background-Main.jpg')}');  background-size: cover;`">
+      <div class="hero-head">
+        <div class="first_nav">
+          <div class="container">
+            <!-- Menu -->
+            <nav-bar :fixedTop="false" />
+          </div>
+        </div>
+      </div>
+      <div class="hero-body">
+        <div class="container has-text-centered">
+          <div class="slider-content animated zoomIn pb-6">
+            <div>
+              <p class="title is-1 main-text">
+                Você chegou Até o Futuro<span v-if="$store.state.currentUser"
+                  >, {{ $store.state.displayName }}</span
+                >
+              </p>
+              <p class="subtitle is-4 main-text">
+                Aproxime o seu presente do Futuro
+              </p>
+            </div>
+          </div>
+          <span class="scroll-down animated zoomIn">
+            <svg
+              width="30px"
+              height="100%"
+              viewBox="0 0 247 390"
+              version="1.1"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              style="
+                fill-rule: evenodd;
+                clip-rule: evenodd;
+                stroke-linecap: round;
+                stroke-linejoin: round;
+                stroke-miterlimit: 1.5;
+              "
+            >
+              <path
+                id="wheel"
+                d="M123.359,79.775l0,72.843"
+                style="fill: none; stroke: #fff; stroke-width: 20px"
+              />
+              <path
+                id="mouse"
+                d="M236.717,123.359c0,-62.565 -50.794,-113.359 -113.358,-113.359c-62.565,0 -113.359,50.794 -113.359,113.359l0,143.237c0,62.565 50.794,113.359 113.359,113.359c62.564,0 113.358,-50.794 113.358,-113.359l0,-143.237Z"
+                style="fill: none; stroke: #fff; stroke-width: 20px"
+              />
+            </svg>
+          </span>
+        </div>
+      </div>
+    </section>
     <section class="hero is-medium">
       <div class="hero-body">
         <div class="container">
-          <h1 class="title is-1">
-            Até o Futuro<span v-if="$store.state.currentUser"
-              >, {{ $store.state.displayName }}</span
-            >
-          </h1>
           <video autoplay muted loop id="myVideo">
             <source src="@/assets/Empregabilidade.mp4" type="video/mp4" />
           </video>
@@ -238,8 +287,14 @@
       </div>
     </footer>
   </empty-layout>
-</template>
+</template> 
 <style scoped lang="scss">
+
+.AteOFuturoBG {
+  background-image:  url('~@/assets/Background-Main.jpg');
+  background-size: cover;
+}
+
 .va {
   display: flex;
   align-items: center;
@@ -376,9 +431,11 @@ textarea::placeholder {
 }
 </style>
 <script>
+import NavBar from "../components/NavBar";
 import firebase from "firebase";
 export default {
   name: "Home",
+  components: { NavBar },
   data() {
     return {
       Nome: "",

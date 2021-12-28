@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div> 
     <nav class="panel">
       <div>
         <p class="panel-heading" v-if="showPanelHeader">
