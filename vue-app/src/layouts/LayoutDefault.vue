@@ -19,8 +19,9 @@
         <div class="column is-12">
           <breadcrumbs />
 
-          <div v-if="!isProduction" style="background-color: red">
-            DEBUGGER > LOADER COUNTER {{ $store.state.loadCounter }}
+          <div v-if="!isProduction" style="background-color: red;color:#FFF">
+            <b>[DEBUGGER]</b> - LOADER COUNTER {{ $store.state.loadCounter }} / IS LOADING:
+            {{ $store.state.isLoading }} / 👤 = {{$store.state.isLogged}}
           </div>
           <slot />
         </div>

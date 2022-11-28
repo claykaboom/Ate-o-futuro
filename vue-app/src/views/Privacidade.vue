@@ -372,7 +372,7 @@ Interações feitas no site enquanto você está "logado" são registradas em se
       </p>
       <br />
       <p>
-        O Até o Futuro não é obrigadoa a fornecer nenhum serviço de suporte para
+        O Até o Futuro não é obrigado a fornecer nenhum serviço de suporte para
         esta plataforma.
       </p>
       <br />
@@ -384,10 +384,11 @@ Interações feitas no site enquanto você está "logado" são registradas em se
       </p>
       <br />
 
-      <h2>MUDANÇAS DESTE DOCUMENTO</h2>
-      <br />
+      <h2 class="subtitle is-4">MUDANÇAS DESTE DOCUMENTO</h2>
+   
       <p>07 de outubro de 2020 (primeira versão)</p>
       <p>19 de setembro de 2021 (segunda versão)</p>
+      <p>01 de janeiro de 2022 (terceira versão)</p>
     </div>
   </layout-default>
 </template>

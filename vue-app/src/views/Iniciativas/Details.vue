@@ -368,6 +368,7 @@ export default {
       thisVM.loadingSupport = true;
       this.animated = true;
       var audio = new Audio(require("../../assets/sounds/like.mp3")); // path to file
+        audio.volume = 0.05;
       audio.play();
 
       firebase

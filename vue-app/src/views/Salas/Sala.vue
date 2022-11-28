@@ -529,6 +529,7 @@ export default {
         });
         thisVM.messages = messages.reverse();
         var audio = new Audio(require("../../assets/sounds/notification.mp3")); // path to file
+        audio.volume = 0.5;
         audio.play();
       });
     },

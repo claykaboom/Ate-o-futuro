@@ -21,6 +21,8 @@ import VueChartsCSS from "vue.charts.css";
 import PrimeVue from 'primevue/config';
 
 import Chat from 'vue-beautiful-chat'
+ 
+
 Vue.use(Chat);
 Vue.use(VueChartsCSS);
 
@@ -43,34 +45,7 @@ Vue.config.productionTip = false
 
 
 let app
-// auth.onAuthStateChanged(() => {
-//   if (!app) {
-//     app = new Vue({
-//       router,
-//       store,
-//       render: h => h(App)
-//       ,
-//       methods: {
-//         startLoading: function () {  
-//           if (this.$loadCounter < 0) {
-//             //no caso de terem usado mais stopLoading do que startLoading
-//             this.$loadCounter = 0;
-//           }
-//           this.$loadCounter++;
-//         },
-//         stopLoading() {
-//           this.$loadCounter--; 
-//           if (this.$loadCounter < 0) {
-//             //no caso de terem usado mais stopLoading do que startLoading
-//             this.$loadCounter = 0;
-//           }
-//         },
-//         resetLoader() {
-//           this.$loadCounter = 0;
-//         }
-//       }}).$mount('#app')
-//   }
-// })
+
 
 
 if (!app) {

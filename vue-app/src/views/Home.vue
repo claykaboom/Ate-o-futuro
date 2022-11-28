@@ -4,7 +4,10 @@
       title="Até o Futuro 💡"
       description="Seu EU do Futuro aprimorado."
     />
-    <section class="hero main_hero is-fullheight AteOFuturoBG" :style="`background-image: url('${require('@/assets/Background-Main.jpg')}');  background-size: cover;`">
+    <section
+      class="hero main_hero is-fullheight AteOFuturoBG"
+      :style="`background-image: url('${require('@/assets/Background-Main.jpg')}');  background-size: cover;`"
+    >
       <div class="hero-head">
         <div class="first_nav">
           <div class="container">
@@ -58,7 +61,7 @@
         </div>
       </div>
     </section>
-    <section class="hero is-medium">
+    <!-- <section class="hero is-medium">
       <div class="hero-body">
         <div class="container">
           <video autoplay muted loop id="myVideo">
@@ -75,12 +78,7 @@
           >
             ❤ Fale com nossos Experts!
           </router-link>
-          <!--  <router-link
-            class="button is-dark is-inverted is-large pulse-button"
-            :to="{ name: 'SkillFeedback' }"
-          >
-          Peça um feedback</router-link
-          >  -->
+          
           <br /><br />
           <h2 class="subtitle">
             Somos um simples mecanismo de aprimoramento coletivo baseado em
@@ -91,6 +89,45 @@
             carreira, com base em habilidades que você quer desenvolver.
             <br /><br />
             Convide amigos e colegas para iniciativas inovadoras!
+          </h2>
+
+          <router-link
+            :to="{ name: 'Sobre' }"
+            class="button is-white is-large is-inverted"
+          >
+            Explore o Até o Futuro &nbsp;&nbsp;&ensp;⚡
+          </router-link>
+        </div>
+      </div>
+    </section> -->
+    <section class="hero is-medium">
+      <div class="hero-body">
+        <div class="container">
+          <video autoplay muted loop id="myVideo">
+            <source src="@/assets/ToolBox.mp4" type="video/mp4" />
+          </video>
+          <br />
+          <br />
+          <router-link
+            class="button is-dark is-inverted is-large pulse-button"
+            :to="{
+              name: 'Toolbox',
+            }"
+          >
+            🛠 Abra sua caixa de ferramentas
+          </router-link>
+
+          <br /><br />
+          <h2 class="subtitle">
+            A nossa caixa de ferramentas serve para você, seu time, ou sua
+            empresa. Energize seu time, destrave insights e inovação, cresça sua
+            auto-liderança.
+            <br />
+            Com nossa caixa de ferramentas, com dinâmicas curadas pelos Experts
+            do Futuro, temos uma gama de atividades que permite que você
+            facilite eventos que se adequam à sua realidade ou à de seu time.<br />
+            É uma forma de criar um ambiente de trabalho inclusivo, integrar
+            pessoas e aumentar a autoconsciência dos indivíduos .<br />
           </h2>
 
           <router-link
@@ -157,7 +194,7 @@
         </div>
       </div>
     </section>
-    <section id="parallax-3" class="hero is-large">
+    <!-- <section id="parallax-3" class="hero is-large">
       <div class="hero-body">
         <div class="container">
           <div class="columns">
@@ -194,8 +231,8 @@
           </div>
         </div>
       </div>
-    </section>
-    <section class="cta va">
+    </section> -->
+    <section class="cta va hero">
       <div class="container">
         <div class="columns">
           <div class="column is-6">
@@ -289,9 +326,8 @@
   </empty-layout>
 </template> 
 <style scoped lang="scss">
-
 .AteOFuturoBG {
-  background-image:  url('~@/assets/Background-Main.jpg');
+  background-image: url("~@/assets/Background-Main.jpg");
   background-size: cover;
 }
 
@@ -303,7 +339,7 @@
 .hero,
 .cta {
   background: url(data:image/svg+xml;charset=utf8,%3Csvg%20viewBox%3D%220%200%20512%20512%22%20width%3D%22512%22%20height%3D%22512%22%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cfilter%20id%3D%22noise%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%220.875%22%20result%3D%22noise%22%20%2F%3E%3CfeColorMatrix%20type%3D%22matrix%22%20values%3D%220%200%200%200%200%200%200%200%200%200%200%200%200%200%200%200%200%200%200.4296875%200%22%20%2F%3E%3C%2Ffilter%3E%3Crect%20filter%3D%22url%28%23noise%29%22%20x%3D%220%22%20y%3D%220%22%20width%3D%22512%22%20height%3D%22512%22%20fill%3D%22transparent%22%20opacity%3D%221%22%20%2F%3E%3C%2Fsvg%3E),
-    linear-gradient(52deg, #42475c 0%, #20222e 71%);
+    linear-gradient(0deg, #42475c 0%, #000 71%);
 }
 
 .cta {

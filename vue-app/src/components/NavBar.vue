@@ -11,8 +11,8 @@
         class="navbar-item"
         :to="{ name: 'Home' }"
       >
-        <b-icon icon="home-outline" /> <span>&nbsp;</span>HOME </b-navbar-item
-      >
+        <b-icon icon="home-outline" /> <span>&nbsp;</span>HOME
+      </b-navbar-item>
       <!-- <b-navbar-dropdown label="Home">
    
         <b-navbar-item
@@ -24,13 +24,33 @@
         <hr class="navbar-divider" />
         <div class="navbar-item">Versão 0.0.1 BETA</div>
       </b-navbar-dropdown> -->
-<b-navbar-item tag="router-link" :to="{ name: 'AgendarEntrevista' }" alt="Faça seu Teste de Empregabilidade e Mentoria Grátis">
-       🌐 <span>&nbsp;</span> Teste de Empregabilidade </b-navbar-item
+      <b-navbar-item
+        tag="router-link"
+        :to="{ name: 'AgendarEntrevista' }"
+        alt="Faça seu Teste de Empregabilidade e Mentoria Grátis"
+        v-if="
+          $store.state.currentUser != null &&
+          ($store.state.currentUserIsPremium ||
+            $store.state.currentUserIsExpert)
+        "
       >
+        🌐 <span>&nbsp;</span> Teste de Empregabilidade
+      </b-navbar-item>
       <b-navbar-item tag="router-link" :to="{ name: 'FeedbackDashboard' }">
         <b-icon icon="atom" /> <span>&nbsp;</span> Feedbacks</b-navbar-item
       >
-      <b-navbar-item tag="router-link" :to="{ name: 'InitiativeDashboard' }" v-if="$store.state.currentUser !=null && (  $store.state.currentUserIsPremium || $store.state.currentUserIsExpert )">
+      <b-navbar-item tag="router-link" :to="{ name: 'Toolbox' }">
+        🛠 Caixa de Ferramentas</b-navbar-item
+      >
+      <b-navbar-item
+        tag="router-link"
+        :to="{ name: 'InitiativeDashboard' }"
+        v-if="
+          $store.state.currentUser != null &&
+          ($store.state.currentUserIsPremium ||
+            $store.state.currentUserIsExpert)
+        "
+      >
         <b-icon icon="eye-outline" />
         <span>&nbsp;</span> Iniciativas</b-navbar-item
       >
@@ -58,6 +78,11 @@
 
     <template slot="end">
       <!-- <b-navbar-item tag="router-link" :to="{ name: 'MeuPerfil' }">Meu Perfil</b-navbar-item> -->
+      <b-navbar-item tag="div">
+        <!-- <div class="animate__animated animate__tada  animate__slower  animate__repeat-1	">
+          <b-tag v-if="$store.state.currentLoginStreak"  v-bind:type="{ 'is-success': $store.state.currentLoginStreak > 0 }" size="is-medium" :title="`Dias de login consecutivos: ${$store.state.currentLoginStreak} dia(s)`"><span v-if="$store.state.currentLoginStreak>0">🔥</span><span v-else>🙄</span>    {{ $store.state.currentLoginStreak }}</b-tag>
+        </div> -->
+      </b-navbar-item>
       <b-navbar-item tag="div">
         <template v-if="notifications.length > 0">
           <b-dropdown aria-role="list">
@@ -93,7 +118,10 @@
             <b-icon icon="bell-outline" title="Nenhuma notificação"></b-icon>
           </div>
         </template>
-        <b-navbar-dropdown label="Perfil & Notificações" v-show="$store.state.isLogged">
+        <b-navbar-dropdown
+          label="Perfil & Notificações"
+          v-show="$store.state.isLogged"
+        >
           <b-navbar-item
             tag="router-link"
             class="navbar-item"
@@ -141,7 +169,7 @@ export default {
       notifications: [],
     };
   },
-  props:{
+  props: {
     fixedTop: { type: Boolean, default: true },
   },
   created() {

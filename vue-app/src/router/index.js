@@ -353,11 +353,11 @@ const routes = [
     meta: {
 
       requiresAuth: false,
-      friendlyName: "QUIZ",
+      friendlyName: "Responder Quiz",
 
-      breadcrumb: [
-        { name: 'Árvore do Conhecimento', link: 'ArvoreConhecimento' }
-      ]
+      // breadcrumb: [
+      //   { name: 'Árvore do Conhecimento', link: 'ArvoreConhecimento' }
+      // ]
     },
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -369,7 +369,7 @@ const routes = [
     meta: {
 
       requiresAuth: false,
-      friendlyName: "QUIZ",
+      friendlyName: "Criar Quiz",
 
       breadcrumb: [
         { name: 'Árvore do Conhecimento', link: 'ArvoreConhecimento' }
@@ -582,7 +582,102 @@ const routes = [
     },
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/Salas/Sala.vue')
-  }
+  }, {
+    path: '/Ferramentas',
+    name: 'Ferramentas',
+    meta: {
+      requiresAuth: false,
+
+      friendlyName: "Caixa de Ferramentas do Futuro",
+
+    },
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/Toolbox/Toolbox.vue')
+  }, {
+    path: '/Toolbox',
+    name: 'Toolbox',
+    meta: {
+      requiresAuth: false,
+
+      friendlyName: "Caixa de Ferramentas do Futuro",
+
+    },
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/Toolbox/Toolbox.vue')
+  }, {
+    path: '/Toolbox/:toolId',
+    name: 'ToolDetail',
+    meta: {
+      requiresAuth: false,
+
+      friendlyName: "Detalhe da Ferramenta",
+      breadcrumb: [{ name: 'Caixa de Ferramentas', link: 'Toolbox' },
+      ]
+    },
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/Toolbox/ToolDetail.vue')
+  }, {
+    path: '/Toolbox/Suportar/:toolId',
+    name: 'SupportTool',
+    meta: {
+      requiresAuth: true,
+
+      friendlyName: "Suportar Ferramenta",
+      breadcrumb: [{ name: 'Caixa de Ferramentas', link: 'Toolbox' },
+      ]
+    },
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/Toolbox/SuportTool.vue')
+  }, {
+    path: '/Criatividade/Inventiva',
+    name: 'CriatividadeInventiva',
+    meta: {
+      requiresAuth: false,
+
+      friendlyName: "Criatividade: Pensamento Inventivo",
+      breadcrumb: [{ name: 'Criatividade', link: 'Criatividade' },
+      ]
+    },
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/criatividade-inventiva/Inventiva.vue')
+  },
+
+  {
+    path: '/labs/unconference/public/:unconferenceId',
+    name: 'public-unconference',
+    meta: {
+      requiresAuth: false,
+
+      friendlyName: "sennder: Concept",
+
+    },
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/labs/unconference.vue')
+  },
+  {
+   path: '/labs/unconference/:unconferenceId',
+   name: 'unconference',
+   meta: {
+     requiresAuth: true,
+
+     friendlyName: "sennder: Concept",
+
+   },
+   // which is lazy-loaded when the route is visited.
+   component: () => import(/* webpackChunkName: "about" */ '../views/labs/unconference.vue')
+ },
+ {
+  path: '/labs/skills-comparer/:contextId',
+  name: 'skills-comparer',
+  meta: {
+    requiresAuth: true,
+
+    friendlyName: "skills-comparer: Concept",
+
+  },
+  // which is lazy-loaded when the route is visited.
+  component: () => import(/* webpackChunkName: "about" */ '../views/labs/skill-comparer.vue')
+},
 ]
 
 const router = new VueRouter({
@@ -606,7 +701,18 @@ router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 
   document.title = "Até o Futuro! "; // Este é o Title /Título Padrão Defaul para páginas que não usam o vue-Headful
-  var redirectToPath = to.path;
+  // montando querystring se necessario 
+  var qString = "";
+  if (to.query != null && to.query != undefined)
+    var str = [];
+  for (var p in to.query) {
+    str.push(encodeURIComponent(p) + "=" + encodeURIComponent(to.query[p]));
+  }
+  qString = str.join("&");
+
+  if (qString != "") { qString = "?" + qString; }
+
+  var redirectToPath = to.path + qString;
   if (router.currentRoute.query.redirectToPath != null) {
     // redirectToPath = router.currentRoute.query.redirectToPath;
   }

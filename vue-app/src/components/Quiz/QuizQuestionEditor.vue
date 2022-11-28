@@ -1,6 +1,10 @@
 <template>
   <div v-if="mutableQuestion">
-    Texto:<b-input v-model="mutableQuestion.text" />
+    Texto:<b-input v-model="mutableQuestion.text" /> <br />
+    
+    Detalhes:<b-input v-model="mutableQuestion.details" />
+
+    Image:<b-input v-model="mutableQuestion.imageURL" />
 
     <b-button @click="addResponse()">Adicionar Resposta</b-button>
     <div class="notification is-info">
@@ -12,6 +16,10 @@
       >
         <b-input v-model="response.text" />
         <b-checkbox v-model="response.correct">Correta</b-checkbox>
+    
+        <p class="card-header-title">Pontos:</p>
+          <b-numberinput v-model="response.points"></b-numberinput>
+
         <b-button @click="removeResponse(response)" type="is-danger"
           >Remover Resposta</b-button
         >
@@ -49,6 +57,7 @@ export default {
           .push().key,
         text: "",
         correct: false,
+        points:1,
       });
     },
   },

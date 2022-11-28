@@ -1409,6 +1409,7 @@ export default {
     dicasParaMelhora() {
       if (!this.congratsAudioPlayed && this.dicasParaMelhora.percent >= 100) {
         var audio = new Audio(require("../../assets/sounds/Complete.mp3")); // path to file
+        audio.volume = 0.5;
         audio.play();
         this.congratsAudioPlayed = true;
       } else if (this.dicasParaMelhora.percent < 100) {

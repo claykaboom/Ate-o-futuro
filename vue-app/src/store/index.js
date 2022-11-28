@@ -13,13 +13,17 @@ export default new Vuex.Store({
     loadCounter: 0,
     isLoading: false,
     notificationCounter: 0,
+    currentLoginStreak: 0,
     currentUserIsExpert: false,
     currentUserIsPremium: false,
+    currentUserLinkedInURL: null,
+    currentUserProfilePicURL: "https://source.unsplash.com/featured/?paint"
   },
   mutations: {
     setNotificationCounter(state, newValue) {
       if (state.notificationCounter < newValue) {
         var audio = new Audio(require("../assets/sounds/notification.mp3")); // path to file
+        audio.volume = 0.3;
         audio.play();
 
       }
@@ -49,7 +53,7 @@ export default new Vuex.Store({
       state.isLoading = false;
     },
     setCurrentUser(state, newValue) {
-       if (this.debug) console.log('setCurrentUser triggered with', newValue)
+      if (this.debug) console.log('setCurrentUser triggered with', newValue)
       state.currentUser = newValue;
       if (newValue != null) {
         state.displayName = this.state.currentUser.displayName;
@@ -59,6 +63,8 @@ export default new Vuex.Store({
           .update({ stub: 1 });
         db.ref(`Users/${newValue.uid}/stats`)
           .update({ stub: 1 });
+        db.ref(`Users/${newValue.uid}/clientLogins`)
+          .update({ LastClientDate: Date.now() });
 
         var userDataRef = db
           .ref(`Users/${state.currentUser.uid}/PersonalData`);
@@ -71,8 +77,9 @@ export default new Vuex.Store({
           state.currentUserIsPremium = data.isExpert ? data.isExpert : false;
           state.currentUserLinkedInURL = data.linkedInURL ? data.linkedInURL : null;
           state.currentUserProfilePicURL = data.photoURL
-           ? data.photoURL
+            ? data.photoURL
             : "https://source.unsplash.com/featured/?paint"
+
           //thisVM.whatsAppNumber = data.whatsAppNumber ? data.whatsAppNumber : null;
 
           //thisVM.areas = data.areas ? data.areas : [];
@@ -86,6 +93,22 @@ export default new Vuex.Store({
 
 
         });
+
+        var userStreakRef = db
+          .ref(`Users/${state.currentUser.uid}/stats/_count_LoginStreak`);
+
+
+        userStreakRef.on("value", function (snapshot) {
+          var data = snapshot.val();
+          if (data != null) {
+            state.currentLoginStreak = data;
+          }
+          else {
+            state.currentLoginStreak = 0;
+          }
+        });
+
+
 
 
       }
