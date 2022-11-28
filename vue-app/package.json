@@ -22,7 +22,7 @@
     "glicko2": "^0.8.7",
     "luxon": "^2.0.1",
     "mercadopago": "^1.5.8",
-    "node-sass": "^4.14.1",
+    "node-sass": "^7.0.0",
     "paypal": "^1.0.1",
     "primeicons": "^4.1.0",
     "primevue": "^2.6.0",
