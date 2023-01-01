@@ -32,7 +32,7 @@
     "vue-beautiful-chat": "^2.5.0",
     "vue-easy-dnd": "^1.10.2",
     "vue-headful": "^2.1.0",
-    "vue-loader": "^15.9.3",
+    "vue-loader": "^17.0.1",
     "vue-media-recorder": "^0.1.25",
     "vue-meta": "^2.4.0",
     "vue-moment": "^4.1.0",
@@ -44,15 +44,15 @@
     "vuex": "^3.4.0"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-plugin-babel": "~5.0.8",
+    "@vue/cli-plugin-eslint": "~5.0.8",
     "@vue/cli-plugin-router": "~4.5.0",
     "@vue/cli-plugin-vuex": "~4.5.0",
-    "@vue/cli-service": "~4.5.0",
+    "@vue/cli-service": "~5.0.8",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
-    "sass-loader": "^8.0.2",
+    "sass-loader": "^13.2.0",
     "vue-template-compiler": "^2.6.11"
   }
 }
