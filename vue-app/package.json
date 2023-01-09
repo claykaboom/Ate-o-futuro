@@ -20,7 +20,7 @@
     "diagram-vue": "^0.3.3",
     "firebase": "^7.24.0",
     "glicko2": "^0.8.7",
-    "luxon": "^2.0.1",
+    "luxon": "^2.5.2",
     "mercadopago": "^1.5.8",
     "node-sass": "^4.14.1",
     "paypal": "^1.0.1",
